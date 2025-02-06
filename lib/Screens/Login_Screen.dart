@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: custom_Button(valu: "SIGN IN"),
                   onTap: (){
                     Showsnackbar();
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => BouttomNavbar(),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BouttomNavbar(),));
                   },
                 ),
                 SizedBox(height: height * 0.025,),

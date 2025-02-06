@@ -6,6 +6,10 @@ class Showsnackbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetSnackBar()
+    return GetSnackBar();
   }
 }
+
+
+
+
