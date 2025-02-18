@@ -1,4 +1,5 @@
 import 'package:event_project_01/App_Resources/App_Color.dart';
+import 'package:event_project_01/App_Resources/App_Style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,7 +26,7 @@ class custom_AuthButton extends StatelessWidget {
         children: [
           SvgPicture.asset(path,width: 25,height: 25,),
           SizedBox(width: 20,),
-          Text(valu,style: TextStyle(color: AppColor.textColor,fontSize: 16,fontWeight: FontWeight.w500),)
+          Text(valu,style: AppStyle.commonTextStyle,)
         ],
       ),
     );

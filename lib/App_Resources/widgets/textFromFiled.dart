@@ -24,7 +24,9 @@ class custom_Textfromfiled extends StatelessWidget {
       style: TextStyle(color:AppColor.textColor),
       decoration: InputDecoration(
         hintText: hint,
-        contentPadding: EdgeInsets.symmetric(vertical: height *0.023),
+        filled: true,
+        fillColor: AppColor.textFiledBgColor,
+        contentPadding: EdgeInsets.symmetric(vertical: height *0.021),
         hintStyle: TextStyle(color: AppColor.hintColor),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -36,7 +38,7 @@ class custom_Textfromfiled extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(
-              color: AppColor.border,
+              color: AppColor.secondaryColour,
               width: 0.5,
             )
         ),

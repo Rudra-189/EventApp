@@ -1,6 +1,7 @@
 import 'package:event_project_01/App_Resources/App_Color.dart';
 import 'package:event_project_01/App_Resources/App_Images.dart';
 import 'package:event_project_01/App_Resources/App_Screen_Size.dart';
+import 'package:event_project_01/App_Resources/App_Style.dart';
 import 'package:event_project_01/App_Resources/widgets/Auth_Button.dart';
 import 'package:event_project_01/App_Resources/widgets/button.dart';
 import 'package:event_project_01/App_Resources/widgets/textFromFiled.dart';
@@ -44,22 +45,22 @@ class _SignupScreenState extends State<SignupScreen> {
             //color: Colors.red,
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   children: [
-                    Text("Sing up",style: TextStyle(color: AppColor.textColor,fontSize: 22,fontWeight: FontWeight.w900),)
+                    Text("Sing up",style: AppStyle.headerTextStyle)
                   ],
                 ),
-                SizedBox(height: height * 0.015,),
+                SizedBox(height: height * 0.025,),
                 custom_Textfromfiled(controller:userController, hint: ' Full name', prefixIcon: AppIcon.personIcon),
-                SizedBox(height: height * 0.015,),
+                SizedBox(height: height * 0.02,),
                 custom_Textfromfiled(controller:emailController, hint: ' abc@gmail.com', prefixIcon: AppIcon.mailIcon),
-                SizedBox(height: height * 0.015,),
+                SizedBox(height: height * 0.02,),
                 custom_PasswordTextFromFiled(controller:passwordController, hint: ' Your password', prefixIcon: AppIcon.passwordIcon),
-                SizedBox(height: height * 0.015,),
+                SizedBox(height: height * 0.02,),
                 custom_PasswordTextFromFiled(controller:confirmPasswordController, hint: ' Confirm password', prefixIcon: AppIcon.passwordIcon),
-                SizedBox(height: height * 0.035,),
+                SizedBox(height: height * 0.02,),
               ],
             ),
           ),
@@ -80,7 +81,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("OR"),
+                    Text("OR",style: AppStyle.commonTextStyle,),
                   ],
                 ),
                 SizedBox(height: height * 0.025,),
@@ -91,9 +92,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don’t have an account?  ",style: TextStyle(color: AppColor.textColor,fontWeight: FontWeight.w500,fontSize: 16),),
+                    Text("Don’t have an account?  ",style: AppStyle.commonTextStyle,),
                     InkWell(
-                      child: Text("Sign in",style: TextStyle(color: AppColor.secondaryColour,fontSize: 16,fontWeight: FontWeight.w500),),
+                      child: Text("Sign in",style: AppStyle.secondaryCommonTextStyle),
                       onTap: (){
                         Navigator.of(context).pop();
                       },

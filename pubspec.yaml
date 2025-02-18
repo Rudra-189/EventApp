@@ -37,8 +37,10 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_switch: ^0.3.2
   provider: ^6.1.2
+  readmore: ^3.0.0
   google_nav_bar: ^5.0.7
   get: ^4.6.6
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:

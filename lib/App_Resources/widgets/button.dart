@@ -1,4 +1,5 @@
 import 'package:event_project_01/App_Resources/App_Color.dart';
+import 'package:event_project_01/App_Resources/App_Style.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../App_Screen_Size.dart';
@@ -18,7 +19,7 @@ class custom_Button extends StatelessWidget {
         color: AppColor.secondaryColour,
         borderRadius: BorderRadius.circular(15)
       ),
-      child: Center(child: Text(valu,style: TextStyle(color: AppColor.primaryColour,fontSize:16,fontWeight: FontWeight.w700),)),
+      child: Center(child: Text(valu,style: AppStyle.ButtonTextStyle,)),
     );
   }
 }

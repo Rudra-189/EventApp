@@ -32,7 +32,7 @@ class custom_otpTextfromfiled extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(
-                color: AppColor.border,
+                color: AppColor.secondaryColour,
                 width: 0.5,
               )
           ),

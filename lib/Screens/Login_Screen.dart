@@ -1,11 +1,14 @@
 import 'package:event_project_01/App_Resources/App_Color.dart';
 import 'package:event_project_01/App_Resources/App_Images.dart';
 import 'package:event_project_01/App_Resources/App_Screen_Size.dart';
+import 'package:event_project_01/App_Resources/App_Style.dart';
 import 'package:event_project_01/App_Resources/widgets/Auth_Button.dart';
 import 'package:event_project_01/App_Resources/widgets/button.dart';
 import 'package:event_project_01/App_Resources/widgets/textFromFiled.dart';
 import 'package:event_project_01/Screens/Bouttom_Navbar.dart';
+import 'package:event_project_01/Screens/Explore_Screen.dart';
 import 'package:event_project_01/Screens/Signup_Screen.dart';
+import 'package:event_project_01/Screens/eventDetail_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
@@ -45,20 +48,19 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             height: height * 0.3,
             width: width,
-            //color: Colors.red,
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               children: [
                 Row(
                   children: [
-                    Text("Sing in",style: TextStyle(color: AppColor.textColor,fontSize: 22,fontWeight: FontWeight.w900),)
+                    Text("Sing in",style: AppStyle.headerTextStyle,)
                   ],
                 ),
-                SizedBox(height: height * 0.015,),
+                SizedBox(height: height * 0.02,),
                 custom_Textfromfiled(controller:emailController, hint: ' abc@gmail.com', prefixIcon: AppIcon.mailIcon),
-                SizedBox(height: height * 0.015,),
+                SizedBox(height: height * 0.02,),
                 custom_PasswordTextFromFiled(controller:passwordController, hint: ' Your password', prefixIcon: AppIcon.passwordIcon),
-                SizedBox(height: height * 0.015,),
+                SizedBox(height: height * 0.02,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -71,15 +73,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               isOn ? isOn = false : isOn = true;
                             });
                           },
-                          height: 25,
-                          width: 46,
+                          height: height * 0.0315,
+                          width: width * 0.125,
                           padding: 1.5,
+                          activeColor: AppColor.secondaryColour,
                         ),
                         SizedBox(width: 5,),
-                        Text("Remember Me",style: TextStyle(color: AppColor.textColor,fontWeight: FontWeight.w500,fontSize: 15),)
+                        Text("Remember Me",style: AppStyle.commonTextStyle,)
                       ],
                     ),
-                    Text("Forgot Password? ",style: TextStyle(color: AppColor.textColor,fontWeight: FontWeight.w500,fontSize: 15))
+                    Text("Forgot Password? ",style: AppStyle.secondaryCommonTextStyle)
                   ],
                 )
               ],
@@ -91,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               children: [
-                SizedBox(height: height * 0.025,),
+                SizedBox(height: height * 0.03,),
                 InkWell(
                   child: custom_Button(valu: "SIGN IN"),
                   onTap: (){
@@ -103,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("OR"),
+                    Text("OR",style: AppStyle.commonTextStyle,),
                   ],
                 ),
                 SizedBox(height: height * 0.025,),
@@ -114,9 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don’t have an account?  ",style: TextStyle(color: AppColor.textColor,fontWeight: FontWeight.w500,fontSize: 16),),
+                    Text("Don’t have an account?  ",style: AppStyle.commonTextStyle),
                     InkWell(
-                      child: Text("Sign up",style: TextStyle(color: AppColor.secondaryColour,fontSize: 16,fontWeight: FontWeight.w500),),
+                      child: Text("Sign up",style: AppStyle.secondaryCommonTextStyle),
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen(),));
                       },

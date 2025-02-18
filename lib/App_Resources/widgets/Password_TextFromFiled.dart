@@ -33,7 +33,9 @@ class _custom_PasswordTextFromFiledState extends State<custom_PasswordTextFromFi
       style: TextStyle(color:AppColor.textColor),
       decoration: InputDecoration(
           hintText: widget.hint,
-          contentPadding: EdgeInsets.symmetric(vertical: height *0.023),
+          filled: true,
+          fillColor: AppColor.textFiledBgColor,
+          contentPadding: EdgeInsets.symmetric(vertical: height *0.021),
           hintStyle: TextStyle(color: AppColor.hintColor),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -45,16 +47,16 @@ class _custom_PasswordTextFromFiledState extends State<custom_PasswordTextFromFi
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(
-                color: AppColor.border,
+                color: AppColor.secondaryColour,
                 width: 0.5,
               )
           ),
           prefixIcon: widget.prefixIcon,
-          suffixIcon: _isvisibel ? InkWell(child: AppIcon.visibilityOffIcon,onTap: (){
+          suffixIcon: _isvisibel ? GestureDetector(child: AppIcon.visibilityOffIcon,onTap: (){
             setState(() {
               _isvisibel = false;
             });
-          },) : InkWell(child: AppIcon.visibilityOnIcon,onTap: (){
+          },) : GestureDetector(child: AppIcon.visibilityOnIcon,onTap: (){
             setState(() {
               _isvisibel = true;
             });
