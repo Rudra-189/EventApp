@@ -17,7 +17,11 @@ class _search_PageState extends State<search_Page> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.green.shade600,
-        leading: Icon(Icons.arrow_back,color: Colors.white,size: 20,),
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.of(context).pop();
+          },
+          child: Icon(Icons.arrow_back,color: Colors.white,size: 20,),),
         title: Text("Search",style: TextStyle(color: Colors.white,fontSize: 18),),
 
       ),

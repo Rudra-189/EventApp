@@ -32,8 +32,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
       "color" : Colors.blue
     },
     {
-      "img" : AppIcon.phoneIcon,
-      "name" : "Phone",
+      "img" : Icon(Icons.format_paint,color: Colors.white,size: 22,),
+      "name" : "Art",
+      "color" : Colors.teal
+    },
+    {
+      "img" : Icon(Icons.design_services,color: Colors.white,size: 22,),
+      "name" : "Design",
+      "color" : Colors.teal
+    },
+    {
+      "img" : Icon(Icons.business,color: Colors.white,size: 22,),
+      "name" : "Business",
       "color" : Colors.teal
     }
   ];
@@ -116,126 +126,33 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
             ),
             SizedBox(height: height * 0.02 ,),
-            Container(
-              height: height * 0.345,
-              child: ListView.builder(itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => eventDetail_Page(img: Eventphoto[index]),));
-                  },
-                  child: Container(
-                    height: height * 0.345,
-                    width: width * 0.7,
-                    margin: EdgeInsets.only(left: 10),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.09),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: height * 0.2,
-                          width: width * 0.65,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            //color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(image: NetworkImage(Eventphoto[index],),fit: BoxFit.cover),
-                          ),
-                        ),
-                        SizedBox(height: height * 0.01,),
-                        Text("This is my Event hello i am rudra this event is",style: AppStyle.overFlowTextStyle,),
-                        SizedBox(height: height * 0.01,),
-                        Row(
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.date_range,color: AppColor.secondaryColour,size: 18,),
-                                  Text("12-15 october,25",style:TextStyle(fontSize: 11,color: AppColor.textColor),)
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.location_pin,color: AppColor.secondaryColour,size: 18,),
-                                  Text("abc,water park,",style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: height * 0.01,),
-                        Row(
-                          children: [
-                            SizedBox(
-                              height: 30,
-                              width: 70,
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                      child: Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white.withOpacity(0.2),
-                                          borderRadius: BorderRadius.circular(15),
-                                        ),
-                                      )
-                                  ),
-                                  Positioned(
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    left: 20,
-                                  ),
-                                  Positioned(
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    left: 40,
-                                  ),
-
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: width * 0.02,),
-                            Text("Members joined",style: TextStyle(fontSize: 11,color: AppColor.textColor),),
-                            Container(
-                              height: 35,
-                              width: 75,
-                              decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(11)
-                              ),
-                              child: Center(
-                                child: Text("JOIN NOW",style: TextStyle(color: AppColor.secondaryColour,fontSize: 11,fontWeight: FontWeight.w900),),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+            CarouselSlider(
+                items: Eventphoto.map((e) => Container(
+                  height: height * 0.345,
+                  width: width * 0.75,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.09),
+                      borderRadius: BorderRadius.circular(15)
                   ),
-                );
-              },
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-              ),
+                  child: Text("Rudo"),
+                ),).toList(),
+                options: CarouselOptions(
+                  height: height * 0.350,
+                  aspectRatio: 16/9,
+                  viewportFraction: 0.75,
+                  initialPage: 0,
+                  enableInfiniteScroll: true,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  enlargeFactor: 0.3,
+                  // onPageChanged: callbackFunction,
+                  scrollDirection: Axis.horizontal,
+                )
             ),
             SizedBox(height: height * 0.035,),
             Padding(
@@ -375,3 +292,125 @@ class _ExploreScreenState extends State<ExploreScreen> {
 //                 ],
 //               ),
 //             ),
+
+/*Container(
+              height: height * 0.345,
+              child: ListView.builder(itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => eventDetail_Page(img: Eventphoto[index]),));
+                  },
+                  child: Container(
+                    height: height * 0.345,
+                    width: width * 0.7,
+                    margin: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.09),
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: height * 0.2,
+                          width: width * 0.65,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            //color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(image: NetworkImage(Eventphoto[index],),fit: BoxFit.cover),
+                          ),
+                        ),
+                        SizedBox(height: height * 0.01,),
+                        Text("This is my Event hello i am rudra this event is",style: AppStyle.overFlowTextStyle,),
+                        SizedBox(height: height * 0.01,),
+                        Row(
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.date_range,color: AppColor.secondaryColour,size: 18,),
+                                  Text("12-15 october,25",style:TextStyle(fontSize: 11,color: AppColor.textColor),)
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.location_pin,color: AppColor.secondaryColour,size: 18,),
+                                  Text("abc,water park,",style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),)
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: height * 0.01,),
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 30,
+                              width: 70,
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.2),
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                      )
+                                  ),
+                                  Positioned(
+                                    child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    left: 20,
+                                  ),
+                                  Positioned(
+                                    child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    left: 40,
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: width * 0.02,),
+                            Text("Members joined",style: TextStyle(fontSize: 11,color: AppColor.textColor),),
+                            Container(
+                              height: 35,
+                              width: 75,
+                              decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(11)
+                              ),
+                              child: Center(
+                                child: Text("JOIN NOW",style: TextStyle(color: AppColor.secondaryColour,fontSize: 11,fontWeight: FontWeight.w900),),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+              ),
+            ),*/

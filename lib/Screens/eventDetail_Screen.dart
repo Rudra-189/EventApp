@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 
 class eventDetail_Page extends StatefulWidget {
@@ -24,7 +25,12 @@ class _eventDetail_PageState extends State<eventDetail_Page> {
             slivers: [
               SliverAppBar(
                 expandedHeight: 350,
-                leading: Icon(Icons.arrow_back,color: Colors.green.shade600,),
+                leading: GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(Icons.arrow_back,color: Colors.green.shade600,),
+                ),
                 actions: [
                   Container(
                     height: 35,
