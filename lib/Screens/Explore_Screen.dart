@@ -126,33 +126,84 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
             ),
             SizedBox(height: height * 0.02 ,),
-            CarouselSlider(
-                items: Eventphoto.map((e) => Container(
-                  height: height * 0.345,
-                  width: width * 0.75,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.09),
-                      borderRadius: BorderRadius.circular(15)
+            Container(
+              height: height * 0.345,
+              child: ListView.builder(itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => eventDetail_Page(img: Eventphoto[index]),));
+                  },
+                  child: Container(
+                    //height: height * 0.345,
+                    width: width * 0.7,
+                    margin: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.09),
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: height * 0.2,
+                          width: width * 0.65,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            //color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(image: NetworkImage(Eventphoto[index],),fit: BoxFit.cover),
+                          ),
+                        ),
+                        SizedBox(height: height * 0.01,),
+                        Text("This is my Event hello i am rudra this event is",style: AppStyle.overFlowTextStyle,),
+                        SizedBox(height: height * 0.01,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.date_range,color: AppColor.secondaryColour,size: 18,),
+                                      Text("12-15 october,25",style:TextStyle(fontSize: 11,color: AppColor.textColor),)
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: height * 0.01,),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.location_pin,color: AppColor.secondaryColour,size: 18,),
+                                      Text("abc,water park,",style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),)
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 40,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade600,
+                                borderRadius: BorderRadius.circular(11)
+                              ),
+                              child: Center(child: Text("JOIN NOW",style: TextStyle(color: Colors.white,fontSize: 12),)),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Text("Rudo"),
-                ),).toList(),
-                options: CarouselOptions(
-                  height: height * 0.350,
-                  aspectRatio: 16/9,
-                  viewportFraction: 0.75,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  enlargeFactor: 0.3,
-                  // onPageChanged: callbackFunction,
-                  scrollDirection: Axis.horizontal,
-                )
+                );
+              },
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+              ),
             ),
             SizedBox(height: height * 0.035,),
             Padding(
@@ -293,124 +344,74 @@ class _ExploreScreenState extends State<ExploreScreen> {
 //               ),
 //             ),
 
-/*Container(
-              height: height * 0.345,
-              child: ListView.builder(itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => eventDetail_Page(img: Eventphoto[index]),));
-                  },
-                  child: Container(
-                    height: height * 0.345,
-                    width: width * 0.7,
-                    margin: EdgeInsets.only(left: 10),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.09),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: height * 0.2,
-                          width: width * 0.65,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            //color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(image: NetworkImage(Eventphoto[index],),fit: BoxFit.cover),
-                          ),
-                        ),
-                        SizedBox(height: height * 0.01,),
-                        Text("This is my Event hello i am rudra this event is",style: AppStyle.overFlowTextStyle,),
-                        SizedBox(height: height * 0.01,),
-                        Row(
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.date_range,color: AppColor.secondaryColour,size: 18,),
-                                  Text("12-15 october,25",style:TextStyle(fontSize: 11,color: AppColor.textColor),)
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.location_pin,color: AppColor.secondaryColour,size: 18,),
-                                  Text("abc,water park,",style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: height * 0.01,),
-                        Row(
-                          children: [
-                            SizedBox(
-                              height: 30,
-                              width: 70,
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                      child: Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white.withOpacity(0.2),
-                                          borderRadius: BorderRadius.circular(15),
-                                        ),
-                                      )
-                                  ),
-                                  Positioned(
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    left: 20,
-                                  ),
-                                  Positioned(
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    left: 40,
-                                  ),
 
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: width * 0.02,),
-                            Text("Members joined",style: TextStyle(fontSize: 11,color: AppColor.textColor),),
-                            Container(
-                              height: 35,
-                              width: 75,
-                              decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(11)
-                              ),
-                              child: Center(
-                                child: Text("JOIN NOW",style: TextStyle(color: AppColor.secondaryColour,fontSize: 11,fontWeight: FontWeight.w900),),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),*/
+
+//CarouselSlider(
+//                 items: Eventphoto.map((e) => Container(
+//                   height: height * 0.375,
+//                   width: width * 0.75,
+//                   padding: EdgeInsets.all(10),
+//                   decoration: BoxDecoration(
+//                       color: Colors.white.withOpacity(0.09),
+//                       //color: Colors.white,
+//                       borderRadius: BorderRadius.circular(15)
+//                   ),
+//                   child: Column(
+//                     children: [
+//                       Container(
+//                         height: height * 0.250,
+//                         decoration: BoxDecoration(
+//                           color: Colors.white.withOpacity(0.2),
+//                           borderRadius: BorderRadius.circular(15),
+//                           image: DecorationImage(
+//                             image: NetworkImage(e.toString()),
+//                             fit: BoxFit.cover
+//                           )
+//                         ),
+//                       ),
+//                       SizedBox(height: 10,),
+//                       Expanded(child: Text("This Event is Orgenize by Rudra and i am orgenaizer of this event",style: TextStyle(color: Colors.white,overflow: TextOverflow.ellipsis,fontSize: 16),)),
+//                       Row(
+//                         children: [
+//                           Column(
+//                             children: [
+//                               SizedBox(
+//                                 child: Row(
+//                                   children: [
+//                                     Icon(Icons.date_range,color: Colors.green.shade600,size: 18,),
+//                                     Text("12-15 october,25",style: TextStyle(color: Colors.white,fontSize: 12),)
+//                                   ],
+//                                 ),
+//                               ),
+//                               SizedBox(
+//                                 child: Row(
+//                                   children: [
+//                                     Icon(Icons.location_on,color: Colors.green.shade600,size: 18,),
+//                                     Text("12-15 october,25",style: TextStyle(color: Colors.white,fontSize: 12),)
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           )
+//                         ],
+//                       )
+//                     ],
+//                   ),
+//                 ),).toList(),
+//                 options: CarouselOptions(
+//                   height: height * 0.375,
+//                   aspectRatio: 1,
+//                   viewportFraction: 0.75,
+//                   initialPage: 0,
+//                   enableInfiniteScroll: true,
+//                   reverse: false,
+//                   autoPlay: true,
+//                   autoPlayInterval: Duration(seconds: 3),
+//                   autoPlayAnimationDuration: Duration(milliseconds: 800),
+//                   autoPlayCurve: Curves.fastOutSlowIn,
+//                   enlargeCenterPage: true,
+//                   enlargeFactor: 0.3,
+//                   // onPageChanged: callbackFunction,
+//                   scrollDirection: Axis.horizontal,
+//                 )
+//             ),

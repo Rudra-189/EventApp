@@ -41,6 +41,10 @@ dependencies:
   google_nav_bar: ^5.0.7
   get: ^4.6.6
   carousel_slider: ^5.0.0
+  firebase_core:
+  firebase_auth:
+  firebase_storage:
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:

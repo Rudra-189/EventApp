@@ -37,38 +37,37 @@ class _BouttomNavbarState extends State<BouttomNavbar> {
         ],
       ),
       bottomNavigationBar:GNav(
-        tabMargin: EdgeInsets.symmetric(vertical: 10),
+        tabMargin: EdgeInsets.only(top: 10,bottom: 5),
         gap: 10,
         selectedIndex: _curentIndex,
         color: AppColor.iconColor,
-        activeColor: AppColor.secondaryColour,
+        activeColor: Colors.green.shade600,
         padding: EdgeInsets.all(15),
-        backgroundColor: AppColor.secondaryColour.withOpacity(0.1),
+        backgroundColor: Colors.black,
         iconSize: 20,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        tabBackgroundColor: AppColor.secondaryColour.withOpacity(0.2),
         haptic: true,
         curve: Curves.bounceIn,
         tabs:[
           GButton(
             icon: Icons.explore,
-            text: 'explore',
+            // text: 'explore',
           ),
           GButton(
             icon: Icons.event,
-            text: 'event',
+            // text: 'event',
           ),
           GButton(
             icon: Icons.add_circle,
-            text: 'Add',
+            // text: 'Add',
           ),
           GButton(
             icon: Icons.location_pin,
-            text: 'location',
+            // text: 'location',
           ),
           GButton(
             icon: Icons.person,
-            text: 'profile',
+            // text: 'profile',
           ),
         ],
         onTabChange: (int index) {
@@ -81,3 +80,4 @@ class _BouttomNavbarState extends State<BouttomNavbar> {
     );
   }
 }
+
