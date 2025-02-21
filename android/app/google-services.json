@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "913001562757",
+    "firebase_url": "https://fooddata-c7e50-default-rtdb.firebaseio.com",
+    "project_id": "fooddata-c7e50",
+    "storage_bucket": "fooddata-c7e50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913001562757:android:535bd319858bcb1f711fec",
+        "android_client_info": {
+          "package_name": "com.example.event_project_01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXS2KsTgLydqC9p5_-fDV7M8cvDMtA7iw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
