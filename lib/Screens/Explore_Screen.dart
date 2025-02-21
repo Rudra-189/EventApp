@@ -257,24 +257,55 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
             ),
             SizedBox(height: height * 0.03,),
-            Container(
-              height: height,
-              child: ListView.builder(itemBuilder: (context, index) {
-                return Container(
-                  height: 100,
-                  margin: EdgeInsets.only(left: 10,right: 10,top: 10),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.09),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                );
-              },
-                itemCount: 10,
-                physics: NeverScrollableScrollPhysics(),
-              ),
+            ListView.builder(itemBuilder: (context, index) {
+              return Container(
+                height: 100,
+                margin: EdgeInsets.only(left: 10,right: 10,top: 10),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.09),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      child: Image.network(Eventphoto[index],height: 75,width: 75,fit: BoxFit.cover,),
+                    ),
+                    SizedBox(width: 10,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width:250,
+                          child: Text("Event Name with other info. of organizer",
+                            style: TextStyle(
+                                color: Colors.white,fontSize: 15,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                            Text("12-15 october,25",style: TextStyle(color: Colors.white,fontSize: 10),),
+                            Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
+                            Text("Abc,water park",style: TextStyle(color: Colors.white,fontSize: 10),)
+                          ],
+                        ),
+                        Row(
+                          children: [
+
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+              itemCount: Eventphoto.length,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
             ),
-            Container(height: height,),
           ],
         ),
       ),

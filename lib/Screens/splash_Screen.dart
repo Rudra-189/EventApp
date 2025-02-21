@@ -30,7 +30,7 @@ class _splash_ScreenState extends State<splash_Screen> {
 
   void checkLogin(){
     Timer(Duration(seconds: 3),
-          ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BouttomNavbar(),),),
+          ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),),),
     );
     // final user = FirebaseAuth.instance.currentUser;
     // if(user != null){
