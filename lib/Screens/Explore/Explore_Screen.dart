@@ -2,10 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:event_project_01/App_Resources/App_Color.dart';
 import 'package:event_project_01/App_Resources/App_Icon.dart';
 import 'package:event_project_01/App_Resources/App_Style.dart';
-import 'package:event_project_01/Screens/eventDetail_Screen.dart';
-import 'package:event_project_01/Screens/search_Screen.dart';
+import 'package:event_project_01/Screens/Explore/exploreControler.dart';
+import 'package:event_project_01/Screens/eventDetail/eventDetail_Screen.dart';
+import 'package:event_project_01/Screens/search/search_Screen.dart';
+import 'package:event_project_01/models/eventmodel.dart';
 import 'package:flutter/material.dart';
-import '../App_Resources/App_Screen_Size.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../../App_Resources/App_Screen_Size.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -18,7 +22,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   List<Map<String,dynamic>>cat = [
     {
       "img" : AppIcon.sportsIcon,
-      "name" : "Sports",
+      "name" : "Sport",
       "color" : Colors.red
     },
     {
@@ -54,9 +58,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
     'https://media.istockphoto.com/id/471906412/photo/beautiful-table-setting-for-an-wedding-reception-or-an-event.jpg?s=612x612&w=0&k=20&c=knlIBspy-ZKuQV7bUVr_eclJmyC24ShNAva_Jh9Rwfc=',
     'https://media.istockphoto.com/id/1352398824/photo/birthday-cake-on-a-background-balloons-party-decor-copy-space-trendy-cake-delicious-wedding.jpg?s=612x612&w=0&k=20&c=T4wlEs_JmC2XOMsCBSzTCBmp7bKRHbCkwjs4RlZpPjU=',
     'https://media.istockphoto.com/id/2045556384/video/the-waiter-places-the-finished-sandwiches-on-the-table-with-treats-catering.jpg?s=640x640&k=20&c=_D__UWIFNJuTcJ7CJXTy-94q3qPNYOXefcI3uaDEA8w=',
+    'https://img.freepik.com/free-photo/field-hockey-players-tournament-game_23-2149668609.jpg?ga=GA1.1.90016798.1734757426&semt=ais_hybrid',
   ];
 
   var selectedCategory = 0;
+
+  final exploreControler controler = Get.put(exploreControler());
+
+  @override
+  void initState() {
+    super.initState();
+    controler.fetchCategoryEvent(cat[selectedCategory]["name"]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,82 +141,93 @@ class _ExploreScreenState extends State<ExploreScreen> {
             SizedBox(height: height * 0.02 ,),
             Container(
               height: height * 0.345,
-              child: ListView.builder(itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => eventDetail_Page(img: Eventphoto[index]),));
-                  },
-                  child: Container(
-                    //height: height * 0.345,
-                    width: width * 0.7,
-                    margin: EdgeInsets.only(left: 10),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.09),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: height * 0.2,
-                          width: width * 0.65,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            //color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(image: NetworkImage(Eventphoto[index],),fit: BoxFit.cover),
-                          ),
+              child: Obx(() {
+                if(controler.isLoading.value){
+                  return Center(child: CircularProgressIndicator());
+                }else{
+                  final data = controler.event;
+                  return ListView.builder(itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => eventDetail_Page(id: data[index].id, category: data[index].category,),));
+                      },
+                      child: Container(
+                        //height: height * 0.345,
+                        width: width * 0.7,
+                        margin: EdgeInsets.only(left: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.09),
+                            borderRadius: BorderRadius.circular(15)
                         ),
-                        SizedBox(height: height * 0.01,),
-                        Text("This is my Event hello i am rudra this event is",style: AppStyle.overFlowTextStyle,),
-                        SizedBox(height: height * 0.01,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
+                            Container(
+                              height: height * 0.2,
+                              width: width * 0.65,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                //color: Colors.white.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(image: NetworkImage(data[index].img,),fit: BoxFit.cover),
+                              ),
+                            ),
+                            SizedBox(height: height * 0.01,),
+                            Text(data[index].title,style: AppStyle.overFlowTextStyle,),
+                            SizedBox(height: height * 0.01,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(Icons.date_range,color: AppColor.secondaryColour,size: 18,),
-                                      Text("12-15 october,25",style:TextStyle(fontSize: 11,color: AppColor.textColor),)
-                                    ],
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.date_range,color: AppColor.secondaryColour,size: 18,),
+                                          Text(data[index].date,style:TextStyle(fontSize: 11,color: AppColor.textColor),)
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: height * 0.01,),
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.location_pin,color: AppColor.secondaryColour,size: 18,),
+                                          SizedBox(
+                                            width: width * 0.3,
+                                            child:Text(data[index].location,style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: height * 0.01,),
                                 Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(Icons.location_pin,color: AppColor.secondaryColour,size: 18,),
-                                      Text("abc,water park,",style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),)
-                                    ],
+                                  height: 40,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      color: Colors.green.shade600,
+                                      borderRadius: BorderRadius.circular(11)
                                   ),
-                                ),
+                                  child: Center(child: Text("JOIN NOW",style: TextStyle(color: Colors.white,fontSize: 12),)),
+                                )
                               ],
                             ),
-                            Container(
-                              height: 40,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: Colors.green.shade600,
-                                borderRadius: BorderRadius.circular(11)
-                              ),
-                              child: Center(child: Text("JOIN NOW",style: TextStyle(color: Colors.white,fontSize: 12),)),
-                            )
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-              ),
+                      ),
+                    );
+                  },
+                    itemCount: data.length,
+                    scrollDirection: Axis.horizontal,
+                  );
+                }
+              },)
             ),
             SizedBox(height: height * 0.035,),
             Padding(
@@ -224,6 +248,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   onTap: (){
                     setState(() {
                       selectedCategory = index;
+                      controler.fetchCategoryEvent(cat[selectedCategory]["name"]);
                     });
                   },
                   child: Container(
@@ -257,61 +282,88 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
             ),
             SizedBox(height: height * 0.03,),
-            ListView.builder(itemBuilder: (context, index) {
-              return Container(
-                height: 100,
-                margin: EdgeInsets.only(left: 10,right: 10,top: 10),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.09),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      child: Image.network(Eventphoto[index],height: 75,width: 75,fit: BoxFit.cover,),
-                    ),
-                    SizedBox(width: 10,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width:250,
-                          child: Text("Event Name with other info. of organizer",
-                            style: TextStyle(
-                                color: Colors.white,fontSize: 15,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold),
+            Obx(() {
+              if(controler.isLoading.value){
+                return Center(child: CircularProgressIndicator());
+              }else{
+                final data = controler.categoryEvent;
+                return ListView.builder(itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => eventDetail_Page(id: data[index].id, category: data[index].category,),));
+                    },
+                    child: Container(
+                      height: 100,
+                      margin: EdgeInsets.only(left: 10,right: 10,top: 10),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.09),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            child: Image.network(data[index].img,height: 75,width: 75,fit: BoxFit.cover,),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                            Text("12-15 october,25",style: TextStyle(color: Colors.white,fontSize: 10),),
-                            Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
-                            Text("Abc,water park",style: TextStyle(color: Colors.white,fontSize: 10),)
-                          ],
-                        ),
-                        Row(
-                          children: [
-
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            },
-              itemCount: Eventphoto.length,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-            ),
+                          SizedBox(width: 10,),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(data[index].title,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    color: Colors.white,fontSize: 16,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold,),
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                                    Text(data[index].date,style: TextStyle(color: Colors.white,fontSize: 10),),
+                                    SizedBox(width: 5,),
+                                    Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
+                                    Expanded(child: Text(data[index].location,style: TextStyle(color: Colors.white,fontSize: 10,overflow: TextOverflow.ellipsis),))
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                  itemCount: data.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                );
+              }
+            },)
           ],
         ),
       ),
     );
   }
 }
+
+//Future showDrawer()async{
+//     return Drawer(
+//       child: ListView(
+//         children: [
+//           DrawerHeader(
+//             decoration: BoxDecoration(
+//                 color: Colors.green.shade600
+//             ),
+//             child: UserAccountsDrawerHeader(
+//               accountName: Text("Mohan"),
+//               accountEmail: Text("mohan@gmail.com"),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
 
 //Container(
 //               height: height * 0.125,

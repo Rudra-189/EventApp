@@ -29,18 +29,16 @@ class _splash_ScreenState extends State<splash_Screen> {
   }
 
   void checkLogin(){
-    Timer(Duration(seconds: 3),
-          ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),),),
-    );
-    // final user = FirebaseAuth.instance.currentUser;
-    // if(user != null){
-    //   Timer(Duration(seconds: 3),
-    //         ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BouttomNavbar(),),),
-    //   );
-    // }else{
-    //   Timer(Duration(seconds: 3),
-    //         ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),),),
-    //   );
-    // }
+    final auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
+    if(user != null){
+      Timer(Duration(seconds: 3),
+            ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BouttomNavbar(),),),
+      );
+    }else{
+      Timer(Duration(seconds: 3),
+            ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),),),
+      );
+    }
   }
 }

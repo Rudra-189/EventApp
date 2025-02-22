@@ -1,6 +1,6 @@
 import 'package:event_project_01/Screens/Add_Screen.dart';
 import 'package:event_project_01/Screens/Event_Screen.dart';
-import 'package:event_project_01/Screens/Explore_Screen.dart';
+import 'package:event_project_01/Screens/Explore/Explore_Screen.dart';
 import 'package:event_project_01/Screens/Location_Screen.dart';
 import 'package:event_project_01/Screens/Profile_Screen.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +76,7 @@ class _BouttomNavbarState extends State<BouttomNavbar> {
             pageController.jumpToPage(_curentIndex);
           });
         },
-      )
+      ),
     );
   }
 }
