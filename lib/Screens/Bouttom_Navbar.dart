@@ -1,8 +1,8 @@
 import 'package:event_project_01/Screens/Add_Screen.dart';
 import 'package:event_project_01/Screens/Event_Screen.dart';
 import 'package:event_project_01/Screens/Explore/Explore_Screen.dart';
-import 'package:event_project_01/Screens/Location_Screen.dart';
 import 'package:event_project_01/Screens/Profile_Screen.dart';
+import 'package:event_project_01/Screens/ticket/ticket_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -32,7 +32,7 @@ class _BouttomNavbarState extends State<BouttomNavbar> {
           ExploreScreen(),
           EventScreen(),
           AddScreen(),
-          LocationScreen(),
+          ticket_Page(),
           ProfileScreen()
         ],
       ),
@@ -62,7 +62,7 @@ class _BouttomNavbarState extends State<BouttomNavbar> {
             // text: 'Add',
           ),
           GButton(
-            icon: Icons.location_pin,
+            icon: Icons.airplane_ticket,
             // text: 'location',
           ),
           GButton(

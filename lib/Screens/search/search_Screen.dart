@@ -30,8 +30,8 @@ class _search_PageState extends State<search_Page> {
             Navigator.of(context).pop();
           },
           child: Icon(Icons.arrow_back,color: Colors.white,size: 20,),),
-        title: Text("Search",style: TextStyle(color: Colors.white,fontSize: 18),),
-
+        title: Text("SEARCH",style: TextStyle(color: Colors.white,fontSize: 18,letterSpacing: 2),),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(

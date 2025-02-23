@@ -5,6 +5,7 @@ import 'package:readmore/readmore.dart';
 import '../../App_Resources/App_Color.dart';
 import '../../App_Resources/App_Screen_Size.dart';
 import '../../App_Resources/App_Style.dart';
+import '../ticketBooking/ticketBooking_Scereen.dart';
 
 class eventDetail_Page extends StatefulWidget {
   String id;
@@ -24,9 +25,6 @@ class _eventDetail_PageState extends State<eventDetail_Page> {
     'https://media.istockphoto.com/id/1352398824/photo/birthday-cake-on-a-background-balloons-party-decor-copy-space-trendy-cake-delicious-wedding.jpg?s=612x612&w=0&k=20&c=T4wlEs_JmC2XOMsCBSzTCBmp7bKRHbCkwjs4RlZpPjU=',
     'https://media.istockphoto.com/id/2045556384/video/the-waiter-places-the-finished-sandwiches-on-the-table-with-treats-catering.jpg?s=640x640&k=20&c=_D__UWIFNJuTcJ7CJXTy-94q3qPNYOXefcI3uaDEA8w=',
   ];
-
-  int itemcount = 1;
-  int total = 0;
 
   final eventDetailControler controler = Get.put(eventDetailControler());
 
@@ -78,7 +76,8 @@ class _eventDetail_PageState extends State<eventDetail_Page> {
                       ),
                       SizedBox(width: 10,)
                     ],
-                    title: Text("Event Detail",style: TextStyle(color: Colors.white,fontSize: 20),),
+                    centerTitle: true,
+                    title: Text("EVENT DETAIL",style: TextStyle(color: Colors.white,fontSize: 20,letterSpacing: 2),),
                     flexibleSpace: FlexibleSpaceBar(
                       background: Container(
                         decoration: BoxDecoration(
@@ -279,7 +278,7 @@ class _eventDetail_PageState extends State<eventDetail_Page> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: 80,
+                  height: height * 0.095,
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Color(0XFFF7F9F2),
@@ -289,89 +288,37 @@ class _eventDetail_PageState extends State<eventDetail_Page> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                        height: 50,
-                        width: 120,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              child: Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                    color: Colors.green.shade600.withOpacity(0.25),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                    child: Icon(Icons.remove,
-                                        size: 17, color: Colors.green.shade600)),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  if (itemcount == 1) {
-                                    setState(() {
-                                      itemcount = 1;
-                                      total = data.price;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      itemcount--;
-                                      total = total * itemcount;
-                                    });
-                                  }
-                                });
-                              },
-                            ),
-                            Text(
-                              "${itemcount}",
-                              style: TextStyle(color: Colors.black, fontSize: 17),
-                            ),
-                            InkWell(
-                              child: Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                    color: Colors.green.shade600,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 17,
-                                      color: Colors.white,
-                                    )),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  setState(() {
-                                    itemcount++;
-                                    total = data.price * itemcount;
-                                  });
-                                });
-                              },
-                            ),
-                          ],
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border(
+                            top: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                            bottom: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                            left: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                            right: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                          )
                         ),
+                        child: Icon(Icons.favorite_border,color: Colors.black,size: 20,),
                       ),
-                      InkWell(
+                      GestureDetector(
                         child: Container(
-                          height: 50,
-                          width: 175,
+                          height: 55,
+                          padding: EdgeInsets.symmetric(horizontal: width * 0.2),
                           decoration: BoxDecoration(
                               color: Colors.green.shade600,
                               borderRadius: BorderRadius.circular(15)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text("BUY TICKET",
-                                style: TextStyle(color: Colors.white, fontSize: 14),
-                              ),
-                              Text(
-                                "₹ ${total}",
-                                style: TextStyle(color: Colors.black, fontSize: 14),
+                              Text("BUY A TICKET",
+                                style: TextStyle(color: Colors.white, fontSize: 14,fontWeight: FontWeight.bold,letterSpacing: 1),
                               ),
                             ],
                           ),
                         ),
                         onTap: ()async{
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ticketBooking_Page(price: data.price.toDouble(),data: data,)));
                         },
                       ),
                     ],
