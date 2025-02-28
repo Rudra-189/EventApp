@@ -40,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "913001562757-jht9ue54h0dpm4a9tg8q3llmu1l4b502.apps.googleusercontent.com",
+              "client_id": "913001562757-hd5tknrk1ocsh1u1o2hfijc7fmskv3jc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.eventProject01"
+                "bundle_id": "com.example.eventera"
               }
             }
           ]

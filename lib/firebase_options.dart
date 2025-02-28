@@ -45,18 +45,18 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDdN4IyVteLAWd3ooXa4nAjut0oly0r13o',
-    appId: '1:913001562757:web:bc30abe611d650f7711fec',
+    appId: '1:913001562757:web:5a3acb87988d0bc0711fec',
     messagingSenderId: '913001562757',
     projectId: 'fooddata-c7e50',
     authDomain: 'fooddata-c7e50.firebaseapp.com',
     databaseURL: 'https://fooddata-c7e50-default-rtdb.firebaseio.com',
     storageBucket: 'fooddata-c7e50.appspot.com',
-    measurementId: 'G-JJLKEKWSK5',
+    measurementId: 'G-2VZD9C0Q4S',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBXS2KsTgLydqC9p5_-fDV7M8cvDMtA7iw',
-    appId: '1:913001562757:android:535bd319858bcb1f711fec',
+    appId: '1:913001562757:android:3530929930ef3987711fec',
     messagingSenderId: '913001562757',
     projectId: 'fooddata-c7e50',
     databaseURL: 'https://fooddata-c7e50-default-rtdb.firebaseio.com',
@@ -65,22 +65,25 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBMmuvcH0Pe4maeTDO5wQEXZrUIHqwmIKY',
-    appId: '1:913001562757:ios:35fd4d9e85e89a06711fec',
+    appId: '1:913001562757:ios:4bbab463ecd066e1711fec',
     messagingSenderId: '913001562757',
     projectId: 'fooddata-c7e50',
     databaseURL: 'https://fooddata-c7e50-default-rtdb.firebaseio.com',
     storageBucket: 'fooddata-c7e50.appspot.com',
-    iosBundleId: 'com.example.eventProject01',
+    androidClientId: '913001562757-6kh2cvb3v06vp73aifn832hutve7nvlj.apps.googleusercontent.com',
+    iosClientId: '913001562757-hd5tknrk1ocsh1u1o2hfijc7fmskv3jc.apps.googleusercontent.com',
+    iosBundleId: 'com.example.eventera',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyDdN4IyVteLAWd3ooXa4nAjut0oly0r13o',
-    appId: '1:913001562757:web:138768810986d0cd711fec',
+    appId: '1:913001562757:web:05343508406ef656711fec',
     messagingSenderId: '913001562757',
     projectId: 'fooddata-c7e50',
     authDomain: 'fooddata-c7e50.firebaseapp.com',
     databaseURL: 'https://fooddata-c7e50-default-rtdb.firebaseio.com',
     storageBucket: 'fooddata-c7e50.appspot.com',
-    measurementId: 'G-8169B78CX6',
+    measurementId: 'G-1SB02KJHPY',
   );
+
 }
