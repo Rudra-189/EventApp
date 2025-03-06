@@ -13,6 +13,7 @@ class appRoutesName{
   static const String myEventScreen= '/myEventPage';
   static const String ticketBookedScreen= '/ticketBookedPage';
   static const String organizerProfileScreen= '/organizerProfilePage';
+  static const String editEventScreen= '/editEventPage';
 
   //user routes name
   static const String bottomNavbarScreen= '/bottomNavbarPage';
@@ -23,5 +24,4 @@ class appRoutesName{
   static const String ticketBookingScreen= '/ticketBookingPage';
   static const String userProfileScreen= '/userProfilePage';
   static const String editProfileScreen= '/editProfilePage';
-  static const String editEventScreen= '/editEventPage';
 }
