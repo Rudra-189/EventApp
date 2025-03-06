@@ -1,4 +1,6 @@
+import 'package:event_project_01/routes/appRoutesName.dart';
 import 'package:event_project_01/views/Organizer/myEvent/myEventControler.dart';
+import 'package:event_project_01/views/Organizer/editEvent/editEvent_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -71,17 +73,49 @@ class _myEventScreenState extends State<myEventScreen> {
                         Text( DateFormat('hh:mm a').format(data[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
                       ],
                     ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        VerticalDivider(
-                          color: Colors.white,
+                    trailing: PopupMenuButton(
+                      color: Colors.white,
+                      itemBuilder: (context) =>[
+                        PopupMenuItem(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.publish,color: Colors.green.shade600,size: 20,),
+                              SizedBox(width: 10,),
+                              Text("Publish",style: TextStyle(fontSize: 14),),
+                            ],
+                          ),
+                          onTap: (){
+                          },
                         ),
-                        Text("TICKET",style: TextStyle(color: Colors.green.shade600,fontSize: 10),)
+                        PopupMenuItem(
+                          onTap: (){
+                            Get.toNamed(appRoutesName.editEventScreen,arguments: data[index].id);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.edit,color: Colors.green.shade600,size: 20,),
+                              SizedBox(width: 10,),
+                              Text("update",style: TextStyle(fontSize: 14),),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          onTap: (){
+
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.delete_outline,color: Colors.green.shade600,size: 20,),
+                              SizedBox(width: 10,),
+                              Text("delete",style: TextStyle(fontSize: 14),),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    onTap: (){
-                    },
                   ),
                 );
               },

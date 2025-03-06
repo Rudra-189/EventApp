@@ -58,35 +58,67 @@ class _editProfileScreenState extends State<editProfileScreen> {
         child: Column(
           children: [
             SizedBox(height: height * 0.02,),
-            Stack(
-              children: [
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(50),
-                    image: DecorationImage(
-                      image: NetworkImage(data.photo),
-                      fit: BoxFit.cover
-                    )
-                  ),
-                ),
-                GestureDetector(
-                  onTap: (){},
-                  child: Positioned(
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:BorderRadius.circular(10)
+            data.photo.isEmpty ? Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 75,
+                    top: 75,
+                    child: GestureDetector(
+                      onTap: (){
+                        print("hello");
+                      },
+                      child: Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Icon(Icons.edit,color: Colors.green.shade600,size: 10,),
                       ),
-                      child: Icon(Icons.edit,color: Colors.green.shade600,size: 10,),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
+            ) : Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(50),
+                  image: DecorationImage(
+                    image: NetworkImage(data.photo),
+                  )
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 75,
+                    top: 75,
+                    child: GestureDetector(
+                      onTap: (){
+                        print("hello");
+                      },
+                      child: Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Icon(Icons.edit,color: Colors.green.shade600,size: 10,),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
             SizedBox(height: height * 0.025,),
             Row(

@@ -1,5 +1,6 @@
 
 import 'package:event_project_01/views/User/search/searchControler.dart';
+import 'package:event_project_01/views/User/search/searchFilter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -82,8 +83,7 @@ class _searchScreenState extends State<searchScreen> {
                   ),
                   GestureDetector(
                     onTap: (){
-                      // showFilterBottomSheet();
-                      _showFilterBottomSheet(context);
+                      showFilterSheet(context);
                     },
                     child: Container(
                       height: 50,
@@ -169,115 +169,6 @@ class _searchScreenState extends State<searchScreen> {
           ],
         ),
       )
-    );
-  }
-  // Future showFilterBottomSheet(){
-  //   return showModalBottomSheet(
-  //     context: context,
-  //     isScrollControlled: true,
-  //     builder: (context) => searchFilter(),
-  //   );
-  // }
-
-  List category = [
-    {
-      "name" : "Sports",
-      "icon": Icon(Icons.sports_baseball,color: Colors.white,),
-    },
-    {
-      "name" : "Music",
-      "icon": Icon(Icons.music_note,color: Colors.white,),
-    },
-    {
-      "name" : "Art",
-      "icon": Icon(Icons.sports_martial_arts,color: Colors.white,),
-    },
-    {
-      "name" : "Food",
-      "icon": Icon(Icons.food_bank_outlined,color: Colors.white,),
-    },
-    {
-      "name" : "Business",
-      "icon": Icon(Icons.business,color: Colors.white,),
-    },
-    {
-      "name" : "Design",
-      "icon": Icon(Icons.design_services,color: Colors.white,),
-    },
-  ];
-
-  void _showFilterBottomSheet(BuildContext context) {
-
-    final height = AppScreenSize.height(context);
-    final width = AppScreenSize.width(context);
-
-
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: height * 0.6,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30)
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(top: 10),
-          child: Column(
-            children: [
-              Container(
-                height: 5,
-                width: 75,
-                decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.75),
-                    borderRadius: BorderRadius.circular(3)
-                ),
-              ),
-              SizedBox(height: height * 0.025,),
-              SizedBox(
-                height: height * 0.1,
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    String value = category[index]["name"];
-                    bool isSelected = controler.selectedCategories.contains(value);
-                    return GestureDetector(
-                      onTap: (){
-                        if (isSelected) {
-                          controler.selectedCategories.remove(value);
-                        } else {
-                          controler.selectedCategories.add(value);
-                        }
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: controler.selectedCategories.contains(value) ? Colors.green.shade600 :Colors.black.withOpacity(0.25),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Center(
-                                child: category[index]["icon"],
-                              ),
-                            ),
-                            Text(category[index]["name"],style: TextStyle(color: Colors.black,fontSize: 12),)
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: category.length,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

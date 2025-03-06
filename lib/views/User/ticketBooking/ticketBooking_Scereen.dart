@@ -20,16 +20,27 @@ class ticketBookingScreen extends StatefulWidget {
 
 class _ticketBookingScreenState extends State<ticketBookingScreen> {
 
-  late double price;
+  double? price;
+  eventDataModel? event;
 
   @override
   void initState() {
+    event = Get.arguments['data'];
     price = Get.arguments['price'];
     super.initState();
-    vPrice = price+100;
-    vTotal = price+100;
-    ePrice = price;
-    eTotal = price;
+    vPrice = price!+100;
+    vTotal = price!+100;
+    ePrice = price!;
+    eTotal = price!;
+
+    if(event!.availableSeats.VIP >0 && event!.availableSeats.Economy == 0){
+      ticketType = true;
+    }
+
+    if(event!.availableSeats.VIP == 0 && event!.availableSeats.Economy > 0){
+      ticketType = false;
+    }
+
   }
 
   int counter = 1;
@@ -37,8 +48,8 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
   double ePrice=0;
   double vTotal = 0;
   double eTotal = 0;
-
   bool ticketType = false;
+  final int personTicketLimit = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +86,11 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
               children: [
                 GestureDetector(
                   onTap: (){
-                    setState(() {
+                    checkVipSeats() ? setState(() {
                       ticketType = true;
                       counter = 1;
-                      vTotal = price+100;
-                    });
+                      vTotal = price!+100;
+                    }) : showSnackBar.message(context, "Vip Seats are not");
                   },
                   child: Container(
                     height: height * 0.065,
@@ -93,11 +104,11 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    setState(() {
+                    checkEconomySeats() ? setState(() {
                       ticketType = false;
                       counter = 1;
-                      eTotal = price;
-                    });
+                      eTotal = price!;
+                    }) : showSnackBar.message(context, "Economy Seats are Not");
                   },
                   child: Container(
                     height: height * 0.065,
@@ -169,11 +180,27 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
                     onTap: (){
                       setState(() {
                         if(ticketType == false){
-                          counter++;
-                          eTotal = ePrice *counter;
+                          if(counter < event!.availableSeats.Economy){
+                            if(counter < personTicketLimit){
+                              counter++;
+                              eTotal = ePrice *counter;
+                            }else{
+                              showSnackBar.error_message(context, "You can Only by 5 Ticket At Time");
+                            }
+                          }else{
+                            showSnackBar.error_message(context, "Only ${event!.availableSeats.Economy.toString()} Seats Available of Economy");
+                          }
                         }else{
-                          counter++;
-                          vTotal = vPrice *counter;
+                          if(counter < event!.availableSeats.VIP){
+                            if(counter < personTicketLimit){
+                              counter++;
+                              vTotal = vPrice *counter;
+                            }else{
+                              showSnackBar.error_message(context, "You can Only by 5 Ticket At Time");
+                            }
+                          }else{
+                            showSnackBar.error_message(context, "Only ${event!.availableSeats.VIP.toString()} Seats Available of Vip");
+                          }
                         }
                       });
                     },
@@ -255,6 +282,24 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
       ),
     );
   }
+
+  bool checkVipSeats(){
+    if(event!.availableSeats.VIP > 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  bool checkEconomySeats(){
+    if(event!.availableSeats.Economy > 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
+
   void ticketBooking(int sets,String type,eventDataModel data)async{
     final uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -279,7 +324,25 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
         "img" : data.img,
         "location" : data.location
       }
-    }).then((value) {
+    }).whenComplete(()async{
+      if(type == 'vip'){
+        await FirebaseFirestore.instance.collection('event').doc(data.id).update({
+          "availableSeats" : {
+            "VIP" : (data.availableSeats.VIP - sets),
+            "Economy" : data.availableSeats.Economy
+          }
+        });
+      }
+      if(type == 'economy'){
+        await FirebaseFirestore.instance.collection('event').doc(data.id).update({
+          "availableSeats" : {
+            "VIP" : data.availableSeats.VIP,
+            "Economy" : (data.availableSeats.Economy - sets),
+          }
+        });
+      }
+
+    },).then((value) async {
       Get.offAllNamed(appRoutesName.bottomNavbarScreen);
       // Navigator.push(context, MaterialPageRoute(builder: (context) => bottomNavbarScreen(),));
       return showSnackBar.message(context, "ticket is Booked");

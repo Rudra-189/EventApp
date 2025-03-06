@@ -9,8 +9,8 @@ import '../../../models/eventmodel.dart';
 class searchControler extends GetxController{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   var isLoading = true.obs;
-  var originalList  = RxList<eventDataModel>();
-  var filteredList = RxList<eventDataModel>();
+  RxList<eventDataModel> originalList  = <eventDataModel>[].obs;
+  RxList<eventDataModel> filteredList = <eventDataModel>[].obs;
   var searchText = ''.obs;
 
   @override
@@ -34,10 +34,10 @@ class searchControler extends GetxController{
     }
   }
 
-  void searchEvent(String query) {
+  void searchEvent(String query){
     searchText.value = query;
     if (query.isEmpty) {
-      filteredList.assignAll(originalList);
+      getFilterData();
     } else {
       filteredList.assignAll(originalList.where((event) => event.title.toLowerCase().contains(query.toLowerCase())).toList());
     }
@@ -45,22 +45,67 @@ class searchControler extends GetxController{
 
 
   // Filter states
-  var selectedCategories = <String>[].obs;
-  var selectedTimeFilter = "".obs;
-  var minPrice = 0.0.obs;
-  var maxPrice = 5000.0.obs;
 
-  void filter(){
-    print(selectedCategories.value);
-    print(selectedTimeFilter.value);
+  RxList<String> selectedCategories = <String>[].obs;
+  // var selectedTime = ''.obs;
+  // var selectedDate = Rxn<DateTime>();
+  // TextEditingController textController = TextEditingController();
+  var priceRange = const RangeValues(100, 2000).obs;
+
+  void toggleCategory(String category) {
+    if (selectedCategories.contains(category)) {
+      selectedCategories.remove(category);
+    } else {
+      selectedCategories.add(category);
+    }
   }
+
+  // Future<void> pickDate(BuildContext context) async{
+  //   DateTime? pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2025),
+  //     lastDate: DateTime(2026),
+  //   );
+  //   selectedDate.value = pickedDate;
+  //   textController.text = DateFormat('yyyy-MM-dd').format(pickedDate!);
+  // }
 
   void resetFilters() {
     selectedCategories.clear();
-    selectedTimeFilter.value = "";
-    minPrice.value = 0.0;
-    maxPrice.value = 5000.0;
-    // applyFilters();
+    // selectedTime.value = '';
+    // selectedDate.value = null;
+    // textController.text = '';
+    priceRange.value = const RangeValues(100, 2000);
+  }
+
+  void applyFilters() {
+    print('Selected Categories: ${selectedCategories.join(', ')}');
+    // print('Selected Time: ${selectedTime.value}');
+    // print('Selected Date: ${selectedDate.value}');
+    print('Price Range: \$${priceRange.value.start} - \$${priceRange.value.end}');
+    getFilterData();
+    resetFilters();
+  }
+
+  void getFilterData()async{
+    if(selectedCategories.isEmpty && priceRange.value.start == 100 && priceRange.value.end == 2000){
+      filteredList.assignAll(originalList);
+      print("all");
+    }else if(selectedCategories.isNotEmpty){
+      if(priceRange.value.start != 100 || priceRange.value.end != 2000){
+        filteredList.assignAll(originalList.where((data) => selectedCategories.contains(data.category)).toList());
+        filteredList.assignAll(filteredList.where((data) => data.price >= priceRange.value.start && data.price <= priceRange.value.end).toList());
+        print("category");
+        print("price");
+      }else{
+        filteredList.assignAll(originalList.where((data) => selectedCategories.contains(data.category)).toList());
+        print("category");
+      }
+    }else if(priceRange.value.start != 100 || priceRange.value.end != 2000){
+      filteredList.assignAll(originalList.where((data) => data.price >= priceRange.value.start && data.price <= priceRange.value.end).toList());
+      print("price");
+    }
   }
 
 }

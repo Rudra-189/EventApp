@@ -33,6 +33,7 @@ class eventDetailControler extends GetxController{
   }
   void fetchCategoryEventById(String id,String category)async{
     try {
+      isLoading(true);
       categoryRelatedEvent.clear();
       QuerySnapshot snapshot = await _firestore.collection('event').get();
       event.value = snapshot.docs.map((doc) {
@@ -41,6 +42,8 @@ class eventDetailControler extends GetxController{
       categoryRelatedEvent.assignAll(event.where((event) => event.category == category).where((event)=> event.id != id).toList());
     } catch (e) {
       print("Error fetching event: $e");
+    }finally{
+      isLoading(false);
     }
   }
 
@@ -58,4 +61,11 @@ class eventDetailControler extends GetxController{
     }
   }
 
+  bool checkSeats(){
+    if(selectedEvent.value!.availableSeats.VIP > 0 || selectedEvent.value!.availableSeats.Economy > 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

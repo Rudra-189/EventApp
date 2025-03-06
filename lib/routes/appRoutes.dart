@@ -1,5 +1,6 @@
 import 'package:event_project_01/routes/appRoutesName.dart';
 import 'package:event_project_01/views/Organizer/addEvent/addEvent_Screen.dart';
+import 'package:event_project_01/views/Organizer/editEvent/editEvent_Screen.dart';
 import 'package:event_project_01/views/Organizer/myEvent/myEvent_Screen.dart';
 import 'package:event_project_01/views/Organizer/organizerDashBord/organizerDashBord_Screen.dart';
 import 'package:event_project_01/views/Organizer/organizerProfile_Screen.dart';
@@ -131,6 +132,12 @@ class appRoutes{
     GetPage(
       name: appRoutesName.editProfileScreen,
       page: ()=>editProfileScreen(),
+      transition: Transition.downToUp,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: appRoutesName.editEventScreen,
+      page: ()=>editEventScreen(),
       transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 500),
     ),

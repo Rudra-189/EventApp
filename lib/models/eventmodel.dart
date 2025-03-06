@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class eventDataModel{
@@ -12,6 +14,8 @@ class eventDataModel{
   final String organizer_id;
   final DateTime date;
   final String time;
+  final bool isPreBookingEnabled;
+  final AvailableSeats availableSeats;
 
   eventDataModel({
     required this.id,
@@ -23,7 +27,9 @@ class eventDataModel{
     required this.price,
     required this.organizer_id,
     required this.date,
-    required this.time
+    required this.time,
+    required this.isPreBookingEnabled,
+    required this.availableSeats
   });
 
   factory eventDataModel.fromMap(Map<String, dynamic> json,String documentId){
@@ -37,7 +43,28 @@ class eventDataModel{
       price: json['price'] ?? 0,
       organizer_id: json['organizer_id'] ?? "0",
       date: (json['date'] as Timestamp).toDate() ?? DateTime.now(),
-      time: json['time'] ?? "no time"
+      time: json['time'] ?? "no time",
+      isPreBookingEnabled: json['isPreBookingEnabled'],
+      availableSeats: AvailableSeats.fromMap(json['availableSeats'] ?? {}),
     );
   }
+}
+
+class AvailableSeats {
+  final int VIP;
+  final int Economy;
+
+  AvailableSeats({
+    required this.VIP,
+    required this.Economy
+  });
+
+  factory AvailableSeats.fromMap(Map<String, dynamic> map) {
+    return AvailableSeats(
+      VIP: map['VIP'],
+      Economy: map['Economy'],
+    );
+  }
+
+
 }

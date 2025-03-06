@@ -43,7 +43,10 @@ class _userProfileScreenState extends State<userProfileScreen> {
               child: Column(
                 children: [
                   SizedBox(height: height * 0.075,),
-                  CircleAvatar(
+                  controler.user.value!.photo.isEmpty ? CircleAvatar(
+                    radius: height * 0.05,
+                    backgroundColor: Colors.white.withOpacity(0.1),
+                  ) : CircleAvatar(
                     radius: height * 0.05,
                     backgroundColor: Colors.white.withOpacity(0.1),
                     backgroundImage: NetworkImage(controler.user.value!.photo),
@@ -142,43 +145,41 @@ class _userProfileScreenState extends State<userProfileScreen> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return Expanded(
-                            child: AlertDialog(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0), // Change the shape here
-                              ),
-                              title: Row(
-                                children: [
-                                  Icon(Icons.warning_amber_rounded,color: Colors.green.shade600,),
-                                  SizedBox(width: 10,),
-                                  Text('Sign out',style: TextStyle(fontSize: 16),),
-                                ],
-                              ),
-                              content: Text('Do You Want Signout?'),
-                              actions: [
-                                GestureDetector(
-                                  onTap:(){
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text("Cancel",style: TextStyle(color: Colors.green.shade600),),
-                                ),
-                                SizedBox(width: 5,),
-                                GestureDetector(
-                                  onTap:(){
-                                    Signout();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Container(
-                                    height: 30,
-                                    width: 50,
-                                    decoration: BoxDecoration(color: Colors.green.shade600),
-                                    child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
-                                  ),
-                                )
-                              ],
-
+                          return AlertDialog(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0), // Change the shape here
                             ),
+                            title: Row(
+                              children: [
+                                Icon(Icons.warning_amber_rounded,color: Colors.green.shade600,),
+                                SizedBox(width: 10,),
+                                Text('Sign out',style: TextStyle(fontSize: 16),),
+                              ],
+                            ),
+                            content: Text('Do You Want Signout?'),
+                            actions: [
+                              GestureDetector(
+                                onTap:(){
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("Cancel",style: TextStyle(color: Colors.green.shade600),),
+                              ),
+                              SizedBox(width: 5,),
+                              GestureDetector(
+                                onTap:(){
+                                  Signout();
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  height: 30,
+                                  width: 50,
+                                  decoration: BoxDecoration(color: Colors.green.shade600),
+                                  child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                                ),
+                              )
+                            ],
+
                           );
                         },
                       );

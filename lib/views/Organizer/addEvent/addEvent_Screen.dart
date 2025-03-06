@@ -27,6 +27,10 @@ class _addEventScreenState extends State<addEventScreen> {
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController vipSeatsController = TextEditingController();
+  TextEditingController economySeatsController = TextEditingController();
+
+  bool _isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -320,6 +324,109 @@ class _addEventScreenState extends State<addEventScreen> {
                     ),
                 ),
               ),
+              SizedBox(height: height * 0.025,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: width * 0.425,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("VipSeats",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        SizedBox(height: height * 0.01,),
+                        TextFormField(
+                          controller: vipSeatsController,
+                          cursorColor: AppColor.textColor,
+                          style: TextStyle(color:AppColor.textColor),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: ' Enter Seats',
+                            filled: true,
+                            fillColor: AppColor.textFiledBgColor,
+                            contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
+                            hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    color: AppColor.borderColor,
+                                    width: 0.25
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  color: AppColor.secondaryColour,
+                                  width: 0.5,
+                                )
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.425,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("EconomySeats",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        SizedBox(height: height * 0.01,),
+                        TextFormField(
+                          controller: economySeatsController,
+                          cursorColor: AppColor.textColor,
+                          style: TextStyle(color:AppColor.textColor),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: ' Enter Seats',
+                            filled: true,
+                            fillColor: AppColor.textFiledBgColor,
+                            contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
+                            hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    color: AppColor.borderColor,
+                                    width: 0.25
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  color: AppColor.secondaryColour,
+                                  width: 0.5,
+                                )
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.025,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Is PreBooking Enabled",style: TextStyle(color: Colors.white,fontSize: 14),),
+                  Switch(
+                    activeColor: Colors.white,
+                    activeTrackColor: Colors.green.shade600,
+                    inactiveThumbColor: Colors.white,
+                    inactiveTrackColor: Colors.white.withOpacity(0.25),
+                    value: _isSwitched,
+                    onChanged: (value) {
+                      setState(() {
+                        if(_isSwitched == true){
+                          _isSwitched = false;
+                        }else{
+                          _isSwitched = true;
+                        }
+                      });
+                    },
+                  )
+                ],
+              ),
               SizedBox(height: height * 0.05,),
               GestureDetector(
                 onTap: (){
@@ -338,8 +445,12 @@ class _addEventScreenState extends State<addEventScreen> {
                     showSnackBar.error_message(context, "please enter event description");
                   }else if(priceController.text.isEmpty){
                     showSnackBar.error_message(context, "please enter ticket price");
+                  }else if(vipSeatsController.text.isEmpty){
+                    showSnackBar.error_message(context, "please enter Vip Seats");
+                  }else if(economySeatsController.text.isEmpty){
+                    showSnackBar.error_message(context, "please enter Economy Seats");
                   }else{
-                    addEvent(imageUrl.toString(),titleController.text.toString(),type,locationController.text.toString(),descriptionController.text.toString(),int.parse(priceController.text),finalDateTime);
+                    addEvent(imageUrl.toString(),titleController.text.toString(),type,locationController.text.toString(),descriptionController.text.toString(),int.parse(priceController.text),int.parse(vipSeatsController.text),int.parse(economySeatsController.text),finalDateTime,_isSwitched);
                   }
                 },
                 child: Container(
@@ -494,7 +605,7 @@ class _addEventScreenState extends State<addEventScreen> {
     }
   }
 
-  Future<void> addEvent(String imgUrl,title,type,location,description,int price,DateTime date) async {
+  Future<void> addEvent(String imgUrl,title,type,location,description,int price,vipSeats,economySeats,DateTime date,bool preBooking) async {
 
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print(imgUrl);
@@ -516,7 +627,12 @@ class _addEventScreenState extends State<addEventScreen> {
       "location" : location,
       "date" : date,
       "description" : description,
-      "price" : price
+      "price" : price,
+      "isPreBookingEnabled" : preBooking,
+      "availableSeats" : {
+        "VIP" : vipSeats,
+        "Economy" : economySeats
+      }
     }).then((value) {
       showSnackBar.message(context, "Event is Publish Now");
       Navigator.push(context, MaterialPageRoute(builder: (context) => organizerDashBordScreen(),));
