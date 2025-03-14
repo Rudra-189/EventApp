@@ -8,6 +8,7 @@ import '../../../App_Resources/App_Color.dart';
 import '../../../App_Resources/App_Screen_Size.dart';
 import '../../../App_Resources/App_Style.dart';
 import '../../../routes/appRoutesName.dart';
+import '../organizerProfileView/organizerProfileView_Screeen.dart';
 import '../ticketBooking/ticketBooking_Scereen.dart';
 import 'eventDetailControler.dart';
 

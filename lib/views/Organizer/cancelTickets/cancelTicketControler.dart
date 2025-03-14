@@ -21,6 +21,7 @@ class cancelTicketControler extends GetxController{
   void getMyEvent()async{
     try{
       isLoading(true);
+      canceledTickets.clear();
       QuerySnapshot snapshot = await _firestore.collection('event').where('organizer_id', isEqualTo: uid).get();
 
       if(snapshot.docs.isNotEmpty){

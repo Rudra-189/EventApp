@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../App_Resources/App_Screen_Size.dart';
-import '../../auth/login_Screen.dart';
+import '../editProfile/organizerEditProfile.dart';
 
 class organizerProfileScreen extends StatefulWidget {
   const organizerProfileScreen({super.key});

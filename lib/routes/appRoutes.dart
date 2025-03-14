@@ -24,6 +24,8 @@ import 'package:event_project_01/views/auth/splash_Screen.dart';
 import 'package:get/get.dart';
 
 import '../views/Organizer/cancelTickets/cancelTickets_Screen.dart';
+import '../views/Organizer/wallet/wallet_Screen.dart';
+import '../views/User/organizerProfileView/organizerProfileView_Screeen.dart';
 
 class appRoutes{
   static final getRouts =[
