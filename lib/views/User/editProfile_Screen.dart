@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/models/userModel.dart';
 import 'package:event_project_01/utils/showSnackbar.dart';
+import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../App_Resources/App_Color.dart';
 import '../../App_Resources/App_Screen_Size.dart';
@@ -19,6 +25,8 @@ class editProfileScreen extends StatefulWidget {
 
 class _editProfileScreenState extends State<editProfileScreen> {
 
+  loaderControler loader = Get.put(loaderControler());
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
@@ -30,6 +38,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
     data = Get.arguments;
     nameController.text = data.name;
     emailController.text = data.email;
+    print(data.photo);
   }
 
   @override
@@ -72,7 +81,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
                     top: 75,
                     child: GestureDetector(
                       onTap: (){
-                        print("hello");
+                        showBottomSheet(context);
                       },
                       child: Container(
                         height: 20,
@@ -95,6 +104,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
                   borderRadius: BorderRadius.circular(50),
                   image: DecorationImage(
                     image: NetworkImage(data.photo),
+                    fit: BoxFit.cover
                   )
               ),
               child: Stack(
@@ -188,11 +198,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
             GestureDetector(
               child: custom_Button(valu: "SAVE CHANGES"),
               onTap: (){
-                if(data.name == nameController.text.toString() && data.email == emailController.text.toString()){
-                  showSnackBar.error_message(context, "Please Change any thing");
-                }else{
-                  editProfile(nameController.text.toString(), emailController.text.toString());
-                }
+                editProfile(nameController.text.toString(), emailController.text.toString(),imageUrl);
               },
             ),
             SizedBox(height: height * 0.02,),
@@ -201,11 +207,118 @@ class _editProfileScreenState extends State<editProfileScreen> {
       ),
     );
   }
-  void editProfile(String name,email)async{
+
+  void showBottomSheet(BuildContext context){
+
+    final height = AppScreenSize.height(context);
+    final width = AppScreenSize.width(context);
+
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 30),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15)
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: (){
+                  pickImage();
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  height: 150,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset('assets/images/Gallery.svg'),
+                      Text("From Gallery",style: TextStyle(color: Colors.black,fontSize: 12,letterSpacing: 1),)
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+
+                },
+                child: Container(
+                  height: 150,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset('assets/images/camera.svg'),
+                      Text("Take Photo",style: TextStyle(color: Colors.black,fontSize: 12,letterSpacing: 1),)
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  File? _imageFile;
+  String? imageUrl;
+  Future<void> pickImage() async{
+    ImagePicker imagePicker=ImagePicker();
+    final file = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if(file!=null){
+      setState(() {
+        _imageFile = File(file.path);
+      });
+      uploadImage();
+    }
+  }
+
+  Future<void>uploadImage()async{
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    if(_imageFile !=null){
+      try{
+        loader.startLoading();
+        Reference ref = FirebaseStorage.instance.ref().child('images/$uid/event photos/${DateTime.now().toString()}');
+        UploadTask uploadTask = ref.putFile(_imageFile!);
+        TaskSnapshot taskSnapshot = await uploadTask;
+        String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+        setState(() {
+          imageUrl = downloadURL;
+        });
+
+        print("Image Url : $downloadURL");
+      }catch(e){
+        print("/////////////////${e.toString()}/////////////////");
+      }finally{
+        loader.stopLoading();
+      }
+    }
+  }
+
+  void editProfile(String name,email,url)async{
     final uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance.collection('user').doc(uid).update({
       "name" : name,
-      "email" : email
+      "email" : email,
+      'photo' : url
     }).whenComplete(() {
       showSnackBar.message(context, "Edit Profile success");
       Get.back();
@@ -213,12 +326,3 @@ class _editProfileScreenState extends State<editProfileScreen> {
     },);
   }
 }
-//Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 CircleAvatar(
-//                   radius: width * 0.125,
-//                   backgroundImage: NetworkImage(widget.userData.photo),
-//                 )
-//               ],
-//             ),

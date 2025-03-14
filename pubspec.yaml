@@ -53,6 +53,13 @@ dependencies:
   image_picker:
   intl: ^0.18.1
 #  flutter_paypal_checkout: ^1.0.1
+  razorpay_flutter: ^1.4.0
+  pdf: ^3.10.8
+  path_provider: ^2.1.2
+  open_file: ^3.3.2
+  share_plus: ^10.1.4
+  lottie: ^3.3.1
+  table_calendar: ^3.0.9
 
 
 dev_dependencies:
@@ -65,6 +72,14 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+    android: true
+    ios: true
+    image_path: "assets/images/Event Era.png"  # Path to your logo
+    adaptive_icon_foreground: "assets/images/Event Era.png"  # For Android adaptive icons
+    adaptive_icon_background: "#000000"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

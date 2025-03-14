@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
 import 'package:event_project_01/views/auth/photoUpload_Screen.dart';
+import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,8 +25,11 @@ class signupScreen extends StatefulWidget {
 
 class _signupScreenState extends State<signupScreen> {
 
+  final loaderControler loader = Get.put(loaderControler());
+
   bool isOn=false;
   bool _isvisibel = true;
+  bool _isvisibel2 = true;
 
   final form_key=GlobalKey<FormState>();
 
@@ -167,7 +171,7 @@ class _signupScreenState extends State<signupScreen> {
                   ),
                   SizedBox(height: height * 0.02,),
                   TextFormField(
-                    obscureText: _isvisibel,
+                    obscureText: _isvisibel2,
                     controller: confirmPasswordController,
                     cursorColor: AppColor.textColor,
                     style: TextStyle(color:AppColor.textColor),
@@ -192,13 +196,13 @@ class _signupScreenState extends State<signupScreen> {
                             )
                         ),
                         prefixIcon: AppIcon.passwordIcon,
-                        suffixIcon: _isvisibel ? GestureDetector(child: AppIcon.visibilityOffIcon,onTap: (){
+                        suffixIcon: _isvisibel2 ? GestureDetector(child: AppIcon.visibilityOffIcon,onTap: (){
                           setState(() {
-                            _isvisibel = false;
+                            _isvisibel2 = false;
                           });
                         },) : GestureDetector(child: AppIcon.visibilityOnIcon,onTap: (){
                           setState(() {
-                            _isvisibel = true;
+                            _isvisibel2 = true;
                           });
                         },)
                     ),

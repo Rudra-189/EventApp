@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../App_Resources/App_Screen_Size.dart';
+import '../../../routes/appRoutesName.dart';
 
 
 class searchScreen extends StatefulWidget {
@@ -113,49 +114,60 @@ class _searchScreenState extends State<searchScreen> {
                 }else{
                   return ListView.builder(itemBuilder: (context, index) {
                     final data = controler.filteredList[index];
-                    return Container(
-                      height: 100,
-                      margin: EdgeInsets.only(left: 10,right: 10,top: 10),
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.09),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.network(data.img,height: 75,width: 75,fit: BoxFit.cover,),
-                          ),
-                          SizedBox(width: 10,),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(data.title,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                    color: Colors.white,fontSize: 16,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold,),
-                                ),
-                                SizedBox(height: 10),
-                                SizedBox(
-                                  width: width * 0.55,
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                                      Text(DateFormat('MM/dd/yyyy').format(data.date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                                      SizedBox(width: 5,),
-                                      Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
-                                      Expanded(
-                                        child: Text(data.location,style: TextStyle(color: Colors.white,fontSize: 10,overflow: TextOverflow.ellipsis),),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
+                    return GestureDetector(
+                      onTap: (){
+                        Get.toNamed(
+                          appRoutesName.eventDetailScreen,
+                          arguments: {
+                            'id': data.id,
+                            'category':data.category
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: 100,
+                        margin: EdgeInsets.only(left: 10,right: 10,top: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.09),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.network(data.img,height: 75,width: 75,fit: BoxFit.cover,),
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 10,),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(data.title,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: Colors.white,fontSize: 16,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold,),
+                                  ),
+                                  SizedBox(height: 10),
+                                  SizedBox(
+                                    width: width * 0.55,
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                                        Text(DateFormat('MM/dd/yyyy').format(data.date),style: TextStyle(color: Colors.white,fontSize: 10),),
+                                        SizedBox(width: 5,),
+                                        Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
+                                        Expanded(
+                                          child: Text(data.location,style: TextStyle(color: Colors.white,fontSize: 10,overflow: TextOverflow.ellipsis),),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

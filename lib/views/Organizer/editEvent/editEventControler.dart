@@ -24,7 +24,8 @@ class editEventControlet extends GetxController{
   var finalDateTime = Rxn<DateTime>();
   var locationController = TextEditingController();
   var descriptionController = TextEditingController();
-  var priceController = TextEditingController();
+  var vPriceController = TextEditingController();
+  var ePriceController = TextEditingController();
   var vipSeatsController = TextEditingController();
   var economySeatsController = TextEditingController();
 
@@ -50,8 +51,10 @@ class editEventControlet extends GetxController{
         print(locationController.text);
         descriptionController.text = selectedEvent.value!.description;
         print(descriptionController.text);
-        priceController.text = selectedEvent.value!.price.toString();
-        print(priceController.text);
+        vPriceController.text = selectedEvent.value!.price.VIP.toString();
+        print(vPriceController.text);
+        ePriceController.text = selectedEvent.value!.price.Economy.toString();
+        print(ePriceController.text);
         vipSeatsController.text = selectedEvent.value!.availableSeats.VIP.toString();
         print(vipSeatsController.text);
         economySeatsController.text = selectedEvent.value!.availableSeats.Economy.toString();
@@ -152,7 +155,8 @@ class editEventControlet extends GetxController{
     print(locationController.text);
     print(finalDateTime);
     print(descriptionController.text);
-    print(int.parse(priceController.text));
+    print(int.parse(vPriceController.text));
+    print(int.parse(ePriceController.text));
     print(isPreBooking.value);
     print(int.parse(vipSeatsController.text));
     print(int.parse(economySeatsController.text));
@@ -167,7 +171,10 @@ class editEventControlet extends GetxController{
       "location" : locationController.text,
       "date" : finalDateTime.value,
       "description" : descriptionController.text,
-      "price" : int.parse(priceController.text),
+      "price" : {
+        "VIP" : int.parse(vPriceController.text),
+        "Economy" : int.parse(ePriceController.text),
+      },
       "isPreBookingEnabled" : isPreBooking.value,
       "availableSeats" : {
         "VIP" : int.parse(vipSeatsController.text),

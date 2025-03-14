@@ -122,7 +122,8 @@ class _myEventScreenState extends State<myEventScreen> {
                 itemCount: data.length,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-              )
+              ),
+              
             ],
           );
         }

@@ -10,7 +10,7 @@ class eventDataModel{
   final String category;
   final String description;
   final String location;
-  final int price;
+  final Price price ;
   final String organizer_id;
   final DateTime date;
   final String time;
@@ -40,7 +40,7 @@ class eventDataModel{
       category: json['category'] ?? "no category",
       description: json['description'] ?? "no description",
       location: json['location'] ?? "no location",
-      price: json['price'] ?? 0,
+      price: Price.fromMap(json['price'] ?? {}),
       organizer_id: json['organizer_id'] ?? "0",
       date: (json['date'] as Timestamp).toDate() ?? DateTime.now(),
       time: json['time'] ?? "no time",
@@ -67,4 +67,21 @@ class AvailableSeats {
   }
 
 
+}
+
+class Price {
+  final int VIP;
+  final int Economy;
+
+  Price({
+    required this.VIP,
+    required this.Economy
+  });
+
+  factory Price.fromMap(Map<String, dynamic> map) {
+    return Price(
+      VIP: map['VIP'],
+      Economy: map['Economy'],
+    );
+  }
 }

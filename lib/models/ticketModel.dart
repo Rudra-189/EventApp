@@ -7,8 +7,10 @@ class ticketDataModel {
   final String eventId;
   final String type;
   final int seat;
+  final String status;
   final String qrCode;
   final EventData eventData;
+  final String payment_id;
 
   ticketDataModel({
     required this.id,
@@ -16,8 +18,10 @@ class ticketDataModel {
     required this.eventId,
     required this.type,
     required this.seat,
+    required this.status,
     required this.qrCode,
     required this.eventData,
+    required this.payment_id,
   });
 
   // Factory method to create a Ticket object from Firestore document
@@ -28,8 +32,10 @@ class ticketDataModel {
       eventId: map['event_id'] ?? '',
       type: map['type'] ?? '',
       seat: map['seat'] ?? 0,
+      status: map['status'] ?? '',
       qrCode: map['qr_code'] ?? '',
       eventData: EventData.fromMap(map['event_data'] ?? {}),
+      payment_id: map['payment_id'] ?? '',
     );
   }
 }

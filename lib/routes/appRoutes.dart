@@ -1,14 +1,17 @@
 import 'package:event_project_01/routes/appRoutesName.dart';
 import 'package:event_project_01/views/Organizer/addEvent/addEvent_Screen.dart';
 import 'package:event_project_01/views/Organizer/editEvent/editEvent_Screen.dart';
+import 'package:event_project_01/views/Organizer/editProfile/organizerEditProfile.dart';
 import 'package:event_project_01/views/Organizer/myEvent/myEvent_Screen.dart';
 import 'package:event_project_01/views/Organizer/organizerDashBord/organizerDashBord_Screen.dart';
-import 'package:event_project_01/views/Organizer/organizerProfile_Screen.dart';
+import 'package:event_project_01/views/Organizer/organizerProfile/organizerProfile_Screen.dart';
 import 'package:event_project_01/views/Organizer/ticketBooked/ticketBooked_Screen.dart';
+import 'package:event_project_01/views/Organizer/wallet/wallet_Screen.dart';
 import 'package:event_project_01/views/User/Explore/explore_Screen.dart';
 import 'package:event_project_01/views/User/bottomNavbar_Screen.dart';
 import 'package:event_project_01/views/User/editProfile_Screen.dart';
 import 'package:event_project_01/views/User/eventDetail/eventDetail_Screen.dart';
+import 'package:event_project_01/views/User/organizerProfileView/organizerProfileView_Screeen.dart';
 import 'package:event_project_01/views/User/search/search_Screen.dart';
 import 'package:event_project_01/views/User/ticket/ticket_Screen.dart';
 import 'package:event_project_01/views/User/ticketBooking/ticketBooking_Scereen.dart';
@@ -19,6 +22,8 @@ import 'package:event_project_01/views/auth/photoUpload_Screen.dart';
 import 'package:event_project_01/views/auth/signup_Screen.dart';
 import 'package:event_project_01/views/auth/splash_Screen.dart';
 import 'package:get/get.dart';
+
+import '../views/Organizer/cancelTickets/cancelTickets_Screen.dart';
 
 class appRoutes{
   static final getRouts =[
@@ -138,6 +143,30 @@ class appRoutes{
     GetPage(
       name: appRoutesName.editEventScreen,
       page: ()=>editEventScreen(),
+      transition: Transition.downToUp,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: appRoutesName.walletScreen,
+      page: ()=>walletScreen(),
+      transition: Transition.downToUp,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: appRoutesName.organizerProfileViewScreen,
+      page: ()=>organizerProfileViewScreen(),
+      transition: Transition.downToUp,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: appRoutesName.organizerEditProfileScreen,
+      page: ()=>organizerEditProfileScreen(),
+      transition: Transition.downToUp,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: appRoutesName.cancelTicketsScreen,
+      page: ()=>cancelTicketScreen(),
       transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 500),
     ),

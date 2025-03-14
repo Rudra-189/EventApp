@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_project_01/App_Resources/App_Category.dart';
 import 'package:event_project_01/utils/showSnackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -26,9 +27,10 @@ class _addEventScreenState extends State<addEventScreen> {
   TextEditingController dateTimeController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
   TextEditingController vipSeatsController = TextEditingController();
   TextEditingController economySeatsController = TextEditingController();
+  TextEditingController vPriceController = TextEditingController();
+  TextEditingController ePriceController = TextEditingController();
 
   bool _isSwitched = false;
 
@@ -134,32 +136,10 @@ class _addEventScreenState extends State<addEventScreen> {
               SizedBox(height: height * 0.01,),
               DropdownButtonFormField(
                 dropdownColor: Colors.green.shade600,
-                items: [
-                  DropdownMenuItem(
-                      value: "sport",
-                      child: Text("sport")
-                  ),
-                  DropdownMenuItem(
-                      value: "food",
-                      child: Text("Food")
-                  ),
-                  DropdownMenuItem(
-                      value: "business",
-                      child: Text("Business")
-                  ),
-                  DropdownMenuItem(
-                      value: "music",
-                      child:Text("Music")
-                  ),
-                  DropdownMenuItem(
-                      value: "art",
-                      child:Text("Art")
-                  ),
-                  DropdownMenuItem(
-                      value: "conferences",
-                      child: Text("Conferences")
-                  ),
-                ],
+                items: AppCategory.category.map((e) => DropdownMenuItem(
+                    value: e['name'],
+                    child: Text(e['name'])
+                ),).toList(),
                 onChanged: (value) {
                   type = value!;
                 },
@@ -292,40 +272,6 @@ class _addEventScreenState extends State<addEventScreen> {
               ),
               SizedBox(height: height * 0.025,),
               Row(
-                children: [
-                  Text("Event Price",style: TextStyle(color: Colors.white,fontSize: 14),),
-                ],
-              ),
-              SizedBox(height: height * 0.01,),
-              TextFormField(
-                controller: priceController,
-                cursorColor: AppColor.textColor,
-                style: TextStyle(color:AppColor.textColor),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    hintText: ' Type Your Event Price',
-                    filled: true,
-                    fillColor: AppColor.textFiledBgColor,
-                    contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
-                    hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                            color: AppColor.borderColor,
-                            width: 0.25
-                        )
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                          color: AppColor.secondaryColour,
-                          width: 0.5,
-                        )
-                    ),
-                ),
-              ),
-              SizedBox(height: height * 0.025,),
-              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
@@ -408,6 +354,86 @@ class _addEventScreenState extends State<addEventScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  SizedBox(
+                    width: width * 0.425,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("VipPrice",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        SizedBox(height: height * 0.01,),
+                        TextFormField(
+                          controller: vPriceController,
+                          cursorColor: AppColor.textColor,
+                          style: TextStyle(color:AppColor.textColor),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: ' Enter Price',
+                            filled: true,
+                            fillColor: AppColor.textFiledBgColor,
+                            contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
+                            hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    color: AppColor.borderColor,
+                                    width: 0.25
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  color: AppColor.secondaryColour,
+                                  width: 0.5,
+                                )
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.425,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("EconomyPrice",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        SizedBox(height: height * 0.01,),
+                        TextFormField(
+                          controller: ePriceController,
+                          cursorColor: AppColor.textColor,
+                          style: TextStyle(color:AppColor.textColor),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: ' Enter Price',
+                            filled: true,
+                            fillColor: AppColor.textFiledBgColor,
+                            contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
+                            hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                    color: AppColor.borderColor,
+                                    width: 0.25
+                                )
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  color: AppColor.secondaryColour,
+                                  width: 0.5,
+                                )
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.025,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Text("Is PreBooking Enabled",style: TextStyle(color: Colors.white,fontSize: 14),),
                   Switch(
                     activeColor: Colors.white,
@@ -443,14 +469,16 @@ class _addEventScreenState extends State<addEventScreen> {
                     showSnackBar.error_message(context, "please enter event location");
                   }else if(descriptionController.text.isEmpty){
                     showSnackBar.error_message(context, "please enter event description");
-                  }else if(priceController.text.isEmpty){
-                    showSnackBar.error_message(context, "please enter ticket price");
                   }else if(vipSeatsController.text.isEmpty){
                     showSnackBar.error_message(context, "please enter Vip Seats");
                   }else if(economySeatsController.text.isEmpty){
                     showSnackBar.error_message(context, "please enter Economy Seats");
+                  }else if(vPriceController.text.isEmpty){
+                    showSnackBar.error_message(context, "please enter Economy Seats Price");
+                  }else if(ePriceController.text.isEmpty){
+                    showSnackBar.error_message(context, "please enter Economy Seats Prices");
                   }else{
-                    addEvent(imageUrl.toString(),titleController.text.toString(),type,locationController.text.toString(),descriptionController.text.toString(),int.parse(priceController.text),int.parse(vipSeatsController.text),int.parse(economySeatsController.text),finalDateTime,_isSwitched);
+                    addEvent(imageUrl.toString(),titleController.text.toString(),type,locationController.text.toString(),descriptionController.text.toString(),int.parse(vPriceController.text),int.parse(ePriceController.text),int.parse(vipSeatsController.text),int.parse(economySeatsController.text),finalDateTime,_isSwitched);
                   }
                 },
                 child: Container(
@@ -605,7 +633,7 @@ class _addEventScreenState extends State<addEventScreen> {
     }
   }
 
-  Future<void> addEvent(String imgUrl,title,type,location,description,int price,vipSeats,economySeats,DateTime date,bool preBooking) async {
+  Future<void> addEvent(String imgUrl,title,type,location,description,int vprice,eprice,vipSeats,economySeats,DateTime date,bool preBooking) async {
 
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print(imgUrl);
@@ -614,7 +642,8 @@ class _addEventScreenState extends State<addEventScreen> {
     print(location);
     print(date);
     print(description);
-    print(price);
+    print(vprice);
+    print(eprice);
 
     String docId = FirebaseFirestore.instance.collection('events').doc().id;
 
@@ -627,7 +656,10 @@ class _addEventScreenState extends State<addEventScreen> {
       "location" : location,
       "date" : date,
       "description" : description,
-      "price" : price,
+      "price" : {
+        "VIP" : vprice,
+        "Economy" : eprice
+      },
       "isPreBookingEnabled" : preBooking,
       "availableSeats" : {
         "VIP" : vipSeats,

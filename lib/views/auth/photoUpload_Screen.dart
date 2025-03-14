@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
 import 'package:event_project_01/utils/showSnackbar.dart';
 import 'package:event_project_01/views/User/bottomNavbar_Screen.dart';
+import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,9 @@ class photoUploadScreen extends StatefulWidget {
 }
 
 class _photoUploadScreenState extends State<photoUploadScreen> {
+
+  final loaderControler loader = Get.put(loaderControler());
+
   @override
   Widget build(BuildContext context) {
 
@@ -155,6 +159,7 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
 
     if(_imageFile !=null){
       try{
+        loader.startLoading();
         Reference ref = FirebaseStorage.instance.ref().child('images/$uid/user photo');
         UploadTask uploadTask = ref.putFile(_imageFile!);
         TaskSnapshot taskSnapshot = await uploadTask;
@@ -167,6 +172,8 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
         print("Image Url : $downloadURL");
       }catch(e){
         print("/////////////////${e.toString()}/////////////////");
+      }finally{
+        loader.stopLoading();
       }
     }
   }

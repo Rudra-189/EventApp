@@ -15,12 +15,11 @@ class ticketBookedScreen extends StatefulWidget {
 
 class _ticketBookedScreenState extends State<ticketBookedScreen> {
 
-  ticketBookingControler controler = Get.put(ticketBookingControler());
+  ticketBookedControler controler = Get.put(ticketBookedControler());
 
   @override
   void initState() {
     super.initState();
-    controler.getEventTickets(Get.arguments.toString());
   }
 
   @override
@@ -48,52 +47,71 @@ class _ticketBookedScreenState extends State<ticketBookedScreen> {
           return Center(child: CircularProgressIndicator(color: Colors.green.shade600,));
         }else{
           final data = controler.myEventTickets;
-          return ListView.builder(itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.09),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child:  ListTile(
-                contentPadding: EdgeInsets.all(10),
-                leading: AspectRatio(
-                  aspectRatio: 1,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    child: Image.network(
-                      data[index].eventData.img,
-                      fit: BoxFit.cover,
+          return SingleChildScrollView(
+            child: ListView.builder(itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(left: 10,right: 10,top: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.09),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child:  Theme(
+                  data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    childrenPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                    leading: AspectRatio(
+                      aspectRatio: 1,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
+                        child: Image.network(
+                          data[index].eventData.img,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
+                    title: Text(data[index].eventData.title,style: TextStyle(color: Colors.white,fontSize: 16,overflow:TextOverflow.ellipsis),) ,
+                    subtitle: Text(data[index].id,style: TextStyle(color: Colors.white.withOpacity(0.75),fontSize: 12),),
+                    iconColor: Colors.green.shade600,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text("UserId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: 5,),
+                              Text("seats : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: 5,),
+                              Text("type : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: 5,),
+                              Text("status : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                            ],
+                          ),
+                          SizedBox(width: 10,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data[index].userId,style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: 5,),
+                              Text(data[index].seat.toString(),style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: 5,),
+                              Text(data[index].type,style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: 5,),
+                              Text(data[index].status,style: TextStyle(color: Colors.white,fontSize: 14),),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                title: Text(data[index].eventData.title,style: TextStyle(color: Colors.white,fontSize: 16,overflow:TextOverflow.ellipsis),) ,
-                subtitle: Row(
-                  children: [
-                    Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                    Text(DateFormat('MM/dd/yyyy').format(data[index].eventData.date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                    SizedBox(width: 5,),
-                    Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
-                    Text( DateFormat('hh:mm a').format(data[index].eventData.date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                  ],
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    VerticalDivider(
-                      color: Colors.white,
-                    ),
-                    Text("TICKET",style: TextStyle(color: Colors.green.shade600,fontSize: 10),)
-                  ],
-                ),
-                onTap: (){
-                },
-              ),
-            );
-          },
-            itemCount: data.length,
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
+              );
+            },
+              itemCount: data.length,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+            ),
           );
         }
       },)

@@ -1,3 +1,4 @@
+import 'package:event_project_01/App_Resources/App_Category.dart';
 import 'package:event_project_01/views/User/search/searchControler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,32 +8,6 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../App_Resources/App_Color.dart';
 import '../../../App_Resources/App_Screen_Size.dart';
 
-List category = [
-  {
-    "name" : "sport",
-    "icon": Icon(Icons.sports_baseball,color: Colors.white,),
-  },
-  {
-    "name" : "music",
-    "icon": Icon(Icons.music_note,color: Colors.white,),
-  },
-  {
-    "name" : "art",
-    "icon": Icon(Icons.sports_martial_arts,color: Colors.white,),
-  },
-  {
-    "name" : "food",
-    "icon": Icon(Icons.food_bank_outlined,color: Colors.white,),
-  },
-  {
-    "name" : "business",
-    "icon": Icon(Icons.business,color: Colors.white,),
-  },
-  {
-    "name" : "design",
-    "icon": Icon(Icons.design_services,color: Colors.white,),
-  },
-];
 
 List time = ['Today', 'Tomorrow', 'This week'];
 
@@ -84,28 +59,28 @@ void showFilterSheet(BuildContext context){
                     Obx(() {
                       return GestureDetector(
                         onTap: (){
-                          controler.toggleCategory(category[index]['name']);
+                          controler.toggleCategory(AppCategory.category[index]['name']);
                         },
                         child: Container(
                           height: 70,
                           width: 70,
                           decoration: BoxDecoration(
-                              color: controler.selectedCategories.contains(category[index]['name']) ? Colors.green.shade600 : Colors.black.withOpacity(0.25),
+                              color: controler.selectedCategories.contains(AppCategory.category[index]['name']) ? Colors.green.shade600 : Colors.black.withOpacity(0.25),
                               borderRadius: BorderRadius.circular(40)
                           ),
                           child: Center(
-                            child: category[index]['icon'],
+                            child: AppCategory.category[index]['img'],
                           ),
                         ),
                       );
                     },),
-                    Text(category[index]['name'],style: TextStyle(fontSize: 12),)
+                    Text(AppCategory.category[index]['name'],style: TextStyle(fontSize: 12),)
                   ],
                 ),
               );
             },
               scrollDirection: Axis.horizontal,
-              itemCount: category.length,
+              itemCount: AppCategory.category.length,
               shrinkWrap: true,
             ),
           ),

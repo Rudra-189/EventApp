@@ -28,7 +28,7 @@ class _splashScreenState extends State<splashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(child: Text("Event Era",style: TextStyle(color: Colors.green.shade600,fontSize: 20),)),
+      body: Center(child: Image.asset("assets/images/BG Event Era.png")),
     );
   }
 

@@ -94,16 +94,16 @@ class searchControler extends GetxController{
       print("all");
     }else if(selectedCategories.isNotEmpty){
       if(priceRange.value.start != 100 || priceRange.value.end != 2000){
-        filteredList.assignAll(originalList.where((data) => selectedCategories.contains(data.category)).toList());
-        filteredList.assignAll(filteredList.where((data) => data.price >= priceRange.value.start && data.price <= priceRange.value.end).toList());
+        filteredList.assignAll(originalList.where((data) => selectedCategories.toString().toLowerCase().contains(data.category)).toList());
+        filteredList.assignAll(filteredList.where((data) => data.price.Economy >= priceRange.value.start && data.price.Economy <= priceRange.value.end).toList());
         print("category");
         print("price");
       }else{
-        filteredList.assignAll(originalList.where((data) => selectedCategories.contains(data.category)).toList());
+        filteredList.assignAll(originalList.where((data) => selectedCategories.toString().toLowerCase().contains(data.category)).toList());
         print("category");
       }
     }else if(priceRange.value.start != 100 || priceRange.value.end != 2000){
-      filteredList.assignAll(originalList.where((data) => data.price >= priceRange.value.start && data.price <= priceRange.value.end).toList());
+      filteredList.assignAll(originalList.where((data) => data.price.Economy >= priceRange.value.start && data.price.Economy <= priceRange.value.end).toList());
       print("price");
     }
   }

@@ -1,7 +1,4 @@
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:event_project_01/routes/appRoutesName.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:event_project_01/views/User/ticketBooking/ticketBookingControler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -9,7 +6,6 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../App_Resources/App_Screen_Size.dart';
 import '../../../models/eventmodel.dart';
 import '../../../utils/showSnackbar.dart';
-import '../bottomNavbar_Screen.dart';
 
 class ticketBookingScreen extends StatefulWidget {
   ticketBookingScreen({super.key});
@@ -20,18 +16,22 @@ class ticketBookingScreen extends StatefulWidget {
 
 class _ticketBookingScreenState extends State<ticketBookingScreen> {
 
-  double? price;
+  final ticketBookingControler controler = Get.put(ticketBookingControler());
+
+  double? Vprice;
+  double? Eprice;
   eventDataModel? event;
 
   @override
   void initState() {
     event = Get.arguments['data'];
-    price = Get.arguments['price'];
+    Vprice = Get.arguments['Vprice'];
+    Eprice = Get.arguments['Eprice'];
     super.initState();
-    vPrice = price!+100;
-    vTotal = price!+100;
-    ePrice = price!;
-    eTotal = price!;
+    vPrice = Vprice!;
+    vTotal = Vprice!;
+    ePrice = Eprice!;
+    eTotal = Eprice!;
 
     if(event!.availableSeats.VIP >0 && event!.availableSeats.Economy == 0){
       ticketType = true;
@@ -89,7 +89,7 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
                     checkVipSeats() ? setState(() {
                       ticketType = true;
                       counter = 1;
-                      vTotal = price!+100;
+                      vTotal = Vprice!;
                     }) : showSnackBar.message(context, "Vip Seats are not");
                   },
                   child: Container(
@@ -107,7 +107,7 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
                     checkEconomySeats() ? setState(() {
                       ticketType = false;
                       counter = 1;
-                      eTotal = price!;
+                      eTotal = Eprice!;
                     }) : showSnackBar.message(context, "Economy Seats are Not");
                   },
                   child: Container(
@@ -262,9 +262,9 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
             GestureDetector(
               onTap: (){
                 if(ticketType == false){
-                  ticketBooking(counter, "economy",Get.arguments['data']);
+                  controler.getData(counter, "economy", event!);
                 }else{
-                  ticketBooking(counter, "vip",Get.arguments['data']);
+                  controler.getData(counter, "vip", event!);
                 }
               },
               child: Container(
@@ -297,55 +297,4 @@ class _ticketBookingScreenState extends State<ticketBookingScreen> {
       return false;
     }
   }
-
-
-
-  void ticketBooking(int sets,String type,eventDataModel data)async{
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-
-    var random = Random();
-    int randomNumber = random.nextInt(10000000);
-
-    String id ="TICKET$randomNumber";
-
-    String code = randomNumber.toString()+uid;
-
-    print(uid);
-    await FirebaseFirestore.instance.collection('ticket').doc(id).set({
-      "id": id,
-      "user_id": uid,
-      "event_id": data.id,
-      "type" : type,
-      "seat" : sets,
-      "qr_code" : code,
-      "event_data" : {
-        "title" : data.title,
-        "date" : data.date,
-        "img" : data.img,
-        "location" : data.location
-      }
-    }).whenComplete(()async{
-      if(type == 'vip'){
-        await FirebaseFirestore.instance.collection('event').doc(data.id).update({
-          "availableSeats" : {
-            "VIP" : (data.availableSeats.VIP - sets),
-            "Economy" : data.availableSeats.Economy
-          }
-        });
-      }
-      if(type == 'economy'){
-        await FirebaseFirestore.instance.collection('event').doc(data.id).update({
-          "availableSeats" : {
-            "VIP" : data.availableSeats.VIP,
-            "Economy" : (data.availableSeats.Economy - sets),
-          }
-        });
-      }
-
-    },).then((value) async {
-      Get.offAllNamed(appRoutesName.bottomNavbarScreen);
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => bottomNavbarScreen(),));
-      return showSnackBar.message(context, "ticket is Booked");
-    },);
-    }
 }

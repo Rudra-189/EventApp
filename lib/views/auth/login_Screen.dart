@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/routes/appRoutes.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
 import 'package:event_project_01/views/auth/forgotPassword_Screen.dart';
+import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -29,6 +30,8 @@ class loginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<loginScreen> {
+
+  final loaderControler loader = Get.put(loaderControler());
 
   bool isOn=false;
   bool _isvisibel = true;
@@ -241,6 +244,7 @@ class _loginScreenState extends State<loginScreen> {
     print(email);
     print(password);
     try {
+      loader.startLoading();
       UserCredential result = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password);
@@ -261,6 +265,8 @@ class _loginScreenState extends State<loginScreen> {
       }
     } on FirebaseAuthException {
       showSnackBar.error_message(context, "Email and Password are Wrong");
+    }finally{
+      loader.stopLoading();
     }
   }
   bool _isValidEmail(String email) {

@@ -1,10 +1,9 @@
+import 'package:event_project_01/views/User/calender/calender_Screen.dart';
 import 'package:event_project_01/views/User/ticket/ticket_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../App_Resources/App_Color.dart';
-import 'Add_Screen.dart';
-import 'Event_Screen.dart';
 import 'Explore/explore_Screen.dart';
 import 'userProfile/userProfile_Screen.dart';
 
@@ -30,8 +29,7 @@ class _bottomNavbarScreenState extends State<bottomNavbarScreen> {
         controller: pageController,
         children: [
           exploreScreen(),
-          EventScreen(),
-          AddScreen(),
+          calenderScreen(),
           ticketScreen(),
           userProfileScreen()
         ],
@@ -56,10 +54,6 @@ class _bottomNavbarScreenState extends State<bottomNavbarScreen> {
           GButton(
             icon: Icons.event,
             // text: 'event',
-          ),
-          GButton(
-            icon: Icons.add_circle,
-            // text: 'Add',
           ),
           GButton(
             icon: Icons.airplane_ticket,

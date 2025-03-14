@@ -1,4 +1,4 @@
-package com.example.event_project_01;
+package com.example.event_era;
 
 import io.flutter.embedding.android.FlutterActivity;
 

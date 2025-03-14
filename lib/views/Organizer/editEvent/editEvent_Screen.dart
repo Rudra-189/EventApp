@@ -167,28 +167,40 @@ class _editEventScreenState extends State<editEventScreen> {
                             child: Text("sport")
                         ),
                         DropdownMenuItem(
-                            value: "food",
-                            child: Text("Food")
-                        ),
-                        DropdownMenuItem(
-                            value: "business",
-                            child: Text("Business")
-                        ),
-                        DropdownMenuItem(
                             value: "music",
-                            child:Text("Music")
+                            child: Text("music")
+                        ),
+                        DropdownMenuItem(
+                            value: "food",
+                            child: Text("food")
                         ),
                         DropdownMenuItem(
                             value: "art",
-                            child:Text("Art")
-                        ),
-                        DropdownMenuItem(
-                            value: "conferences",
-                            child: Text("Conferences")
+                            child:Text("art")
                         ),
                         DropdownMenuItem(
                             value: "festivals",
-                            child: Text("festivals")
+                            child:Text("festivals")
+                        ),
+                        DropdownMenuItem(
+                            value: "product launches",
+                            child: Text("product launches")
+                        ),
+                        DropdownMenuItem(
+                            value: "conferences",
+                            child: Text("conferences")
+                        ),
+                        DropdownMenuItem(
+                            value: "design",
+                            child: Text("design")
+                        ),
+                        DropdownMenuItem(
+                            value: "business",
+                            child: Text("business")
+                        ),
+                        DropdownMenuItem(
+                            value: "birthday",
+                            child: Text("birthday")
                         ),
                       ],
                       onChanged: (value) {
@@ -323,40 +335,6 @@ class _editEventScreenState extends State<editEventScreen> {
                     ),
                     SizedBox(height: height * 0.025,),
                     Row(
-                      children: [
-                        Text("Event Price",style: TextStyle(color: Colors.white,fontSize: 14),),
-                      ],
-                    ),
-                    SizedBox(height: height * 0.01,),
-                    TextFormField(
-                      controller: controlet.priceController,
-                      cursorColor: AppColor.textColor,
-                      style: TextStyle(color:AppColor.textColor),
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: ' Type Your Event Price',
-                        filled: true,
-                        fillColor: AppColor.textFiledBgColor,
-                        contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
-                        hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                                color: AppColor.borderColor,
-                                width: 0.25
-                            )
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                              color: AppColor.secondaryColour,
-                              width: 0.5,
-                            )
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: height * 0.025,),
-                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
@@ -410,6 +388,84 @@ class _editEventScreenState extends State<editEventScreen> {
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                   hintText: ' Enter Seats',
+                                  filled: true,
+                                  fillColor: AppColor.textFiledBgColor,
+                                  contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
+                                  hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: BorderSide(
+                                          color: AppColor.borderColor,
+                                          width: 0.25
+                                      )
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: BorderSide(
+                                        color: AppColor.secondaryColour,
+                                        width: 0.5,
+                                      )
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: height * 0.025,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: width * 0.425,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("VipPrice",style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: height * 0.01,),
+                              TextFormField(
+                                controller: controlet.vPriceController,
+                                cursorColor: AppColor.textColor,
+                                style: TextStyle(color:AppColor.textColor),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: AppColor.textFiledBgColor,
+                                  contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),
+                                  hintStyle: TextStyle(color: AppColor.hintColor,fontSize: 14),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: BorderSide(
+                                          color: AppColor.borderColor,
+                                          width: 0.25
+                                      )
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: BorderSide(
+                                        color: AppColor.secondaryColour,
+                                        width: 0.5,
+                                      )
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: width * 0.425,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("EconomyPrice",style: TextStyle(color: Colors.white,fontSize: 14),),
+                              SizedBox(height: height * 0.01,),
+                              TextFormField(
+                                controller: controlet.ePriceController,
+                                cursorColor: AppColor.textColor,
+                                style: TextStyle(color:AppColor.textColor),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
                                   filled: true,
                                   fillColor: AppColor.textFiledBgColor,
                                   contentPadding: EdgeInsets.symmetric(vertical: height *0.021,horizontal: width * 0.05),

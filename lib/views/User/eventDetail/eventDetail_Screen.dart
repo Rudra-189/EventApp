@@ -1,4 +1,5 @@
 import 'package:event_project_01/utils/showSnackbar.dart';
+import 'package:event_project_01/views/User/organizerProfileView/organizerProfileView_Screeen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,20 +20,15 @@ class eventDetailScreen extends StatefulWidget {
 
 class _eventDetailScreenState extends State<eventDetailScreen> {
 
-  List Eventphoto = [
-    'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGV2ZW50fGVufDB8fDB8fHww',
-    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGV2ZW50fGVufDB8fDB8fHww',
-    'https://media.istockphoto.com/id/471906412/photo/beautiful-table-setting-for-an-wedding-reception-or-an-event.jpg?s=612x612&w=0&k=20&c=knlIBspy-ZKuQV7bUVr_eclJmyC24ShNAva_Jh9Rwfc=',
-    'https://media.istockphoto.com/id/1352398824/photo/birthday-cake-on-a-background-balloons-party-decor-copy-space-trendy-cake-delicious-wedding.jpg?s=612x612&w=0&k=20&c=T4wlEs_JmC2XOMsCBSzTCBmp7bKRHbCkwjs4RlZpPjU=',
-    'https://media.istockphoto.com/id/2045556384/video/the-waiter-places-the-finished-sandwiches-on-the-table-with-treats-catering.jpg?s=640x640&k=20&c=_D__UWIFNJuTcJ7CJXTy-94q3qPNYOXefcI3uaDEA8w=',
-  ];
-
   final eventDetailControler controler = Get.put(eventDetailControler());
 
   @override
   void initState() {
     super.initState();
-    controler.fetchEventById(Get.arguments['id'],Get.arguments['category']);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controler.fetchEventById(Get.arguments['id'],Get.arguments['category']);
+    });
   }
 
   @override
@@ -149,26 +145,36 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                                 ],
                               ),
                               SizedBox(height: 20,),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(15)
+                              GestureDetector(
+                                onTap: (){
+                                  Get.toNamed(
+                                    appRoutesName.organizerProfileViewScreen,
+                                    arguments: {
+                                      'data' : organizerData
+                                    }
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.2),
+                                          borderRadius: BorderRadius.circular(15)
+                                      ),
+                                      child: Icon(Icons.person,color: Colors.green.shade600,size: 20,),
                                     ),
-                                    child: Icon(Icons.person,color: Colors.green.shade600,size: 20,),
-                                  ),
-                                  SizedBox(width: 10,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(organizerData.name ?? 'no organizer',style: TextStyle(color: Colors.white,fontSize: 14),),
-                                      Text("Organizer",style: TextStyle(color: Colors.white,fontSize: 12),),
-                                    ],
-                                  )
-                                ],
+                                    SizedBox(width: 10,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(organizerData.name ?? 'no organizer',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                        Text("Event Organizer",style: TextStyle(color: Colors.white,fontSize: 12),),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 10,),
                               Divider(color: Colors.white.withOpacity(0.25),),
@@ -193,14 +199,16 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                               SizedBox(
                                 height: height * 0.345,
                                 child: ListView.builder(itemBuilder: (context, index) {
-                                  return GestureDetector(
+                                  return InkWell(
                                     onTap: (){
-                                      Get.toNamed(
+                                      print("hello");
+                                      Get.offNamed(
                                         appRoutesName.eventDetailScreen,
                                         arguments: {
                                           'id': categoryData[index].id,
-                                          'category':categoryData[index].category
+                                          'category':categoryData[index].category,
                                         },
+                                          preventDuplicates: false,
                                       );
                                       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => eventDetailScreen(id: categoryData[index].id, category: categoryData[index].category,),));
                                     },
@@ -331,7 +339,8 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                             ),
                             onTap: ()async{
                               Get.toNamed(appRoutesName.ticketBookingScreen,arguments: {
-                                'price': data.price.toDouble(),
+                                'Vprice': data.price.VIP.toDouble(),
+                                'Eprice': data.price.Economy.toDouble(),
                                 'data' : data
                               });
                               // Navigator.push(context, MaterialPageRoute(builder: (context) => ticketBookingScreen(price: data.price.toDouble(),data: data,)));
@@ -346,7 +355,7 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text("FULL",
+                                  Text("Sold Out",
                                     style: TextStyle(color: Colors.white, fontSize: 14,fontWeight: FontWeight.bold,letterSpacing: 1),
                                   ),
                                 ],
