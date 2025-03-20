@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
+import 'package:event_project_01/utils/notification.dart';
 import 'package:event_project_01/views/auth/photoUpload_Screen.dart';
 import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -351,5 +352,6 @@ class _signupScreenState extends State<signupScreen> {
       'password' : password,
       'role': role
     });
+    NotificationService.Notification_message("Title: 🎉 Welcome to Event Era", "Thank you for signing up! 🎟️ Explore exciting events, book your tickets, and enjoy seamless event experiences. Start your journey now!");
   }
 }

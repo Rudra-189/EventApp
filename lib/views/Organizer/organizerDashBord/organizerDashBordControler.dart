@@ -12,6 +12,7 @@ class organizerDashBordControler extends GetxController{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final uid = FirebaseAuth.instance.currentUser!.uid;
   var isLoading = true.obs;
+  var myEvent =<eventDataModel>[].obs;
 
   var canceledTicketCount = 0.obs;
   var ticketCount = 0.obs;
@@ -26,6 +27,9 @@ class organizerDashBordControler extends GetxController{
       QuerySnapshot snapshot = await _firestore.collection('event').where('organizer_id', isEqualTo: uid).get();
 
       if(snapshot.docs.isNotEmpty){
+        myEvent.assignAll(snapshot.docs.map((doc) {
+          return eventDataModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+        }).toList());
         List<String> eventIds = snapshot.docs.map((doc) => doc.id).toList();
         print(eventIds.toString());
         if (eventIds.isNotEmpty) {
@@ -62,7 +66,7 @@ class organizerDashBordControler extends GetxController{
 
   String qrResult = '';
 
-  void scanBarcode(BuildContext context)async{
+  void scanBarcode(BuildContext context,String id)async{
     try{
       qrResult = '';
       qrResult = (await SimpleBarcodeScanner.scanBarcode(
@@ -77,7 +81,7 @@ class organizerDashBordControler extends GetxController{
         delayMillis: 2000,
         cameraFace: CameraFace.back,
       )).toString();
-      getUserTicket(context, qrResult);
+      getUserTicket(context, qrResult,id);
     }catch(e){
       print("/////////${e.toString()}////////");
     }finally{
@@ -85,20 +89,30 @@ class organizerDashBordControler extends GetxController{
     }
   }
 
-  void getUserTicket(BuildContext context,String id)async{
+  void getUserTicket(BuildContext context,String qr,id)async{
     try {
-      final querySnapshot = await _firestore.collection('ticket').where('qr_code',isEqualTo: id).get();
+      final querySnapshot = await _firestore.collection('ticket').where('qr_code',isEqualTo: qr).get();
       if (querySnapshot.docs.isNotEmpty) {
 
         var doc = querySnapshot.docs.first;
         var userTicket = ticketDataModel.fromMap(doc.data(), doc.id);
 
-        if(userTicket.status == "booked"){
-          showSnackBar.message(context, "Ticket is Found");
-        }else if(userTicket.status == "pending"){
-          showSnackBar.error_message (context, "Ticket is Under Cancellation");
+        if(id == userTicket.eventId){
+          if(userTicket.status == "booked"){
+            if(userTicket.type == "economy"){
+              Get.back();
+              showSnackBar.message(context, "Your ${userTicket.seat} economy is Found.");
+            }
+          }else if(userTicket.status == "pending"){
+            Get.back();
+            showSnackBar.error_message (context, "Ticket is Under Cancellation");
+          }
+        }else{
+          Get.back();
+          showSnackBar.error_message(context, "Ticket not Found");
         }
       }else{
+        Get.back();
         showSnackBar.error_message(context, "Ticket not Found");
       }
     } catch (e) {

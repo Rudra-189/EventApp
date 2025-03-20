@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../models/eventmodel.dart';
+import '../../../utils/notification.dart';
 
 class cancelTicketControler extends GetxController{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -54,6 +55,5 @@ class cancelTicketControler extends GetxController{
     }finally{
       isLoading(false);
     }
-
   }
 }

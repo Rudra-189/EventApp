@@ -197,6 +197,7 @@ void showFilterSheet(BuildContext context){
               GestureDetector(
                 onTap: (){
                   controler.resetFilters();
+                  Get.back();
                 },
                 child: Container(
                   height: 55,

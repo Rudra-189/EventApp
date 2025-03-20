@@ -100,7 +100,7 @@ class _searchScreenState extends State<searchScreen> {
               ),
             ),
             SizedBox(height: 20,),
-            Obx(() {
+            Obx((){
               if(controler.isLoading.value){
                 return Center(child: CircularProgressIndicator(color: Colors.green.shade600,));
               }else{
@@ -158,8 +158,8 @@ class _searchScreenState extends State<searchScreen> {
                                   SizedBox(height: 5),
                                   Row(
                                     children: [
-                                      Icon(Icons.location_on,color: Colors.green.shade600,size: 18,),
-                                      Expanded(child: Text(" ${data.location}",style: TextStyle(color: Colors.white.withOpacity(0.25),overflow: TextOverflow.ellipsis,fontSize: 12),))
+                                      Icon(Icons.currency_rupee,color: Colors.green.shade600,size: 12,),
+                                      Text(data.price.Economy.toString(),style: TextStyle(color: Colors.green.shade600,fontSize: 14),)
                                     ],
                                   )
                                 ],

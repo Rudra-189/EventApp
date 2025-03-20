@@ -1,4 +1,6 @@
 import 'package:event_project_01/views/User/seeMore/seeMoreControler.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -6,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../App_Resources/App_Screen_Size.dart';
 import '../../../routes/appRoutesName.dart';
+import '../../../utils/showSnackbar.dart';
 
 class seeMoreScreen extends StatefulWidget {
   const seeMoreScreen({super.key});
@@ -108,20 +111,25 @@ class _seeMoreScreenState extends State<seeMoreScreen> {
                                 ),
                                 Row(
                                   children: [
-                                    Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border(
-                                          top: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
-                                          bottom: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
-                                          left: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
-                                          right: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
+                                    GestureDetector(
+                                      onTap:(){
+                                        bookmarkEvent(data[index].id);
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border(
+                                            top: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
+                                            bottom: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
+                                            left: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
+                                            right: BorderSide(color: Colors.white.withOpacity(0.2),width: 1),
+                                          ),
                                         ),
-                                      ),
-                                      child: Center(
-                                        child:Icon(Icons.bookmark_border,color: Colors.white.withOpacity(0.5),size: 18,),
+                                        child: Center(
+                                          child:Icon(Icons.bookmark_border,color: Colors.white.withOpacity(0.5),size: 18,),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(width: 10,),
@@ -155,4 +163,22 @@ class _seeMoreScreenState extends State<seeMoreScreen> {
       },),
     );
   }
+
+  void bookmarkEvent(String id)async{
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final DatabaseReference databaseRef = FirebaseDatabase.instance.ref("users/$uid/bookmark/$id");
+
+    databaseRef.once().then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        showSnackBar.message(context, "Event is already bookmarked.");
+      } else {
+        databaseRef.set(true).then((_) {
+          showSnackBar.message(context, "Event bookmarked successfully!");
+        }).catchError((error) {
+          print("Error bookmarking event: $error");
+        });
+      }
+    },);
+  }
+
 }

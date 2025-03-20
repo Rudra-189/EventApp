@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
+import 'package:event_project_01/utils/notification.dart';
 import 'package:event_project_01/utils/showSnackbar.dart';
 import 'package:event_project_01/views/User/ticket/ticketControler.dart';
 import 'package:event_project_01/views/loaderControler.dart';
@@ -311,7 +312,7 @@ class _ticketScreenState extends State<ticketScreen> {
                           height: height * 0.15,
                           child: SfBarcodeGenerator(
                             value: data.qrCode,
-                            barColor: data.type == 'vip' ? Colors.amber.shade700 : Colors.black,
+                            barColor: data.type == 'vip' ? Colors.green.shade600 : Colors.black,
                             symbology: QRCode(),
                           ),
                         )
@@ -422,6 +423,7 @@ class _ticketScreenState extends State<ticketScreen> {
     }catch(e){
       print(e.toString());
     }finally{
+      NotificationService.Notification_message("Ticket Cancellation", "Your cancellation request for ${ticket.eventData.title} has been submitted. Refund will be processed with in 7 days.");
       loader.stopLoading();
       controler.getTicket();
     }

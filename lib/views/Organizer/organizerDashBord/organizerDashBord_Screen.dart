@@ -4,6 +4,7 @@ import 'package:event_project_01/views/Organizer/organizerDashBord/organizerDash
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import '../../../../App_Resources/App_Color.dart';
 import '../../../../App_Resources/App_Screen_Size.dart';
@@ -42,7 +43,7 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
           actions: [
             GestureDetector(
               onTap: ()async{
-                controler.scanBarcode(context);
+                _showBottomSheet(context);
               },
               child: Icon(Icons.qr_code_scanner,color: Colors.white,size: 18,),
             ),
@@ -306,6 +307,90 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
           );
         }
       },)
+    );
+  }
+  void _showBottomSheet(BuildContext context) {
+    final height = AppScreenSize.height(context);
+    final width = AppScreenSize.width(context);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30))
+            ),
+            width: width,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: 5,
+                    width: 75,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.75),
+                      borderRadius: BorderRadius.circular(3)
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("SELECT EVENT",style: TextStyle(color: Colors.black,fontSize: 14),),
+                  ListView.builder(
+                    itemBuilder: (context, index) {
+                      final data = controler.myEvent;
+                    return GestureDetector(
+                      onTap: (){
+                        controler.scanBarcode(context,data[index].id);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10,right: 10,top: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.35),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child:  ListTile(
+                          contentPadding: EdgeInsets.all(10),
+                          leading: AspectRatio(
+                            aspectRatio: 1,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
+                              child: Image.network(
+                                data[index].img,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          title: Text(data[index].title,style: TextStyle(color: Colors.white,fontSize: 16,overflow:TextOverflow.ellipsis),) ,
+                          subtitle: Row(
+                            children: [
+                              Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                              Text(DateFormat('MM/dd/yyyy').format(data[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
+                              SizedBox(width: 5,),
+                              Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
+                              Text( DateFormat('hh:mm a').format(data[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                    itemCount: controler.myEvent.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

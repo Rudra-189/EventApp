@@ -1,5 +1,6 @@
 import 'package:event_project_01/App_Resources/App_Category.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
+import 'package:event_project_01/utils/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -49,26 +50,24 @@ class _exploreScreenState extends State<exploreScreen> {
             backgroundColor: AppColor.primaryColour,
             appBar: AppBar(
               backgroundColor: AppColor.secondaryColour,
-              leading: Image.asset("assets/images/BG Event Era.png",color: Colors.white,),
-              title: Text("Hey ${controler.user.value!.name}",style: AppStyle.commonTextStyle,),
-              centerTitle: true,
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: controler.user.value!.photo.isEmpty ? Image.asset("assets/images/BG Event Era.png",color: Colors.white) : CircleAvatar(radius: 20,backgroundImage: NetworkImage(controler.user.value!.photo),),
+                  )
+                ],
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Hi Welcome",style: TextStyle(color: AppColor.textColor,fontWeight: FontWeight.w500,fontSize: 11),),
+                  Text(controler.user.value!.name,style: TextStyle(color: AppColor.textColor,fontWeight: FontWeight.w500,fontSize: 15,letterSpacing: 2),),
+                ],
+              ),
               elevation: 0,
-              actions: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.25),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: Icon(Icons.notifications_none,color: Colors.white,),
-                  ),
-                ),
-                SizedBox(
-                  width: width * 0.05,
-                )
-              ],
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -326,7 +325,7 @@ class _exploreScreenState extends State<exploreScreen> {
                   )
                 ],
               ),
-            ),
+            )
           );
         }
 

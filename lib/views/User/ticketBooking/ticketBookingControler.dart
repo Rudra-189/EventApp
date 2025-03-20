@@ -6,10 +6,12 @@ import 'package:event_project_01/models/ticketModel.dart';
 import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../models/userModel.dart';
 import '../../../routes/appRoutesName.dart';
+import '../../../utils/notification.dart';
 
 
 class ticketBookingControler extends GetxController {
@@ -95,6 +97,7 @@ class ticketBookingControler extends GetxController {
     String id ="TICKET$randomNumber";
     String code = randomNumber.toString()+uid;
     print(uid);
+    NotificationService.Notification_message("Ticket Booked", "Your ticket for ${event!.title} on ${DateFormat('MM/dd/yyyy').format(event!.date)} is confirmed! Check your Ticket.Get ready for an amazing experience!");
     await FirebaseFirestore.instance.collection('ticket').doc(id).set({
       "id": id,
       "user_id": uid,

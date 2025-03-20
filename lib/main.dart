@@ -1,16 +1,35 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:event_project_01/routes/appRoutes.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
 import 'package:event_project_01/views/auth/splash_Screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'firebase_options.dart';
 
+class PermissionService {
+  static Future<void> requestAllPermissions() async {
+    await [
+      Permission.camera,
+      Permission.notification,
+    ].request();
+  }
+}
+
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
+  await PermissionService.requestAllPermissions();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(channelKey: 'notification', channelName: 'basic notification', channelDescription: 'test')
+    ],
+    debug: true,
   );
   runApp(const MyApp());
 }

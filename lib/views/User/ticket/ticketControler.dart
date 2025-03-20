@@ -150,7 +150,7 @@ class ticketControler extends GetxController{
                             width: 50,
                             height: 50,
                             drawText: false,
-                            color: ticket.type == 'vip' ? PdfColors.yellow600 : PdfColors.white ,
+                            color: ticket.type == 'vip' ? PdfColors.green600 : PdfColors.white ,
                           ),
                         ]
                     )

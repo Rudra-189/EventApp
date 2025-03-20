@@ -36,7 +36,7 @@ class _bottomNavbarScreenState extends State<bottomNavbarScreen> {
         ],
       ),
       bottomNavigationBar:GNav(
-        tabMargin: EdgeInsets.only(top: 10,bottom: 5),
+        tabMargin: EdgeInsets.only(top: 0,bottom: 0),
         gap: 10,
         selectedIndex: _curentIndex,
         color: AppColor.iconColor,
@@ -49,28 +49,51 @@ class _bottomNavbarScreenState extends State<bottomNavbarScreen> {
         curve: Curves.bounceIn,
         tabs:[
           GButton(
-            icon: Icons.explore,
+            icon: Icons.circle,
+            leading: Column(
+              children: [
+                Icon(Icons.explore,size: 20,color: _curentIndex == 0 ? Colors.green.shade600 : Colors.white.withOpacity(0.25),),
+                Text("explore",style: TextStyle(color: _curentIndex == 0 ? Colors.white : Colors.white.withOpacity(0.25),fontSize: 10),)
+              ],
+            ),
             // text: 'explore',
           ),
           GButton(
-            icon: Icons.event,
+            icon: Icons.circle,
+            leading: Column(
+              children: [
+                Icon(Icons.event,size: 20,color: _curentIndex == 1 ? Colors.green.shade600 : Colors.white.withOpacity(0.25),),
+                Text("calender",style: TextStyle(color: _curentIndex == 1 ? Colors.white : Colors.white.withOpacity(0.25),fontSize: 10),)
+              ],
+            ),
             // text: 'event',
           ),
           GButton(
-            leading: SvgPicture.asset(
-              "assets/images/ticket.svg",
-              width: 30,
-              colorFilter: ColorFilter.mode(
-                _curentIndex == 2 ? Colors.green.shade600 : Colors.white, // Change color when selected
-                BlendMode.srcIn,
-              ),
+            leading: Column(
+              children: [
+                SvgPicture.asset(
+                  "assets/images/ticket.svg",
+                  width: 30,
+                  height: 25,
+                  colorFilter: ColorFilter.mode(
+                    _curentIndex == 2 ? Colors.green.shade600 : Colors.white.withOpacity(0.25), // Change color when selected
+                    BlendMode.srcIn,
+                  ),
+                ),
+                Text("ticket",style: TextStyle(color: _curentIndex == 2 ? Colors.white : Colors.white.withOpacity(0.25),fontSize: 10),)
+              ],
             ),
-
             icon: Icons.circle,
             // text: 'location',
           ),
           GButton(
-            icon: Icons.person,
+            icon: Icons.circle,
+            leading: Column(
+              children: [
+                Icon(Icons.person,size: 20,color: _curentIndex == 3 ? Colors.green.shade600 : Colors.white.withOpacity(0.25),),
+                Text("profile",style: TextStyle(color: _curentIndex == 3 ? Colors.white : Colors.white.withOpacity(0.25),fontSize: 10),)
+              ],
+            ),
             // text: 'profile',
           ),
         ],

@@ -11,10 +11,13 @@ class loaderScreen extends StatefulWidget {
 class _loaderScreenState extends State<loaderScreen> {
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: Center(
-        child: Lottie.asset('assets/images/Animation - 1741575601711.json'),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Dialog(
+        backgroundColor: Colors.transparent,
+        child: Center(
+          child: Lottie.asset('assets/images/Animation - 1741575601711.json'),
+        ),
       ),
     );
   }

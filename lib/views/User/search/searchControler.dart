@@ -77,6 +77,7 @@ class searchControler extends GetxController{
     // selectedDate.value = null;
     // textController.text = '';
     priceRange.value = const RangeValues(100, 2000);
+    applyFilters();
   }
 
   void applyFilters() {
@@ -85,7 +86,6 @@ class searchControler extends GetxController{
     // print('Selected Date: ${selectedDate.value}');
     print('Price Range: \$${priceRange.value.start} - \$${priceRange.value.end}');
     getFilterData();
-    resetFilters();
   }
 
   void getFilterData()async{

@@ -32,6 +32,6 @@ class appRoutesName{
   static const String bookmarkScreen= '/bookmarkPage';
   static const String helpAndFaqsScreen= '/helpAndFaqsPage';
   static const String contactusScreen= '/contactusPage';
-  static const String settingsScreen= '/settingsPage';
+  static const String aboutScreen= '/aboutPage';
 
 }

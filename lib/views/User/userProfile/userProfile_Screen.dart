@@ -68,19 +68,6 @@ class _userProfileScreenState extends State<userProfileScreen> {
                     ),
                   ),
                   SizedBox(height: height * 0.02,),
-                  Container(
-                    height: height * 0.065,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.095),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.message_outlined,color: Colors.green.shade600,size: 20,),
-                      title: Text("Massage",style: TextStyle(color: Colors.white,fontSize: 14),),
-                      trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.02,),
                   GestureDetector(
                     onTap: (){
                       Get.toNamed(appRoutesName.bookmarkScreen);
@@ -119,7 +106,7 @@ class _userProfileScreenState extends State<userProfileScreen> {
                   SizedBox(height: height * 0.02,),
                   GestureDetector(
                     onTap: (){
-                      Get.toNamed(appRoutesName.settingsScreen);
+                      Get.toNamed(appRoutesName.aboutScreen);
                     },
                     child: Container(
                       height: height * 0.065,
@@ -128,8 +115,8 @@ class _userProfileScreenState extends State<userProfileScreen> {
                           borderRadius: BorderRadius.circular(15)
                       ),
                       child: ListTile(
-                        leading: Icon(Icons.settings,color: Colors.green.shade600,size: 20,),
-                        title: Text("Settings",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        leading: Icon(Icons.error,color: Colors.green.shade600,size: 20,),
+                        title: Text("About",style: TextStyle(color: Colors.white,fontSize: 14),),
                         trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
                       ),
                     ),
