@@ -1,6 +1,7 @@
 import 'package:event_project_01/views/User/calender/calender_Screen.dart';
 import 'package:event_project_01/views/User/ticket/ticket_Screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../App_Resources/App_Color.dart';
@@ -56,7 +57,16 @@ class _bottomNavbarScreenState extends State<bottomNavbarScreen> {
             // text: 'event',
           ),
           GButton(
-            icon: Icons.airplane_ticket,
+            leading: SvgPicture.asset(
+              "assets/images/ticket.svg",
+              width: 30,
+              colorFilter: ColorFilter.mode(
+                _curentIndex == 2 ? Colors.green.shade600 : Colors.white, // Change color when selected
+                BlendMode.srcIn,
+              ),
+            ),
+
+            icon: Icons.circle,
             // text: 'location',
           ),
           GButton(

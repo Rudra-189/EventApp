@@ -54,170 +54,175 @@ class _ticketScreenState extends State<ticketScreen> {
           return Center(child: CircularProgressIndicator(color: Colors.green.shade600,));
         }else{
           final ticketData = controler.tickets;
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                ListView.builder(itemBuilder: (context, index) {
-                  if(ticketData[index].status == "booked"){
-                    return Container(
-                      margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.09),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child:  ListTile(
-                        contentPadding: EdgeInsets.all(10),
-                        leading: AspectRatio(
-                          aspectRatio: 1,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(15)),
-                            child: Image.network(
-                              ticketData[index].eventData.img,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+          if(ticketData.isEmpty){
+            return Center(child: Text("No Ticket Found",style: TextStyle(color: Colors.white,fontSize: 12),));
+          }else{
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListView.builder(itemBuilder: (context, index) {
+                    if(ticketData[index].status == "booked"){
+                      return Container(
+                        margin: EdgeInsets.only(left: 10,right: 10,top: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.09),
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        title: Text(ticketData[index].eventData.title,style: TextStyle(color: Colors.white,fontSize: 16,overflow:TextOverflow.ellipsis),) ,
-                        subtitle: Row(
-                          children: [
-                            Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                            Text(DateFormat('MM/dd/yyyy').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                            SizedBox(width: 5,),
-                            Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
-                            Text( DateFormat('hh:mm a').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                          ],
-                        ),
-                        trailing: PopupMenuButton(
-                          color: Colors.white,
-                          iconColor: Colors.white,
-                          itemBuilder: (context) =>[
-                            PopupMenuItem(
-                              child: ListTile(
-                                leading: Icon(Icons.download,color: Colors.green.shade600,size: 20,),
-                                title:  Text("Download",style: TextStyle(fontSize: 14),),
-                              ),
-                              onTap: (){
-                                controler.generateAndDownloadPdf(controler.tickets[index],false);
-                              },
-                            ),
-                            PopupMenuItem(
-                              onTap: (){
-                                controler.generateAndDownloadPdf(controler.tickets[index],true );
-                              },
-                              child: ListTile(
-                                leading:  Icon(Icons.share_outlined,color: Colors.green.shade600,size: 20,),
-                                title: Text("Share",style: TextStyle(fontSize: 14),),
-                              ),
-                            ),
-                            PopupMenuItem(
-                              onTap: (){
-                                showCancelDialog(context,ticketData[index]);
-                              },
-                              child: ListTile(
-                                leading:  Icon(Icons.cancel,color: Colors.green.shade600,size: 20,),
-                                title: Text("Cancel",style: TextStyle(fontSize: 14),),
-                              ),
-                            ),
-                          ],
-                        ),
-                        onTap: (){
-                          _showTicketDialog(ticketData[index]);
-                        },
-                      ),
-                    );
-                  }else if(ticketData[index].status == "pending"){
-                    return Container(
-                      margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.05),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child:  ListTile(
-                        contentPadding: EdgeInsets.all(10),
-                        leading: AspectRatio(
-                          aspectRatio: 1,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(15)),
-                            child: ColorFiltered(
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.5), // Adjust darkness (0.0 to 1.0)
-                                BlendMode.darken, // Darken effect
-                              ),
+                        child:  ListTile(
+                          contentPadding: EdgeInsets.all(10),
+                          leading: AspectRatio(
+                            aspectRatio: 1,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
                               child: Image.network(
                                 ticketData[index].eventData.img,
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                        ),
-                        title: Text(ticketData[index].eventData.title,style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 16,overflow:TextOverflow.ellipsis),) ,
-                        subtitle: Row(
-                          children: [
-                            Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                            Text(DateFormat('MM/dd/yyyy').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 10),),
-                            SizedBox(width: 5,),
-                            Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
-                            Text( DateFormat('hh:mm a').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 10),),
-                          ],
-                        ),
-                        trailing: Text("pending",style: TextStyle(color: Colors.green.shade600),),
-                        onTap: (){
-                          showSnackBar.message(context, "cancellation request is in process");
-                        },
-                      ),
-                    );
-                  }else if(ticketData[index].status == "cancel"){
-                    return Container(
-                      margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.05),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child:  ListTile(
-                        contentPadding: EdgeInsets.all(10),
-                        leading: AspectRatio(
-                          aspectRatio: 1,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(15)),
-                            child: ColorFiltered(
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.5), // Adjust darkness (0.0 to 1.0)
-                                BlendMode.darken, // Darken effect
-                              ),
-                              child: Image.network(
-                                ticketData[index].eventData.img,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                          title: Text(ticketData[index].eventData.title,style: TextStyle(color: Colors.white,fontSize: 16,overflow:TextOverflow.ellipsis),) ,
+                          subtitle: Row(
+                            children: [
+                              Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                              Text(DateFormat('MM/dd/yyyy').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white,fontSize: 10),),
+                              SizedBox(width: 5,),
+                              Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
+                              Text( DateFormat('hh:mm a').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white,fontSize: 10),),
+                            ],
                           ),
-                        ),
-                        title: Text(ticketData[index].eventData.title,style: TextStyle(color: Colors.white.withOpacity(0.25),fontSize: 16,overflow:TextOverflow.ellipsis),) ,
-                        subtitle: Row(
-                          children: [
-                            Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                            Text(DateFormat('MM/dd/yyyy').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.25),fontSize: 10),),
-                            SizedBox(width: 5,),
-                            Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
-                            Text( DateFormat('hh:mm a').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.25),fontSize: 10),),
-                          ],
-                        ),
-                        trailing: GestureDetector(
+                          trailing: PopupMenuButton(
+                            color: Colors.white,
+                            iconColor: Colors.white,
+                            itemBuilder: (context) =>[
+                              PopupMenuItem(
+                                child: ListTile(
+                                  leading: Icon(Icons.download,color: Colors.green.shade600,size: 20,),
+                                  title:  Text("Download",style: TextStyle(fontSize: 14),),
+                                ),
+                                onTap: (){
+                                  controler.generateAndDownloadPdf(controler.tickets[index],false);
+                                },
+                              ),
+                              PopupMenuItem(
+                                onTap: (){
+                                  controler.generateAndDownloadPdf(controler.tickets[index],true );
+                                },
+                                child: ListTile(
+                                  leading:  Icon(Icons.share_outlined,color: Colors.green.shade600,size: 20,),
+                                  title: Text("Share",style: TextStyle(fontSize: 14),),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                onTap: (){
+                                  showCancelDialog(context,ticketData[index]);
+                                },
+                                child: ListTile(
+                                  leading:  Icon(Icons.cancel,color: Colors.green.shade600,size: 20,),
+                                  title: Text("Cancel",style: TextStyle(fontSize: 14),),
+                                ),
+                              ),
+                            ],
+                          ),
                           onTap: (){
-
+                            _showTicketDialog(ticketData[index]);
                           },
-                          child: Icon(Icons.cancel_outlined,color: Colors.red,size: 20,),
                         ),
-                      ),
-                    );
-                  }
-                    },
-                  itemCount: ticketData.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                )
-              ],
-            ),
-          );
+                      );
+                    }else if(ticketData[index].status == "pending"){
+                      return Container(
+                        margin: EdgeInsets.only(left: 10,right: 10,top: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.05),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child:  ListTile(
+                          contentPadding: EdgeInsets.all(10),
+                          leading: AspectRatio(
+                            aspectRatio: 1,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
+                              child: ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.5), // Adjust darkness (0.0 to 1.0)
+                                  BlendMode.darken, // Darken effect
+                                ),
+                                child: Image.network(
+                                  ticketData[index].eventData.img,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text(ticketData[index].eventData.title,style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 16,overflow:TextOverflow.ellipsis),) ,
+                          subtitle: Row(
+                            children: [
+                              Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                              Text(DateFormat('MM/dd/yyyy').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 10),),
+                              SizedBox(width: 5,),
+                              Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
+                              Text(DateFormat('hh:mm a').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 10),),
+                            ],
+                          ),
+                          trailing: Text("pending",style: TextStyle(color: Colors.green.shade600),),
+                          onTap: (){
+                            showSnackBar.message(context, "cancellation request is in process");
+                          },
+                        ),
+                      );
+                    }else if(ticketData[index].status == "cancel"){
+                      return Container(
+                        margin: EdgeInsets.only(left: 10,right: 10,top: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.05),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child:  ListTile(
+                          contentPadding: EdgeInsets.all(10),
+                          leading: AspectRatio(
+                            aspectRatio: 1,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
+                              child: ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.5), // Adjust darkness (0.0 to 1.0)
+                                  BlendMode.darken, // Darken effect
+                                ),
+                                child: Image.network(
+                                  ticketData[index].eventData.img,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text(ticketData[index].eventData.title,style: TextStyle(color: Colors.white.withOpacity(0.25),fontSize: 16,overflow:TextOverflow.ellipsis),) ,
+                          subtitle: Row(
+                            children: [
+                              Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                              Text(DateFormat('MM/dd/yyyy').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.25),fontSize: 10),),
+                              SizedBox(width: 5,),
+                              Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
+                              Text( DateFormat('hh:mm a').format(ticketData[index].eventData.date),style: TextStyle(color: Colors.white.withOpacity(0.25),fontSize: 10),),
+                            ],
+                          ),
+                          trailing: GestureDetector(
+                            onTap: (){
+
+                            },
+                            child: Icon(Icons.cancel_outlined,color: Colors.red,size: 20,),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                    itemCount: ticketData.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                  )
+                ],
+              ),
+            );
+          }
+
         }
       },),
     );

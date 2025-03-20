@@ -321,10 +321,10 @@ class _signupScreenState extends State<signupScreen> {
     try {
       UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       if(role == "User"){
-        Get.toNamed(appRoutesName.photoUploadScreen);
+        Get.toNamed(appRoutesName.photoUploadScreen,arguments:{'role' : "User"});
         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => photoUploadScreen(),));
       }else{
-        Get.offAllNamed(appRoutesName.organizerDashBordScreen);
+        Get.toNamed(appRoutesName.photoUploadScreen,arguments:{'role' : "Organizer"});
         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => organizerDashBordScreen( ),));
       }
       storeUserData(result.user!.uid.toString(),name,email,password,role);

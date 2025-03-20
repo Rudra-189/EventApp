@@ -49,7 +49,7 @@ class _exploreScreenState extends State<exploreScreen> {
             backgroundColor: AppColor.primaryColour,
             appBar: AppBar(
               backgroundColor: AppColor.secondaryColour,
-              leading: Image.asset("assets/images/BG Event Era.png",color: Colors.white),
+              leading: Image.asset("assets/images/BG Event Era.png",color: Colors.white,),
               title: Text("Hey ${controler.user.value!.name}",style: AppStyle.commonTextStyle,),
               centerTitle: true,
               elevation: 0,
@@ -103,13 +103,18 @@ class _exploreScreenState extends State<exploreScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Upcoming Events",style: AppStyle.commonTextStyle,),
-                        Text("See More",style: AppStyle.secondaryCommonTextStyle,)
+                        GestureDetector(
+                          onTap: (){
+                            Get.toNamed(appRoutesName.seeMoreScreen);
+                          },
+                          child: Text("See More",style: AppStyle.secondaryCommonTextStyle,),
+                        )
                       ],
                     ),
                   ),
                   SizedBox(height: height * 0.02 ,),
                   SizedBox(
-                      height: height * 0.345,
+                      height: height * 0.3275,
                       child: ListView.builder(itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: (){
@@ -146,7 +151,7 @@ class _exploreScreenState extends State<exploreScreen> {
                                   ),
                                 ),
                                 SizedBox(height: height * 0.01,),
-                                Text(upcomingData[index].title,style: AppStyle.overFlowTextStyle,),
+                                Text(upcomingData[index].title,style: TextStyle(color: AppColor.textColor,fontWeight: FontWeight.bold,fontSize: 15,overflow: TextOverflow.ellipsis),),
                                 SizedBox(height: height * 0.01,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,7 +164,7 @@ class _exploreScreenState extends State<exploreScreen> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Icon(Icons.date_range,color: AppColor.secondaryColour,size: 18,),
-                                              Text(DateFormat('MM/dd/yyyy').format(upcomingData[index].date),style:TextStyle(fontSize: 11,color: AppColor.textColor),)
+                                              Text(DateFormat(' MM/dd/yyyy').format(upcomingData[index].date),style:TextStyle(fontSize: 11,color: AppColor.textColor),)
                                             ],
                                           ),
                                         ),
@@ -171,7 +176,7 @@ class _exploreScreenState extends State<exploreScreen> {
                                               Icon(Icons.location_pin,color: AppColor.secondaryColour,size: 18,),
                                               SizedBox(
                                                 width: width * 0.3,
-                                                child:Text(upcomingData[index].location,style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),),
+                                                child:Text(" "+upcomingData[index].location,style:TextStyle(fontSize: 11,color: AppColor.textColor,overflow: TextOverflow.ellipsis),),
                                               )
                                             ],
                                           ),
@@ -280,26 +285,33 @@ class _exploreScreenState extends State<exploreScreen> {
                             SizedBox(width: 10,),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(categoryData[index].title,
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      color: Colors.white,fontSize: 16,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold,),
+                                  SizedBox(
+                                    child: Text(categoryData[index].title,
+                                      style: TextStyle(
+                                        color: Colors.white,fontSize: 15,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold,),
+                                    ),
+                                    width: width * 0.75,
                                   ),
                                   SizedBox(height: 10),
-                                  SizedBox(
-                                    width: width * 0.55,
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                                        Text(DateFormat('MM/dd/yyyy').format(categoryData[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                                        SizedBox(width: 5,),
-                                        Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
-                                        Expanded(child: Text(categoryData[index].location,style: TextStyle(color: Colors.white,fontSize: 10,overflow: TextOverflow.ellipsis),))
-                                      ],
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                                      Text(DateFormat(' MM/dd/yyyy').format(categoryData[index].date),style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 10),),
+                                      SizedBox(width: 5),
+                                      Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                                      Text(DateFormat(' hh:mm a').format(categoryData[index].date),style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 10),),
+                                    ],
                                   ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
+                                      Expanded(child: Text(categoryData[index].location,style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 10,overflow: TextOverflow.ellipsis),))
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -322,155 +334,3 @@ class _exploreScreenState extends State<exploreScreen> {
     );
   }
 }
-
-//Future showDrawer()async{
-//     return Drawer(
-//       child: ListView(
-//         children: [
-//           DrawerHeader(
-//             decoration: BoxDecoration(
-//                 color: Colors.green.shade600
-//             ),
-//             child: UserAccountsDrawerHeader(
-//               accountName: Text("Mohan"),
-//               accountEmail: Text("mohan@gmail.com"),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-
-//Container(
-//               height: height * 0.125,
-//               child: Stack(
-//                 children: [
-//                   Container(
-//                     height: height * 0.1,
-//                     decoration: BoxDecoration(
-//                         color: Colors.green.shade600,
-//                         borderRadius: BorderRadius.only(bottomRight: Radius.elliptical(70, 40),bottomLeft: Radius.elliptical(70, 40))
-//                     ),
-//                     child: Column(
-//                       children: [
-//                         Container(
-//                           height: height * 0.06,
-//                           margin: EdgeInsets.symmetric(horizontal: 10),
-//                           decoration: BoxDecoration(
-//                               color: Colors.black.withOpacity(0.09),
-//                               borderRadius: BorderRadius.circular(15)
-//                           ),
-//                           child: Row(
-//                             children: [
-//                               SizedBox(width: width * 0.05,),
-//                               Icon(Icons.search,color: Colors.white,),
-//                               SizedBox(width: width * 0.025,),
-//                               Text("Search",style: AppStyle.commonTextStyle,)
-//                             ],
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   ),
-//                   Align(
-//                     alignment: Alignment.bottomCenter,
-//                     child: Container(
-//                       height: height * 0.05,
-//                       child: ListView.builder(itemBuilder: (context, index) {
-//                         return Container(
-//                           height: height * 0.05,
-//                           width:width * 0.3,
-//                           margin: EdgeInsets.only(left: width*0.025),
-//                           decoration: BoxDecoration(
-//                               color: cat[index]["color"],
-//                               borderRadius: BorderRadius.circular(20)
-//                           ),
-//                           child: Row(
-//                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                             children: [
-//                               cat[index]['img'],
-//                               Text(cat[index]["name"],style: AppStyle.commonTextStyle,)
-//                             ],
-//                           ),
-//                         );
-//                       },
-//                         itemCount: cat.length,
-//                         scrollDirection: Axis.horizontal,
-//                       ),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-
-
-
-//CarouselSlider(
-//                 items: Eventphoto.map((e) => Container(
-//                   height: height * 0.375,
-//                   width: width * 0.75,
-//                   padding: EdgeInsets.all(10),
-//                   decoration: BoxDecoration(
-//                       color: Colors.white.withOpacity(0.09),
-//                       //color: Colors.white,
-//                       borderRadius: BorderRadius.circular(15)
-//                   ),
-//                   child: Column(
-//                     children: [
-//                       Container(
-//                         height: height * 0.250,
-//                         decoration: BoxDecoration(
-//                           color: Colors.white.withOpacity(0.2),
-//                           borderRadius: BorderRadius.circular(15),
-//                           image: DecorationImage(
-//                             image: NetworkImage(e.toString()),
-//                             fit: BoxFit.cover
-//                           )
-//                         ),
-//                       ),
-//                       SizedBox(height: 10,),
-//                       Expanded(child: Text("This Event is Orgenize by Rudra and i am orgenaizer of this event",style: TextStyle(color: Colors.white,overflow: TextOverflow.ellipsis,fontSize: 16),)),
-//                       Row(
-//                         children: [
-//                           Column(
-//                             children: [
-//                               SizedBox(
-//                                 child: Row(
-//                                   children: [
-//                                     Icon(Icons.date_range,color: Colors.green.shade600,size: 18,),
-//                                     Text("12-15 october,25",style: TextStyle(color: Colors.white,fontSize: 12),)
-//                                   ],
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 child: Row(
-//                                   children: [
-//                                     Icon(Icons.location_on,color: Colors.green.shade600,size: 18,),
-//                                     Text("12-15 october,25",style: TextStyle(color: Colors.white,fontSize: 12),)
-//                                   ],
-//                                 ),
-//                               ),
-//                             ],
-//                           )
-//                         ],
-//                       )
-//                     ],
-//                   ),
-//                 ),).toList(),
-//                 options: CarouselOptions(
-//                   height: height * 0.375,
-//                   aspectRatio: 1,
-//                   viewportFraction: 0.75,
-//                   initialPage: 0,
-//                   enableInfiniteScroll: true,
-//                   reverse: false,
-//                   autoPlay: true,
-//                   autoPlayInterval: Duration(seconds: 3),
-//                   autoPlayAnimationDuration: Duration(milliseconds: 800),
-//                   autoPlayCurve: Curves.fastOutSlowIn,
-//                   enlargeCenterPage: true,
-//                   enlargeFactor: 0.3,
-//                   // onPageChanged: callbackFunction,
-//                   scrollDirection: Axis.horizontal,
-//                 )
-//             ),

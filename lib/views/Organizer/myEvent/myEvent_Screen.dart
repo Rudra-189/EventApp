@@ -42,90 +42,94 @@ class _myEventScreenState extends State<myEventScreen> {
           return Center(child: CircularProgressIndicator(color: Colors.green.shade600,));
         }else{
           final data = controler.myEvent;
-          return Column(
-            children: [
-              ListView.builder(itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.09),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child:  ListTile(
-                    contentPadding: EdgeInsets.all(10),
-                    leading: AspectRatio(
-                      aspectRatio: 1,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(15)),
-                        child: Image.network(
-                          data[index].img,
-                          fit: BoxFit.cover,
+          if(data.isEmpty){
+            return Center(child: Text("No Event Found.",style: TextStyle(color: Colors.white,fontSize: 12),));
+          }else{
+            return Column(
+              children: [
+                ListView.builder(itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(left: 10,right: 10,top: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.09),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child:  ListTile(
+                      contentPadding: EdgeInsets.all(10),
+                      leading: AspectRatio(
+                        aspectRatio: 1,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(Radius.circular(15)),
+                          child: Image.network(
+                            data[index].img,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    title: Text(data[index].title,style: TextStyle(color: Colors.white,fontSize: 16,overflow:TextOverflow.ellipsis),) ,
-                    subtitle: Row(
-                      children: [
-                        Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                        Text(DateFormat('MM/dd/yyyy').format(data[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                        SizedBox(width: 5,),
-                        Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
-                        Text( DateFormat('hh:mm a').format(data[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                      ],
-                    ),
-                    trailing: PopupMenuButton(
-                      color: Colors.white,
-                      itemBuilder: (context) =>[
-                        PopupMenuItem(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.publish,color: Colors.green.shade600,size: 20,),
-                              SizedBox(width: 10,),
-                              Text("Publish",style: TextStyle(fontSize: 14),),
-                            ],
+                      title: Text(data[index].title,style: TextStyle(color: Colors.white,fontSize: 16,overflow:TextOverflow.ellipsis),) ,
+                      subtitle: Row(
+                        children: [
+                          Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
+                          Text(DateFormat('MM/dd/yyyy').format(data[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
+                          SizedBox(width: 5,),
+                          Icon(Icons.timer_outlined,color: Colors.green.shade600,size: 16,),
+                          Text( DateFormat('hh:mm a').format(data[index].date),style: TextStyle(color: Colors.white,fontSize: 10),),
+                        ],
+                      ),
+                      trailing: PopupMenuButton(
+                        color: Colors.white,
+                        itemBuilder: (context) =>[
+                          PopupMenuItem(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.publish,color: Colors.green.shade600,size: 20,),
+                                SizedBox(width: 10,),
+                                Text("Publish",style: TextStyle(fontSize: 14),),
+                              ],
+                            ),
+                            onTap: (){
+                            },
                           ),
-                          onTap: (){
-                          },
-                        ),
-                        PopupMenuItem(
-                          onTap: (){
-                            Get.toNamed(appRoutesName.editEventScreen,arguments: data[index].id);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.edit,color: Colors.green.shade600,size: 20,),
-                              SizedBox(width: 10,),
-                              Text("update",style: TextStyle(fontSize: 14),),
-                            ],
+                          PopupMenuItem(
+                            onTap: (){
+                              Get.toNamed(appRoutesName.editEventScreen,arguments: data[index].id);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.edit,color: Colors.green.shade600,size: 20,),
+                                SizedBox(width: 10,),
+                                Text("update",style: TextStyle(fontSize: 14),),
+                              ],
+                            ),
                           ),
-                        ),
-                        PopupMenuItem(
-                          onTap: (){
+                          PopupMenuItem(
+                            onTap: (){
 
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.delete_outline,color: Colors.green.shade600,size: 20,),
-                              SizedBox(width: 10,),
-                              Text("delete",style: TextStyle(fontSize: 14),),
-                            ],
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.delete_outline,color: Colors.green.shade600,size: 20,),
+                                SizedBox(width: 10,),
+                                Text("delete",style: TextStyle(fontSize: 14),),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-                itemCount: data.length,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-              ),
-              
-            ],
-          );
+                  );
+                },
+                  itemCount: data.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                ),
+
+              ],
+            );
+          }
         }
       },),
     );

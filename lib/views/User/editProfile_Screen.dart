@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/models/userModel.dart';
 import 'package:event_project_01/utils/showSnackbar.dart';
+import 'package:event_project_01/views/User/userProfile/userProfileControler.dart';
 import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -39,6 +40,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
     nameController.text = data.name;
     emailController.text = data.email;
     print(data.photo);
+    imageUrl = data.photo;
   }
 
   @override
@@ -103,7 +105,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
                   color: Colors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(50),
                   image: DecorationImage(
-                    image: NetworkImage(data.photo),
+                    image: NetworkImage(imageUrl!),
                     fit: BoxFit.cover
                   )
               ),
@@ -114,7 +116,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
                     top: 75,
                     child: GestureDetector(
                       onTap: (){
-                        print("hello");
+                        showBottomSheet(context);
                       },
                       child: Container(
                         height: 20,
@@ -171,6 +173,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
             SizedBox(height: height * 0.01,),
             TextFormField(
               controller: emailController,
+              readOnly: true,
               cursorColor: AppColor.textColor,
               style: TextStyle(color:AppColor.textColor),
               decoration: InputDecoration(
@@ -198,7 +201,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
             GestureDetector(
               child: custom_Button(valu: "SAVE CHANGES"),
               onTap: (){
-                editProfile(nameController.text.toString(), emailController.text.toString(),imageUrl);
+                editProfile(nameController.text.toString(),imageUrl);
               },
             ),
             SizedBox(height: height * 0.02,),
@@ -283,7 +286,9 @@ class _editProfileScreenState extends State<editProfileScreen> {
 
     if(file!=null){
       setState(() {
-        _imageFile = File(file.path);
+        deleteImage().then((value) {
+          _imageFile = File(file.path);
+        },);
       });
       uploadImage();
     }
@@ -295,7 +300,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
     if(_imageFile !=null){
       try{
         loader.startLoading();
-        Reference ref = FirebaseStorage.instance.ref().child('images/$uid/event photos/${DateTime.now().toString()}');
+        Reference ref = FirebaseStorage.instance.ref().child('images/$uid/photo/${DateTime.now().toString()}');
         UploadTask uploadTask = ref.putFile(_imageFile!);
         TaskSnapshot taskSnapshot = await uploadTask;
         String downloadURL = await taskSnapshot.ref.getDownloadURL();
@@ -313,16 +318,26 @@ class _editProfileScreenState extends State<editProfileScreen> {
     }
   }
 
-  void editProfile(String name,email,url)async{
+  void editProfile(String name,url)async{
     final uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance.collection('user').doc(uid).update({
       "name" : name,
-      "email" : email,
       'photo' : url
     }).whenComplete(() {
       showSnackBar.message(context, "Edit Profile success");
+      userProfileControler controler = Get.put(userProfileControler());
+      controler.getUserData();
       Get.back();
       // Navigator.of(context).pop();
     },);
+  }
+
+  Future<void> deleteImage()async{
+    try{
+      Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl!);
+      await storageRef.delete();
+    }catch(e){
+      print("///////////${e.toString()}///////////");
+    }
   }
 }

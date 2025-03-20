@@ -148,26 +148,8 @@ class _loginScreenState extends State<loginScreen> {
                   ),
                   SizedBox(height: height * 0.02,),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          FlutterSwitch(
-                            value: isOn,
-                            onToggle: (value) {
-                              setState(() {
-                                isOn ? isOn = false : isOn = true;
-                              });
-                            },
-                            height: height * 0.0315,
-                            width: width * 0.125,
-                            padding: 1.5,
-                            activeColor: AppColor.secondaryColour,
-                          ),
-                          SizedBox(width: 5,),
-                          Text("Remember Me",style: AppStyle.commonTextStyle,)
-                        ],
-                      ),
                       GestureDetector(
                         onTap: (){
                           Get.toNamed(appRoutesName.forgotPasswordScreen);
@@ -254,10 +236,12 @@ class _loginScreenState extends State<loginScreen> {
       if (userDoc.exists) {
         String role = userDoc.get("role");
         if (role == "Organizer") {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => organizerDashBordScreen(),));
+          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => organizerDashBordScreen(),));
+          Get.offAllNamed(appRoutesName.organizerDashBordScreen);
           showSnackBar.message(context, "account Login success ");
         } else if(role == "User"){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => bottomNavbarScreen(),));
+          Get.offAllNamed(appRoutesName.bottomNavbarScreen);
+          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => bottomNavbarScreen(),));
           showSnackBar.message(context, "account Login success ");
         }
       }else{

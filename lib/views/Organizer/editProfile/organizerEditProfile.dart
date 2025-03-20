@@ -39,6 +39,7 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
     nameController.text = data.name;
     emailController.text = data.email;
     print(data.photo);
+    imageUrl = data.photo;
   }
 
   @override
@@ -103,7 +104,7 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
                   color: Colors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(50),
                   image: DecorationImage(
-                      image: NetworkImage(data.photo),
+                      image: NetworkImage(imageUrl!),
                       fit: BoxFit.cover
                   )
               ),
@@ -114,7 +115,7 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
                     top: 75,
                     child: GestureDetector(
                       onTap: (){
-                        print("hello");
+                        showBottomSheet(context);
                       },
                       child: Container(
                         height: 20,
@@ -171,6 +172,7 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
             SizedBox(height: height * 0.01,),
             TextFormField(
               controller: emailController,
+              readOnly: true,
               cursorColor: AppColor.textColor,
               style: TextStyle(color:AppColor.textColor),
               decoration: InputDecoration(
@@ -198,7 +200,7 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
             GestureDetector(
               child: custom_Button(valu: "SAVE CHANGES"),
               onTap: (){
-                editProfile(nameController.text.toString(), emailController.text.toString(),imageUrl);
+                editProfile(nameController.text.toString(),imageUrl);
               },
             ),
             SizedBox(height: height * 0.02,),
@@ -283,7 +285,9 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
 
     if(file!=null){
       setState(() {
-        _imageFile = File(file.path);
+        deleteImage().then((value) {
+          _imageFile = File(file.path);
+        },);
       });
       uploadImage();
     }
@@ -295,7 +299,7 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
     if(_imageFile !=null){
       try{
         loader.startLoading();
-        Reference ref = FirebaseStorage.instance.ref().child('images/$uid/event photos/${DateTime.now().toString()}');
+        Reference ref = FirebaseStorage.instance.ref().child('images/$uid/photo/${DateTime.now().toString()}');
         UploadTask uploadTask = ref.putFile(_imageFile!);
         TaskSnapshot taskSnapshot = await uploadTask;
         String downloadURL = await taskSnapshot.ref.getDownloadURL();
@@ -313,16 +317,24 @@ class _organizerEditProfileScreenState extends State<organizerEditProfileScreen>
     }
   }
 
-  void editProfile(String name,email,url)async{
+  void editProfile(String name,url)async{
     final uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance.collection('user').doc(uid).update({
       "name" : name,
-      "email" : email,
       'photo' : url
     }).whenComplete(() {
       showSnackBar.message(context, "Edit Profile success");
       Get.back();
       // Navigator.of(context).pop();
     },);
+  }
+
+  Future<void> deleteImage()async{
+    try{
+      Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl!);
+      await storageRef.delete();
+    }catch(e){
+      print("///////////${e.toString()}///////////");
+    }
   }
 }

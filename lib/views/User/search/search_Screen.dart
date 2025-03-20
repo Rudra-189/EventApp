@@ -143,26 +143,25 @@ class _searchScreenState extends State<searchScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Text(
+                                    "${DateFormat('EEE').format(data.date).toUpperCase()}, "
+                                        "${DateFormat('d').format(data.date)} "
+                                        "${DateFormat('MMMM').format(data.date).toUpperCase()}"
+                                        " - ${DateFormat('hh:mm a').format(data.date)}",
+                                    style: TextStyle(color: Colors.green.shade600, fontSize: 12,),
+                                  ),
+                                  SizedBox(height: 5),
                                   Text(data.title,
-                                    maxLines: 2,
                                     style: TextStyle(
                                       color: Colors.white,fontSize: 16,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.bold,),
                                   ),
-                                  SizedBox(height: 10),
-                                  SizedBox(
-                                    width: width * 0.55,
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.date_range,color: Colors.green.shade600,size: 16,),
-                                        Text(DateFormat('MM/dd/yyyy').format(data.date),style: TextStyle(color: Colors.white,fontSize: 10),),
-                                        SizedBox(width: 5,),
-                                        Icon(Icons.location_on,color: Colors.green.shade600,size: 16,),
-                                        Expanded(
-                                          child: Text(data.location,style: TextStyle(color: Colors.white,fontSize: 10,overflow: TextOverflow.ellipsis),),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.location_on,color: Colors.green.shade600,size: 18,),
+                                      Expanded(child: Text(" ${data.location}",style: TextStyle(color: Colors.white.withOpacity(0.25),overflow: TextOverflow.ellipsis,fontSize: 12),))
+                                    ],
+                                  )
                                 ],
                               ),
                             ),

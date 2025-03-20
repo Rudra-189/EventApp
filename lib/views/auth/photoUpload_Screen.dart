@@ -27,6 +27,14 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
 
   final loaderControler loader = Get.put(loaderControler());
 
+  String? role;
+
+  @override
+  void initState() {
+    super.initState();
+    role = Get.arguments['role'];
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -116,11 +124,29 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
               child: custom_Button(valu: "Next"),
               onTap: (){
                 if(imageUrl != null){
-                  addPhoto();
+                  addPhoto(role!);
                 }else{
                   showSnackBar.error_message(context,"pick image first");
                 }
               },
+            ),
+            SizedBox(
+              height: height * 0.015,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    if(role == "User"){
+                      Get.offAllNamed(appRoutesName.bottomNavbarScreen);
+                    }else{
+                      Get.offAllNamed(appRoutesName.organizerDashBordScreen);
+                    }
+                  },
+                  child: Text("skip",style: TextStyle(color: Colors.green,fontSize: 12,letterSpacing: 1),),
+                )
+              ],
             ),
             SizedBox(
               height: height * 0.02,
@@ -177,12 +203,16 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
       }
     }
   }
-  Future<void>addPhoto()async{
+  Future<void>addPhoto(String role)async{
     final uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance.collection('user').doc(uid).update({
       'photo':imageUrl
     }).whenComplete(() {
-      Get.offAllNamed(appRoutesName.bottomNavbarScreen);
+      if(role == "User"){
+        Get.offAllNamed(appRoutesName.bottomNavbarScreen);
+      }else{
+        Get.offAllNamed(appRoutesName.organizerDashBordScreen);
+      }
       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => bottomNavbarScreen()),(Route<dynamic> route) => false);
     },);
   }

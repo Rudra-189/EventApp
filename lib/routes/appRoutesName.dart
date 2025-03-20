@@ -28,5 +28,10 @@ class appRoutesName{
   static const String editProfileScreen= '/editProfilePage';
   static const String editEventScreen= '/editEventPage';
   static const String organizerProfileViewScreen= '/organizerProfileViewPage';
+  static const String seeMoreScreen= '/seeMorePage';
+  static const String bookmarkScreen= '/bookmarkPage';
+  static const String helpAndFaqsScreen= '/helpAndFaqsPage';
+  static const String contactusScreen= '/contactusPage';
+  static const String settingsScreen= '/settingsPage';
 
 }

@@ -1,5 +1,4 @@
 import 'package:event_project_01/routes/appRoutesName.dart';
-import 'package:event_project_01/views/User/editProfile_Screen.dart';
 import 'package:event_project_01/views/User/userProfile/userProfileControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +15,7 @@ class userProfileScreen extends StatefulWidget {
 
 class _userProfileScreenState extends State<userProfileScreen> {
 
-  userProfileControler controler = Get.put(userProfileControler());
-
-  @override
-  void initState() {
-    super.initState();
-    controler.getUserData();
-  }
+  final userProfileControler controler = Get.put(userProfileControler());
 
   @override
   Widget build(BuildContext context) {
@@ -88,55 +81,75 @@ class _userProfileScreenState extends State<userProfileScreen> {
                     ),
                   ),
                   SizedBox(height: height * 0.02,),
-                  Container(
-                    height: height * 0.065,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.095),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.bookmark_border,color: Colors.green.shade600,size: 20,),
-                      title: Text("Bookmark",style: TextStyle(color: Colors.white,fontSize: 14),),
-                      trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.02,),
-                  Container(
-                    height: height * 0.065,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.095),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.mail,color: Colors.green.shade600,size: 20,),
-                      title: Text("Contact Us",style: TextStyle(color: Colors.white,fontSize: 14),),
-                      trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(appRoutesName.bookmarkScreen);
+                    },
+                    child: Container(
+                      height: height * 0.065,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.095),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.bookmark_border,color: Colors.green.shade600,size: 20,),
+                        title: Text("Bookmark",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                      ),
                     ),
                   ),
                   SizedBox(height: height * 0.02,),
-                  Container(
-                    height: height * 0.065,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.095),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.settings,color: Colors.green.shade600,size: 20,),
-                      title: Text("Settings",style: TextStyle(color: Colors.white,fontSize: 14),),
-                      trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(appRoutesName.contactusScreen);
+                    },
+                    child: Container(
+                      height: height * 0.065,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.095),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.mail,color: Colors.green.shade600,size: 20,),
+                        title: Text("Contact Us",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                      ),
                     ),
                   ),
                   SizedBox(height: height * 0.02,),
-                  Container(
-                    height: height * 0.065,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.095),
-                        borderRadius: BorderRadius.circular(15)
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(appRoutesName.settingsScreen);
+                    },
+                    child: Container(
+                      height: height * 0.065,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.095),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.settings,color: Colors.green.shade600,size: 20,),
+                        title: Text("Settings",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                      ),
                     ),
-                    child: ListTile(
-                      leading: Icon(Icons.help_outline,color: Colors.green.shade600,size: 20,),
-                      title: Text("Helps & FAQs",style: TextStyle(color: Colors.white,fontSize: 14),),
-                      trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                  ),
+                  SizedBox(height: height * 0.02,),
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(appRoutesName.helpAndFaqsScreen);
+                    },
+                    child: Container(
+                      height: height * 0.065,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.095),
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.help_outline,color: Colors.green.shade600,size: 20,),
+                        title: Text("Helps & FAQs",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                      ),
                     ),
                   ),
                   SizedBox(height: height * 0.02,),
@@ -196,7 +209,7 @@ class _userProfileScreenState extends State<userProfileScreen> {
                         trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

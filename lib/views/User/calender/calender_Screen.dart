@@ -229,7 +229,7 @@ class _calenderScreenState extends State<calenderScreen> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 subtitle: Text(
-                                  "₹ ${events.first.price}",
+                                  "₹ ${events.first.price.Economy}",
                                   style: TextStyle(color: Colors.green.shade600, fontSize: 14),
                                 ),
                               ),
@@ -274,7 +274,7 @@ class _calenderScreenState extends State<calenderScreen> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
-                                      "₹ ${events[index].price}",
+                                      "₹ ${events[index].price.Economy}",
                                       style: TextStyle(color: Colors.green.shade600, fontSize: 14),
                                     ),
                                   ),

@@ -9,6 +9,11 @@ class userProfileControler extends GetxController{
   var isLoading = true.obs;
   var user = Rxn<userDataModel>();
 
+  @override
+  void onInit() {
+    super.onInit();
+    getUserData();
+  }
 
   void getUserData()async{
     try{

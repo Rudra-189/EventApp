@@ -1,5 +1,7 @@
 import 'package:event_project_01/utils/showSnackbar.dart';
 import 'package:event_project_01/views/User/organizerProfileView/organizerProfileView_Screeen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -69,18 +71,6 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                           },
                           child: Icon(Icons.arrow_back,color: Colors.white,size: 18,),
                         ),
-                        actions: [
-                          Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.25),
-                              borderRadius: BorderRadius.circular(11),
-                            ),
-                            child: Icon(Icons.favorite,color: Colors.green.shade600,size: 18,),
-                          ),
-                          SizedBox(width: 10,)
-                        ],
                         centerTitle: true,
                         title: Text("EVENT DETAIL",style: TextStyle(color: Colors.white,fontSize: 20,letterSpacing: 2),),
                         flexibleSpace: FlexibleSpaceBar(
@@ -193,12 +183,17 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("Related Events",style: AppStyle.commonTextStyle,),
-                                  Text("See More",style: AppStyle.secondaryCommonTextStyle,)
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.toNamed(appRoutesName.seeMoreScreen);
+                                    },
+                                    child: Text("See More",style: AppStyle.secondaryCommonTextStyle,),
+                                  )
                                 ],
                               ),
                               SizedBox(height: 10,),
                               SizedBox(
-                                height: height * 0.345,
+                                height: height * 0.330,
                                 child: ListView.builder(itemBuilder: (context, index) {
                                   return InkWell(
                                     onTap: (){
@@ -302,25 +297,30 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                       height: height * 0.095,
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Color(0XFFF7F9F2),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            height: 55,
-                            width: 55,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border(
-                                  top: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
-                                  bottom: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
-                                  left: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
-                                  right: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
-                                )
+                          GestureDetector(
+                            onTap: (){
+                              bookmarkEvent(data.id);
+                            },
+                            child: Container(
+                              height: 55,
+                              width: 55,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border(
+                                    top: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                                    bottom: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                                    left: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                                    right: BorderSide(color: Colors.black.withOpacity(0.2),width: 1),
+                                  )
+                              ),
+                              child: Icon(Icons.bookmark_border,color: Colors.black,size: 20,),
                             ),
-                            child: Icon(Icons.favorite_border,color: Colors.black,size: 20,),
                           ),
                           controler.checkSeats() ? GestureDetector(
                             child: Container(
@@ -378,5 +378,22 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
         }
       },),
     );
+  }
+
+  void bookmarkEvent(String id)async{
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final DatabaseReference databaseRef = FirebaseDatabase.instance.ref("users/$uid/bookmark/$id");
+
+    databaseRef.once().then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        showSnackBar.message(context, "Event is already bookmarked.");
+      } else {
+        databaseRef.set(true).then((_) {
+          showSnackBar.message(context, "Event bookmarked successfully!");
+        }).catchError((error) {
+          print("Error bookmarking event: $error");
+        });
+      }
+    },);
   }
 }

@@ -41,89 +41,93 @@ class _walletScreenState extends State<walletScreen> {
           return Center(child: CircularProgressIndicator(color: Colors.green.shade600,));
         }else{
           final data = controler.payments;
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 10,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Revenue",style: TextStyle(color: Colors.white,fontSize: 14),),
-                      Text("₹ ${controler.Revenue}",style: TextStyle(color: Colors.green.shade600,fontSize: 14),)
-                    ],
+          if(data.isEmpty){
+            return Center(child: Text("No Payments Found.",style: TextStyle(color: Colors.white,fontSize: 12),));
+          }else{
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Revenue",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        Text("₹ ${controler.Revenue}",style: TextStyle(color: Colors.green.shade600,fontSize: 14),)
+                      ],
+                    ),
                   ),
-                ),
-                ListView.builder(itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.09),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child:  Theme(
-                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                      child: ExpansionTile(
-                        iconColor: Colors.green.shade600,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                        leading: Text((index+1).toString(),style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
-                        title: Text(data[index].id,style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text("Amount : ",style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text("UserId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text("ticketId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text("eventId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text("status : ",style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text("Date : ",style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text("Time : ",style: TextStyle(color: Colors.white,fontSize: 14),),
-                                ],
-                              ),
-                              SizedBox(width: 10,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("₹ ${data[index].amount}",style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text(data[index].userId,style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text(data[index].ticketId,style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text(data[index].eventId,style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text(data[index].status,style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text(DateFormat('MM/dd/yyyy').format(data[index].timestamp),style: TextStyle(color: Colors.white,fontSize: 14),),
-                                  SizedBox(height: 5,),
-                                  Text(DateFormat('hh:mm a').format(data[index].timestamp),style: TextStyle(color: Colors.white,fontSize: 14),),
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
+                  ListView.builder(itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.only(left: 10,right: 10,top: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.09),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                    ),
-                  );
-                },
-                  itemCount: data.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                )
-              ],
-            ),
-          );
+                      child:  Theme(
+                        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                        child: ExpansionTile(
+                          iconColor: Colors.green.shade600,
+                          childrenPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                          leading: Text((index+1).toString(),style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
+                          title: Text(data[index].id,style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text("Amount : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text("UserId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text("ticketId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text("eventId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text("status : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text("Date : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text("Time : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                  ],
+                                ),
+                                SizedBox(width: 10,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("₹ ${data[index].amount}",style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text(data[index].userId,style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text(data[index].ticketId,style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text(data[index].eventId,style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text(data[index].status,style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text(DateFormat('MM/dd/yyyy').format(data[index].timestamp),style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text(DateFormat('hh:mm a').format(data[index].timestamp),style: TextStyle(color: Colors.white,fontSize: 14),),
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                    itemCount: data.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                  )
+                ],
+              ),
+            );
+          }
         }
       },),
     );
