@@ -106,7 +106,47 @@ class _myEventScreenState extends State<myEventScreen> {
                           ),
                           PopupMenuItem(
                             onTap: (){
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(0), // Change the shape here
+                                    ),
+                                    title: Row(
+                                      children: [
+                                        Icon(Icons.warning_amber_rounded,color: Colors.green.shade600,),
+                                        SizedBox(width: 10,),
+                                        Text('Delete Event',style: TextStyle(fontSize: 16),),
+                                      ],
+                                    ),
+                                    content: Text('Do You Want Delete Event?'),
+                                    actions: [
+                                      GestureDetector(
+                                        onTap:(){
+                                          Get.back();
+                                        },
+                                        child: Text("Cancel",style: TextStyle(color: Colors.green.shade600),),
+                                      ),
+                                      SizedBox(width: 5,),
+                                      GestureDetector(
+                                        onTap:(){
+                                          controler.deleteEvent(context,data[index].id);
+                                          Get.back();
+                                        },
+                                        child: Container(
+                                          height: 30,
+                                          width: 50,
+                                          decoration: BoxDecoration(color: Colors.green.shade600),
+                                          child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                                        ),
+                                      )
+                                    ],
 
+                                  );
+                                },
+                              );
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -134,4 +174,5 @@ class _myEventScreenState extends State<myEventScreen> {
       },),
     );
   }
+
 }

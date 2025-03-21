@@ -62,7 +62,7 @@ class _userProfileScreenState extends State<userProfileScreen> {
                       ),
                       child: ListTile(
                         leading: Icon(Icons.person,color: Colors.green.shade600,size: 20,),
-                        title: Text("Edite Profile",style: TextStyle(color: Colors.white,fontSize: 14),),
+                        title: Text("Edit Profile",style: TextStyle(color: Colors.white,fontSize: 14),),
                         trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
                       ),
                     ),
