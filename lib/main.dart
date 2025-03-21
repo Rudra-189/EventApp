@@ -1,6 +1,6 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:event_project_01/routes/appRoutes.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
+import 'package:event_project_01/utils/notification.dart';
 import 'package:event_project_01/views/auth/splash_Screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,15 +21,9 @@ class PermissionService {
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await PermissionService.requestAllPermissions();
+  await NotificationService.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
-  AwesomeNotifications().initialize(
-    null,
-    [
-      NotificationChannel(channelKey: 'notification', channelName: 'basic notification', channelDescription: 'test')
-    ],
-    debug: true,
   );
   runApp(const MyApp());
 }

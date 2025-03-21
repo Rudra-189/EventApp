@@ -97,7 +97,8 @@ class ticketBookingControler extends GetxController {
     String id ="TICKET$randomNumber";
     String code = randomNumber.toString()+uid;
     print(uid);
-    NotificationService.Notification_message("Ticket Booked", "Your ticket for ${event!.title} on ${DateFormat('MM/dd/yyyy').format(event!.date)} is confirmed! Check your Ticket.Get ready for an amazing experience!");
+    NotificationService.showNotification(title: "Ticket Booked", body: "Your ticket for ${event!.title} on ${DateFormat('MM/dd/yyyy').format(event!.date)} is confirmed! Check your Ticket.Get ready for an amazing experience!");
+    // NotificationService.Notification_message("Ticket Booked", "Your ticket for ${event!.title} on ${DateFormat('MM/dd/yyyy').format(event!.date)} is confirmed! Check your Ticket.Get ready for an amazing experience!");
     await FirebaseFirestore.instance.collection('ticket').doc(id).set({
       "id": id,
       "user_id": uid,

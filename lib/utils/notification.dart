@@ -1,18 +1,43 @@
-import 'dart:async';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+class NotificationService {
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
-abstract class NotificationService{
-  static Notification_message(String title,msg){
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 1,
-          channelKey: 'notification',
-          title: title,
-          body: msg,
-          notificationLayout: NotificationLayout.BigText,
-      ));
+  static Future<void> init() async {
+    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings();
+
+    const InitializationSettings settings = InitializationSettings(
+      android: androidSettings,
+      iOS: iosSettings,
+    );
+
+    await _notificationsPlugin.initialize(settings);
   }
+
+  static Future<void> showNotification({required String title, required String body}) async {
+    final BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+      body, // Required parameter for expanded text
+    );
+
+    final AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+      'channel_id', // Unique channel ID
+      'channel_name', // Channel Name
+      importance: Importance.high,
+      priority: Priority.high,
+      styleInformation: bigTextStyleInformation, // Use BigTextStyleInformation
+    );
+
+    final NotificationDetails details = NotificationDetails(
+      android: androidDetails,
+    );
+
+    await _notificationsPlugin.show(
+      0, // Notification ID
+      title,
+      body, // Short text (shown before expanding)
+      details,
+    );
+  }
+
 }

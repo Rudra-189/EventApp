@@ -423,7 +423,8 @@ class _ticketScreenState extends State<ticketScreen> {
     }catch(e){
       print(e.toString());
     }finally{
-      NotificationService.Notification_message("Ticket Cancellation", "Your cancellation request for ${ticket.eventData.title} has been submitted. Refund will be processed with in 7 days.");
+      NotificationService.showNotification(title: "Ticket Cancellation", body: "Your cancellation request for ${ticket.eventData.title} has been submitted. Refund will be processed with in 7 days.");
+      // NotificationService.Notification_message("Ticket Cancellation", "Your cancellation request for ${ticket.eventData.title} has been submitted. Refund will be processed with in 7 days.");
       loader.stopLoading();
       controler.getTicket();
     }
