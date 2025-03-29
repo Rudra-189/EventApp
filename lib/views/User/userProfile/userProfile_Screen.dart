@@ -30,174 +30,208 @@ class _userProfileScreenState extends State<userProfileScreen> {
         if(controler.isLoading.value){
           return Center(child: CircularProgressIndicator(color: Colors.green.shade600,));
         }else{
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  SizedBox(height: height * 0.075,),
-                  controler.user.value!.photo.isEmpty ? CircleAvatar(
-                    radius: height * 0.05,
-                    backgroundColor: Colors.white.withOpacity(0.1),
-                  ) : CircleAvatar(
-                    radius: height * 0.05,
-                    backgroundColor: Colors.white.withOpacity(0.1),
-                    backgroundImage: NetworkImage(controler.user.value!.photo),
-                  ),
-                  Obx(() {
-                    return Text(controler.user.value!.name,style: TextStyle(color: Colors.green.shade600,fontSize: 16),);
-                  },),
-                  Text(controler.user.value!.email,style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 13),),
-                  SizedBox(height: height * 0.05,),
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(appRoutesName.editProfileScreen,arguments: controler.user.value!);
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => editProfileScreen(userData: controler.user.value!,),));
-                    },
-                    child: Container(
-                      height: height * 0.065,
+          return SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    SizedBox(height: height * 0.075,),
+                    controler.user.value!.photo.isEmpty ? Container(
+                      height: height * 0.1,
+                      width: height * 0.1,
                       decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.095),
-                          borderRadius: BorderRadius.circular(15)
+                          color: Colors.white.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(50)
                       ),
-                      child: ListTile(
-                        leading: Icon(Icons.person,color: Colors.green.shade600,size: 20,),
-                        title: Text("Edit Profile",style: TextStyle(color: Colors.white,fontSize: 14),),
-                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                      alignment: Alignment.center,
+                      child: Text(controler.firstLetter.toUpperCase(),style: TextStyle(color: Colors.green.shade600,fontSize: 30,fontWeight: FontWeight.bold),),
+                    ) : CircleAvatar(
+                      radius: height * 0.05,
+                      backgroundColor: Colors.white.withOpacity(0.1),
+                      backgroundImage: NetworkImage(controler.user.value!.photo),
+                    ),
+                    Obx(() {
+                      return Text(controler.user.value!.name,style: TextStyle(color: Colors.green.shade600,fontSize: 16),);
+                    },),
+                    Text(controler.user.value!.email,style: TextStyle(color: Colors.white.withOpacity(0.5),fontSize: 13),),
+                    SizedBox(height: height * 0.05,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(appRoutesName.editProfileScreen,arguments: controler.user.value!);
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => editProfileScreen(userData: controler.user.value!,),));
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.095),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          leading: Icon(Icons.person_outline,color: Colors.green.shade600,size: 20,),
+                          title: Text("Edit Profile",style: TextStyle(color: Colors.white,fontSize: 14),),
+                          trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: height * 0.02,),
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(appRoutesName.bookmarkScreen);
-                    },
-                    child: Container(
-                      height: height * 0.065,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.095),
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.bookmark_border,color: Colors.green.shade600,size: 20,),
-                        title: Text("Bookmark",style: TextStyle(color: Colors.white,fontSize: 14),),
-                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.02,),
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(appRoutesName.contactusScreen);
-                    },
-                    child: Container(
-                      height: height * 0.065,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.095),
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.mail,color: Colors.green.shade600,size: 20,),
-                        title: Text("Contact Us",style: TextStyle(color: Colors.white,fontSize: 14),),
-                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(appRoutesName.coinHistoryScreen);
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => editProfileScreen(userData: controler.user.value!,),));
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.095),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          leading: Icon(Icons.circle_outlined,color: Colors.green.shade600,size: 20,),
+                          title: Text("Coins",style: TextStyle(color: Colors.white,fontSize: 14),),
+                          trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: height * 0.02,),
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(appRoutesName.aboutScreen);
-                    },
-                    child: Container(
-                      height: height * 0.065,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.095),
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.error,color: Colors.green.shade600,size: 20,),
-                        title: Text("About",style: TextStyle(color: Colors.white,fontSize: 14),),
-                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.02,),
-                  GestureDetector(
-                    onTap: (){
-                      Get.toNamed(appRoutesName.helpAndFaqsScreen);
-                    },
-                    child: Container(
-                      height: height * 0.065,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.095),
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.help_outline,color: Colors.green.shade600,size: 20,),
-                        title: Text("Helps & FAQs",style: TextStyle(color: Colors.white,fontSize: 14),),
-                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(appRoutesName.bookmarkScreen);
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.095),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          leading: Icon(Icons.bookmark_border,color: Colors.green.shade600,size: 20,),
+                          title: Text("Bookmark",style: TextStyle(color: Colors.white,fontSize: 14),),
+                          trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: height * 0.02,),
-                  GestureDetector(
-                    onTap: (){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0), // Change the shape here
-                            ),
-                            title: Row(
-                              children: [
-                                Icon(Icons.warning_amber_rounded,color: Colors.green.shade600,),
-                                SizedBox(width: 10,),
-                                Text('Sign out',style: TextStyle(fontSize: 16),),
-                              ],
-                            ),
-                            content: Text('Do You Want Signout?'),
-                            actions: [
-                              GestureDetector(
-                                onTap:(){
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("Cancel",style: TextStyle(color: Colors.green.shade600),),
-                              ),
-                              SizedBox(width: 5,),
-                              GestureDetector(
-                                onTap:(){
-                                  Signout();
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  height: 30,
-                                  width: 50,
-                                  decoration: BoxDecoration(color: Colors.green.shade600),
-                                  child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
-                                ),
-                              )
-                            ],
-
-                          );
-                        },
-                      );
-                    },
-                    child: Container(
-                      height: height * 0.065,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.095),
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: ListTile(
-                        leading: Icon(Icons.login_outlined,color: Colors.green.shade600,size: 20,),
-                        title: Text("Sign Out",style: TextStyle(color: Colors.white,fontSize: 14),),
-                        trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(appRoutesName.contactusScreen);
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.095),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          leading: Icon(Icons.mail_outline,color: Colors.green.shade600,size: 20,),
+                          title: Text("Contact Us",style: TextStyle(color: Colors.white,fontSize: 14),),
+                          trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(appRoutesName.aboutScreen);
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.095),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          leading: Icon(Icons.error_outline,color: Colors.green.shade600,size: 20,),
+                          title: Text("About",style: TextStyle(color: Colors.white,fontSize: 14),),
+                          trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(appRoutesName.helpAndFaqsScreen);
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.095),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          leading: Icon(Icons.help_outline,color: Colors.green.shade600,size: 20,),
+                          title: Text("Helps & FAQs",style: TextStyle(color: Colors.white,fontSize: 14),),
+                          trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: (){
+                        showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0), // Change the shape here
+                                  ),
+                                  title: Row(
+                                    children: [
+                                      Icon(Icons.warning_amber_rounded,color: Colors.green.shade600,),
+                                      SizedBox(width: 10,),
+                                      Text('Sign out',style: TextStyle(fontSize: 16),),
+                                    ],
+                                  ),
+                                  content: Text('Do You Want Signout?'),
+                                  actions: [
+                                    GestureDetector(
+                                      onTap:(){
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("Cancel",style: TextStyle(color: Colors.green.shade600),),
+                                    ),
+                                    SizedBox(width: 5,),
+                                    GestureDetector(
+                                      onTap:(){
+                                        Signout();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 50,
+                                        decoration: BoxDecoration(color: Colors.green.shade600),
+                                        child: Center(child: Text("Ok",style: TextStyle(color: Colors.white),)),
+                                      ),
+                                    )
+                                  ],
+            
+                                );
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.095),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          leading: Icon(Icons.login_outlined,color: Colors.green.shade600,size: 20,),
+                          title: Text("Sign Out",style: TextStyle(color: Colors.white,fontSize: 14),),
+                          trailing: Icon(Icons.arrow_right,color: Colors.green.shade600,size: 20,),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

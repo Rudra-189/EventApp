@@ -80,18 +80,6 @@ class _myEventScreenState extends State<myEventScreen> {
                         color: Colors.white,
                         itemBuilder: (context) =>[
                           PopupMenuItem(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.publish,color: Colors.green.shade600,size: 20,),
-                                SizedBox(width: 10,),
-                                Text("Publish",style: TextStyle(fontSize: 14),),
-                              ],
-                            ),
-                            onTap: (){
-                            },
-                          ),
-                          PopupMenuItem(
                             onTap: (){
                               Get.toNamed(appRoutesName.editEventScreen,arguments: data[index].id);
                             },

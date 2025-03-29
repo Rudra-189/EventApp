@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/models/eventmodel.dart';
 import 'package:event_project_01/models/ticketModel.dart';
+import 'package:event_project_01/utils/coinBox.dart';
+import 'package:event_project_01/utils/coinSystem.dart';
 import 'package:event_project_01/views/loaderControler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -24,12 +26,17 @@ class ticketBookingControler extends GetxController {
   var isLoading = true.obs;
   var user = Rxn<userDataModel>();
 
+  int bookedTicket = 0;
 
 
   int seats = 0;
   int total = 0;
   String? type;
   eventDataModel? event;
+  int discount = 0;
+  int coin = 0;
+
+
 
   @override
   void onInit() {
@@ -41,16 +48,30 @@ class ticketBookingControler extends GetxController {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
   }
 
-  void getData(int s,String t,eventDataModel data){
+  void getData(int s,d,c,String t,eventDataModel data){
     seats = s;
     type = t;
     event = data;
-    if(type == "economy"){
-      total = event!.price.Economy * seats;
-    }else if(type == "vip"){
-      total = event!.price.VIP * seats;
+    discount = d;
+    coin = c;
+    if(discount != 0){
+      if(type == "economy"){
+        total = event!.price.Economy * seats;
+        total = (total -(total*(discount/100))).toInt();
+      }else if(type == "vip"){
+        total = event!.price.VIP * seats;
+        total = (total -(total*(discount/100))).toInt();
+      }
+    }else{
+      if(type == "economy"){
+        total = event!.price.Economy * seats;
+      }else if(type == "vip"){
+        total = event!.price.VIP * seats;
+      }
     }
-
+    print(total);
+    print(discount);
+    print(coin);
     openCheckout();
   }
 
@@ -91,6 +112,11 @@ class ticketBookingControler extends GetxController {
   /// Handle Successful Payment
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     loader.startLoading();
+    if(discount != 0){
+      print("inside coin -");
+      print(discount !=0 );
+      coinSystem.addCoin(coin, "used coin to booked Ticket", "spend");
+    }
     final uid = FirebaseAuth.instance.currentUser!.uid;
     var random = Random();
     int randomNumber = random.nextInt(10000000);
@@ -113,7 +139,8 @@ class ticketBookingControler extends GetxController {
         "location" : event!.location
       },
       "status" : "booked",
-      "payment_id" : response.paymentId
+      "payment_id" : response.paymentId,
+      "timestamp": FieldValue.serverTimestamp()
     }).whenComplete(()async{
       if(type == 'vip'){
         await FirebaseFirestore.instance.collection('event').doc(event!.id).update({
@@ -139,12 +166,18 @@ class ticketBookingControler extends GetxController {
         "organizerId" : event!.organizer_id,
         "ticketId" : id,
         "amount": total,
+        "discount" : discount,
         "status": "Success",
         "timestamp": FieldValue.serverTimestamp(),
       });
     },).whenComplete(() {
       loader.stopLoading();
-      Get.offAllNamed(appRoutesName.bottomNavbarScreen);
+      coinSystem.addCoin(((total ~/ 100) * 3).toInt(), "got coins for booking a ticket!", "reward");
+      Future.delayed(Duration(seconds: 5),() => showRewardDialog("🏆 You got coins for booking a ticket!",((total ~/ 100) * 3).toInt()),);
+      Get.offAllNamed(appRoutesName.bottomNavbarScreen,arguments: {
+        'bookedTicket' : true,
+        'coin' : ((total ~/ 100) * 3).toInt()
+      });
     },);
 
     // Store payment details in Firebase
@@ -161,5 +194,22 @@ class ticketBookingControler extends GetxController {
   void onClose() {
     _razorpay.clear(); // Clean up
     super.onClose();
+  }
+
+  void getBookedTicket(String id)async{
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('ticket')
+          .where('event_id', isEqualTo: id)
+          .where('user_id', isEqualTo: uid)
+          .get();
+      for (var doc in querySnapshot.docs) {
+        bookedTicket += (doc['seat'] as int);
+      }
+    }catch(e){
+      print("///////////${e.toString()}/////////");
+    }finally{
+      print(bookedTicket);
+    }
   }
 }

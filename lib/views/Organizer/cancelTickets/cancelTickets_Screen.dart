@@ -87,7 +87,7 @@ class _cancelTicketScreenState extends State<cancelTicketScreen> {
                                   children: [
                                     Text(data[index].eventId,style: TextStyle(color: Colors.white,fontSize: 14),),
                                     SizedBox(height: 5,),
-                                    Text(data[index].userId,style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    Text(data[index].userId,style: TextStyle(color: Colors.white,fontSize: 14,overflow: TextOverflow.ellipsis),),
                                     SizedBox(height: 5,),
                                     Text(data[index].cancel_reason,style: TextStyle(color: Colors.white,fontSize: 14),),
                                   ],

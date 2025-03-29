@@ -503,6 +503,8 @@ class _editEventScreenState extends State<editEventScreen> {
                           inactiveTrackColor: Colors.white.withOpacity(0.25),
                           value: controlet.isPreBooking.value,
                           onChanged: (value) {
+                            DateTime today = DateTime.now();
+                            DateTime twoMonthsLater = today.add(const Duration(days: 45));
                             setState(() {
                               if(controlet.isPreBooking.value == true){
                                 controlet.isPreBooking.value = false;

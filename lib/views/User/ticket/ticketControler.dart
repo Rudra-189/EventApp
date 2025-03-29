@@ -39,7 +39,7 @@ class ticketControler extends GetxController{
   void getTicket()async{
     try{
       isLoading(true);
-      QuerySnapshot snapshot = await _firestore.collection('ticket').where('user_id', isEqualTo: uid).get();
+      QuerySnapshot snapshot = await _firestore.collection('ticket').where('user_id', isEqualTo: uid).orderBy("timestamp", descending: true).get();
 
       if(snapshot.docs.isNotEmpty){
         tickets.value = snapshot.docs.map((doc) {

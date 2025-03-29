@@ -11,6 +11,7 @@ class ticketDataModel {
   final String qrCode;
   final EventData eventData;
   final String payment_id;
+  final DateTime timestamp;
 
   ticketDataModel({
     required this.id,
@@ -22,6 +23,7 @@ class ticketDataModel {
     required this.qrCode,
     required this.eventData,
     required this.payment_id,
+    required this.timestamp,
   });
 
   // Factory method to create a Ticket object from Firestore document
@@ -36,6 +38,7 @@ class ticketDataModel {
       qrCode: map['qr_code'] ?? '',
       eventData: EventData.fromMap(map['event_data'] ?? {}),
       payment_id: map['payment_id'] ?? '',
+      timestamp: (map['timestamp'] as Timestamp).toDate() ?? DateTime.now(),
     );
   }
 }

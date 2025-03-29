@@ -10,9 +10,11 @@ class exploreControler extends GetxController{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final uid = FirebaseAuth.instance.currentUser!.uid;
   var isLoading = true.obs;
+  var upcomingEvent = RxList<eventDataModel>();
   var event = RxList<eventDataModel>();
   var categoryEvent = RxList<eventDataModel>();
   var user = Rxn<userDataModel>();
+  var coins = 0.obs;
 
   @override
   void onInit() {
@@ -24,21 +26,19 @@ class exploreControler extends GetxController{
   void getEvent()async{
     try{
       isLoading(true);
+      upcomingEvent.clear();
+      getCoins();
+      DateTime today = DateTime.now();
+      DateTime twoMonthsLater = today.add(const Duration(days: 45));
 
-      DateTime now = DateTime.now();
+      print(today);
+      print(twoMonthsLater);
 
-      // Get the date 2 months from now
-      DateTime twoMonthsLater = now.add(Duration(days: 60));
-
-      // Convert to Firestore Timestamp
-      Timestamp nowTimestamp = Timestamp.fromDate(now);
-      Timestamp twoMonthsLaterTimestamp = Timestamp.fromDate(twoMonthsLater);
-
-      QuerySnapshot snapshot = await _firestore.collection('event').where('date', isGreaterThanOrEqualTo: nowTimestamp).where('date', isLessThanOrEqualTo: twoMonthsLaterTimestamp).orderBy('date', descending: false).get();
-      event.value = snapshot.docs.map((doc) {
+      QuerySnapshot snapshot = await _firestore.collection('event').where('date', isGreaterThanOrEqualTo: Timestamp.fromDate(today)).where('date', isLessThanOrEqualTo: Timestamp.fromDate(twoMonthsLater)).orderBy('date', descending: false).get();
+      upcomingEvent.value = snapshot.docs.map((doc) {
         return eventDataModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
       }).toList();
-      print(event);
+      print(upcomingEvent);
     }catch(e){
       debugPrint('#//////${e.toString()}//////#');
     }finally{
@@ -73,4 +73,10 @@ class exploreControler extends GetxController{
     }
   }
 
+  void getCoins()async{
+    DocumentSnapshot userDoc = await _firestore.collection('user').doc(uid).get();
+    if (userDoc.exists) {
+      coins.value = userDoc['coin'] ?? 0;
+    }
+  }
 }

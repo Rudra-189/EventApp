@@ -28,7 +28,6 @@ void showFilterSheet(BuildContext context){
         borderRadius: BorderRadius.circular(30)
       ),
       child: Column(
-
         children: [
           SizedBox(height: height * 0.01,),
           Container(
@@ -50,7 +49,7 @@ void showFilterSheet(BuildContext context){
           ),
           SizedBox(height: height * 0.02,),
           SizedBox(
-            height: 100,
+            height: height * 0.12,
             child: ListView.builder(itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(left: 20),
@@ -62,8 +61,8 @@ void showFilterSheet(BuildContext context){
                           controler.toggleCategory(AppCategory.category[index]['name']);
                         },
                         child: Container(
-                          height: 70,
-                          width: 70,
+                          height: height * 0.08,
+                          width: height * 0.08,
                           decoration: BoxDecoration(
                               color: controler.selectedCategories.contains(AppCategory.category[index]['name']) ? Colors.green.shade600 : Colors.black.withOpacity(0.25),
                               borderRadius: BorderRadius.circular(40)
@@ -235,7 +234,7 @@ void showFilterSheet(BuildContext context){
               )
             ],
           ),
-          SizedBox(height: height * 0.01,),
+          SizedBox(height: height * 0.025,),
         ],
       ),
     );

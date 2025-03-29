@@ -63,7 +63,7 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                       SliverAppBar(
                         pinned: true,
                         backgroundColor: Colors.green.shade600,
-                        expandedHeight: 350,
+                        expandedHeight: height * 0.35,
                         leading: GestureDetector(
                           onTap: (){
                             Get.back();
@@ -91,7 +91,27 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 10,),
-                              Text(data.title ?? 'no Title',style: TextStyle(color: Colors.white,fontSize: 23),),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(child: Text(data.title ?? 'no Title',style: TextStyle(color: Colors.white,fontSize: 20,),)),
+                                  data.isPreBookingEnabled ? SizedBox() : Container(
+                                    height: height * 0.04,
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border(
+                                          top: BorderSide(color: Colors.white.withOpacity(0.25),width: 0.5),
+                                          bottom: BorderSide(color: Colors.white.withOpacity(0.25),width: 0.5),
+                                          left: BorderSide(color: Colors.white.withOpacity(0.25),width: 0.5),
+                                          right: BorderSide(color: Colors.white.withOpacity(0.25),width: 0.5),
+                                        )
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text("Opens Soon!",style: TextStyle(color: Colors.green.shade600,fontSize: 12),),
+                                  )
+                                ],
+                              ),
                               SizedBox(height: 10,),
                               Divider(color: Colors.white.withOpacity(0.25),),
                               SizedBox(height: 10,),
@@ -193,7 +213,7 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                               ),
                               SizedBox(height: 10,),
                               SizedBox(
-                                height: height * 0.330,
+                                height: height * 0.3325,
                                 child: ListView.builder(itemBuilder: (context, index) {
                                   return InkWell(
                                     onTap: (){
@@ -308,8 +328,8 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                               bookmarkEvent(data.id);
                             },
                             child: Container(
-                              height: 55,
-                              width: 55,
+                              height: height * 0.065,
+                              width: height * 0.065,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   border: Border(
@@ -324,7 +344,7 @@ class _eventDetailScreenState extends State<eventDetailScreen> {
                           ),
                           controler.checkSeats() ? GestureDetector(
                             child: Container(
-                              height: 55,
+                              height: height * 0.065,
                               padding: EdgeInsets.symmetric(horizontal: width * 0.2),
                               decoration: BoxDecoration(
                                   color: Colors.green.shade600,

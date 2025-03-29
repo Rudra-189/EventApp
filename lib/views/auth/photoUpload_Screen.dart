@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/routes/appRoutesName.dart';
+import 'package:event_project_01/utils/coinBox.dart';
+import 'package:event_project_01/utils/coinSystem.dart';
 import 'package:event_project_01/utils/showSnackbar.dart';
 import 'package:event_project_01/views/User/bottomNavbar_Screen.dart';
 import 'package:event_project_01/views/loaderControler.dart';
@@ -139,7 +141,8 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
                 GestureDetector(
                   onTap: (){
                     if(role == "User"){
-                      Get.offAllNamed(appRoutesName.bottomNavbarScreen);
+                      Get.offAllNamed(appRoutesName.welcomeCoinScreen);
+
                     }else{
                       Get.offAllNamed(appRoutesName.organizerDashBordScreen);
                     }
@@ -149,7 +152,7 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
               ],
             ),
             SizedBox(
-              height: height * 0.02,
+              height: height * 0.025,
             ),
           ],
         ),
@@ -209,7 +212,7 @@ class _photoUploadScreenState extends State<photoUploadScreen> {
       'photo':imageUrl
     }).whenComplete(() {
       if(role == "User"){
-        Get.offAllNamed(appRoutesName.bottomNavbarScreen);
+        Get.offAllNamed(appRoutesName.welcomeCoinScreen);
       }else{
         Get.offAllNamed(appRoutesName.organizerDashBordScreen);
       }

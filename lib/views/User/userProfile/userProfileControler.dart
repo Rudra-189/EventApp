@@ -8,6 +8,7 @@ class userProfileControler extends GetxController{
   final uid = FirebaseAuth.instance.currentUser!.uid;
   var isLoading = true.obs;
   var user = Rxn<userDataModel>();
+  var firstLetter = "".obs;
 
   @override
   void onInit() {
@@ -21,11 +22,13 @@ class userProfileControler extends GetxController{
       DocumentSnapshot doc = await _firestore.collection('user').doc(uid).get();
       if (doc.exists) {
         user.value = userDataModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+        firstLetter.value = user.value!.name[0].toUpperCase();
       }
     }catch(e){
       print("///////${e.toString()}///////");
     }finally{
       isLoading(false);
+      print(firstLetter);
     }
   }
 }

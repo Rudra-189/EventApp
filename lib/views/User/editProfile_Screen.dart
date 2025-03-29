@@ -33,6 +33,8 @@ class _editProfileScreenState extends State<editProfileScreen> {
 
   late userDataModel data;
 
+  String firstLetter = '';
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +42,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
     nameController.text = data.name;
     emailController.text = data.email;
     print(data.photo);
+    firstLetter = data.name[0].toUpperCase();
     imageUrl = data.photo;
   }
 
@@ -78,6 +81,9 @@ class _editProfileScreenState extends State<editProfileScreen> {
               ),
               child: Stack(
                 children: [
+                  Center(
+                    child: Text(firstLetter,style: TextStyle(color: Colors.green.shade600,fontSize: 30,fontWeight: FontWeight.bold),),
+                  ),
                   Positioned(
                     left: 75,
                     top: 75,
@@ -232,8 +238,8 @@ class _editProfileScreenState extends State<editProfileScreen> {
             children: [
               GestureDetector(
                 onTap: (){
-                  pickImage();
-                  Navigator.of(context).pop();
+                  pickImageFromGallery();
+                  Get.back();
                 },
                 child: Container(
                   height: 150,
@@ -253,7 +259,8 @@ class _editProfileScreenState extends State<editProfileScreen> {
               ),
               GestureDetector(
                 onTap: (){
-
+                  pickImageFromCamera();
+                  Get.back();
                 },
                 child: Container(
                   height: 150,
@@ -280,9 +287,24 @@ class _editProfileScreenState extends State<editProfileScreen> {
 
   File? _imageFile;
   String? imageUrl;
-  Future<void> pickImage() async{
+
+  Future<void> pickImageFromGallery() async{
     ImagePicker imagePicker=ImagePicker();
     final file = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if(file!=null){
+      setState(() {
+        deleteImage().then((value) {
+          _imageFile = File(file.path);
+        },);
+      });
+      uploadImage();
+    }
+  }
+
+  Future<void> pickImageFromCamera() async{
+    ImagePicker imagePicker=ImagePicker();
+    final file = await imagePicker.pickImage(source: ImageSource.camera);
 
     if(file!=null){
       setState(() {

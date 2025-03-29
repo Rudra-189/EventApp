@@ -12,6 +12,7 @@ import 'package:event_project_01/views/User/Explore/explore_Screen.dart';
 import 'package:event_project_01/views/User/Help%20&%20FAQs/helpandfaqs_Screen.dart';
 import 'package:event_project_01/views/User/bookmark/bookmark_Screen.dart';
 import 'package:event_project_01/views/User/bottomNavbar_Screen.dart';
+import 'package:event_project_01/views/User/coin/coinhistory_Screen.dart';
 import 'package:event_project_01/views/User/contactus/contactus_Screen.dart';
 import 'package:event_project_01/views/User/editProfile_Screen.dart';
 import 'package:event_project_01/views/User/eventDetail/eventDetail_Screen.dart';
@@ -21,6 +22,7 @@ import 'package:event_project_01/views/User/seeMore/seemore_Screen.dart';
 import 'package:event_project_01/views/User/ticket/ticket_Screen.dart';
 import 'package:event_project_01/views/User/ticketBooking/ticketBooking_Scereen.dart';
 import 'package:event_project_01/views/User/userProfile/userProfile_Screen.dart';
+import 'package:event_project_01/views/User/welcomecoin_Screen.dart';
 import 'package:event_project_01/views/auth/forgotPassword_Screen.dart';
 import 'package:event_project_01/views/auth/login_Screen.dart';
 import 'package:event_project_01/views/auth/photoUpload_Screen.dart';
@@ -204,6 +206,18 @@ class appRoutes{
     GetPage(
       name: appRoutesName.aboutScreen,
       page: ()=>aboutScreen(),
+      transition: Transition.downToUp,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: appRoutesName.welcomeCoinScreen,
+      page: ()=>welcomeCoinScreen(),
+      transition: Transition.downToUp,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: appRoutesName.coinHistoryScreen,
+      page: ()=>coinhistoryScreen(),
       transition: Transition.downToUp,
       transitionDuration: Duration(milliseconds: 500),
     ),

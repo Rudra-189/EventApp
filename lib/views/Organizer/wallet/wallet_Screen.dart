@@ -81,6 +81,8 @@ class _walletScreenState extends State<walletScreen> {
                                   children: [
                                     Text("Amount : ",style: TextStyle(color: Colors.white,fontSize: 14),),
                                     SizedBox(height: 5,),
+                                    Text("Discount : ",style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    SizedBox(height: 5,),
                                     Text("UserId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
                                     SizedBox(height: 5,),
                                     Text("ticketId : ",style: TextStyle(color: Colors.white,fontSize: 14),),
@@ -100,7 +102,9 @@ class _walletScreenState extends State<walletScreen> {
                                   children: [
                                     Text("₹ ${data[index].amount}",style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
                                     SizedBox(height: 5,),
-                                    Text(data[index].userId,style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    Text("${data[index].discount} %",style: TextStyle(color: Colors.green.shade600,fontSize: 14),),
+                                    SizedBox(height: 5,),
+                                    Text(data[index].userId,style: TextStyle(color: Colors.white,fontSize: 14,overflow: TextOverflow.ellipsis),),
                                     SizedBox(height: 5,),
                                     Text(data[index].ticketId,style: TextStyle(color: Colors.white,fontSize: 14),),
                                     SizedBox(height: 5,),

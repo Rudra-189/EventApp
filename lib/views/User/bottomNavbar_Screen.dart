@@ -3,20 +3,17 @@ import 'package:event_project_01/views/User/ticket/ticket_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
 import '../../App_Resources/App_Color.dart';
 import 'Explore/explore_Screen.dart';
 import 'userProfile/userProfile_Screen.dart';
 
 class bottomNavbarScreen extends StatefulWidget {
   const bottomNavbarScreen({super.key});
-
   @override
   State<bottomNavbarScreen> createState() => _bottomNavbarScreenState();
 }
 
 class _bottomNavbarScreenState extends State<bottomNavbarScreen> {
-
   int _curentIndex = 0;
 
   PageController pageController=PageController();
@@ -107,4 +104,3 @@ class _bottomNavbarScreenState extends State<bottomNavbarScreen> {
     );
   }
 }
-

@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../../../App_Resources/App_Screen_Size.dart';
+import '../organizerDashBord/organizerDashBordControler.dart';
 
 class ticketBookedScreen extends StatefulWidget {
   ticketBookedScreen({super.key});
@@ -20,6 +21,7 @@ class _ticketBookedScreenState extends State<ticketBookedScreen> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -108,7 +110,7 @@ class _ticketBookedScreenState extends State<ticketBookedScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(data[index].userId, style: TextStyle(
-                                    color: Colors.white, fontSize: 14),),
+                                    color: Colors.white, fontSize: 14,overflow: TextOverflow.ellipsis),),
                                 SizedBox(height: 5,),
                                 Text(data[index].seat.toString(),
                                   style: TextStyle(

@@ -8,6 +8,7 @@ class paymentDataModel{
   final String organizerId;
   final int amount;
   final String status;
+  final int discount;
   final DateTime timestamp;
 
   paymentDataModel({
@@ -18,6 +19,7 @@ class paymentDataModel{
     required this.organizerId,
     required this.amount,
     required this.status,
+    required this.discount,
     required this.timestamp
   });
 
@@ -30,6 +32,7 @@ class paymentDataModel{
       organizerId: json['organizerId'],
       amount: json['amount'] ?? 0,
       status: json['status'] ?? '',
+      discount: json['discount'] ?? 0.0,
       timestamp: (json['timestamp'] as Timestamp).toDate()
     );
   }

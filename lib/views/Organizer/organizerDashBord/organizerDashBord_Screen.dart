@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import '../../../../App_Resources/App_Color.dart';
 import '../../../../App_Resources/App_Screen_Size.dart';
-import '../wallet/wallet_Screen.dart';
 
 class organizerDashBordScreen extends StatefulWidget {
   const organizerDashBordScreen({super.key});
@@ -63,8 +61,8 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      height: 125,
-                      width: 350,
+                      height: height * 0.15,
+                      padding: EdgeInsets.symmetric(horizontal: height * 0.05),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(15),
@@ -122,8 +120,8 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
                         // Navigator.push(context,MaterialPageRoute(builder: (context) => addEventScreen(),));
                       },
                       child: Container(
-                        height: 125,
-                        width: 125,
+                        height: height * 0.145,
+                        width: height * 0.145,
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(15),
@@ -151,8 +149,8 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
                         // Navigator.push(context, MaterialPageRoute(builder: (context) => myEventScreen(),));
                       },
                       child: Container(
-                        height: 125,
-                        width: 125,
+                        height: height * 0.145,
+                        width: height * 0.145,
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(15),
@@ -185,8 +183,8 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
                         Get.toNamed(appRoutesName.ticketBookedScreen);
                       },
                       child: Container(
-                        height: 125,
-                        width: 125,
+                        height: height * 0.145,
+                        width: height * 0.145,
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(15),
@@ -214,8 +212,8 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
                         // Navigator.push(context, MaterialPageRoute(builder: (context) => walletScreen(),));
                       },
                       child: Container(
-                        height: 125,
-                        width: 125,
+                        height: height * 0.145,
+                        width: height * 0.145,
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(15),
@@ -248,8 +246,8 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
                         Get.toNamed(appRoutesName.cancelTicketsScreen);
                       },
                       child: Container(
-                        height: 125,
-                        width: 125,
+                        height: height * 0.145,
+                        width: height * 0.145,
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(15),
@@ -277,8 +275,8 @@ class _organizerDashBordScreenState extends State<organizerDashBordScreen> {
                         // Navigator.push(context, MaterialPageRoute(builder: (context) => organizerProfileScreen(),));
                       },
                       child: Container(
-                        height: 125,
-                        width: 125,
+                        height: height * 0.145,
+                        width: height * 0.145,
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(15),

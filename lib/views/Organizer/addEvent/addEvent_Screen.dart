@@ -492,7 +492,7 @@ class _addEventScreenState extends State<addEventScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: height * 0.02,),
+              SizedBox(height: height * 0.0225,),
             ],
           ),
         ),

@@ -350,7 +350,8 @@ class _signupScreenState extends State<signupScreen> {
       'name': name,
       'email': email,
       'password' : password,
-      'role': role
+      'role': role,
+      'coin' : 0
     });
     NotificationService.showNotification(title: "🎉 Welcome to Event Era", body: "Thank you for signing up! 🎟️ Explore exciting events, book your tickets, and enjoy seamless event experiences. Start your journey now!");
     // NotificationService.Notification_message("🎉 Welcome to Event Era", "Thank you for signing up! 🎟️ Explore exciting events, book your tickets, and enjoy seamless event experiences. Start your journey now!");

@@ -7,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../App_Resources/App_Screen_Size.dart';
 import '../../../models/eventmodel.dart';
 
 class calenderScreen extends StatefulWidget {
@@ -34,6 +35,10 @@ class _calenderScreenState extends State<calenderScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final height = AppScreenSize.height(context);
+    final width = AppScreenSize.width(context);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -161,8 +166,8 @@ class _calenderScreenState extends State<calenderScreen> {
                         // Date Header
                         ListTile(
                           leading: Container(
-                            height: 50,
-                            width: 50,
+                            height: height * 0.055,
+                            width: height * 0.055,
                             decoration: BoxDecoration(
                               color: Colors.white10,
                               borderRadius: BorderRadius.circular(15),
@@ -206,32 +211,42 @@ class _calenderScreenState extends State<calenderScreen> {
                               );
                             },
                             child: Container(
-                              height: 75,
                               width: double.infinity,
+                              padding: EdgeInsets.all(10),
                               margin: EdgeInsets.only(left: 50),
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              child: ListTile(
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.network(
-                                    events.first.img,
-                                    fit: BoxFit.cover,
-                                    width: 60,
-                                    height: 60,
+                              child:Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Image.network(
+                                      events.first.img,
+                                      fit: BoxFit.cover,
+                                      width: height * 0.075,
+                                      height: height * 0.075,
+                                    ),
                                   ),
-                                ),
-                                title: Text(
-                                  events.first.title,
-                                  style: TextStyle(color: Colors.white, fontSize: 16, overflow: TextOverflow.ellipsis),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                subtitle: Text(
-                                  "₹ ${events.first.price.Economy}",
-                                  style: TextStyle(color: Colors.green.shade600, fontSize: 14),
-                                ),
+                                  SizedBox(width: 10,),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          events.first.title,
+                                          style: TextStyle(color: Colors.white, fontSize: 16, overflow: TextOverflow.ellipsis),
+                                        ),
+                                        Text(
+                                          "₹ ${events.first.price.Economy}",
+                                          style: TextStyle(color: Colors.green.shade600, fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                           )
@@ -258,25 +273,35 @@ class _calenderScreenState extends State<calenderScreen> {
                                     color: Colors.white.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(15),
                                   ),
-                                  child: ListTile(
-                                    leading: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(
-                                        events[index].img,
-                                        fit: BoxFit.cover,
-                                        width: 60,
-                                        height: 60,
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Image.network(
+                                          events[index].img,
+                                          fit: BoxFit.cover,
+                                          width: height * 0.075,
+                                          height: height * 0.075,
+                                        ),
                                       ),
-                                    ),
-                                    title: Text(
-                                      events[index].title,
-                                      style: TextStyle(color: Colors.white, fontSize: 16, overflow: TextOverflow.ellipsis),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    subtitle: Text(
-                                      "₹ ${events[index].price.Economy}",
-                                      style: TextStyle(color: Colors.green.shade600, fontSize: 14),
-                                    ),
+                                      SizedBox(width: 10,),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              events[index].title,
+                                              style: TextStyle(color: Colors.white, fontSize: 16, overflow: TextOverflow.ellipsis),
+                                            ),
+                                            Text(
+                                              "₹ ${events[index].price.Economy}",
+                                              style: TextStyle(color: Colors.green.shade600, fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               );
@@ -294,4 +319,3 @@ class _calenderScreenState extends State<calenderScreen> {
     );
   }
 }
-

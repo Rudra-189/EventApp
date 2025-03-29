@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_project_01/models/ticketModel.dart';
+import 'package:event_project_01/models/userModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class ticketBookedControler extends GetxController{
   final uid = FirebaseAuth.instance.currentUser!.uid;
   var isLoading = true.obs;
   var myEventTickets =<ticketDataModel>[].obs;
+  var users =<userDataModel>[].obs;
 
   @override
   void onInit() {

@@ -231,6 +231,9 @@ class _ticketScreenState extends State<ticketScreen> {
   void _showTicketDialog(ticketDataModel data) {
     final height = AppScreenSize.height(context);
     final width = AppScreenSize.width(context);
+
+    var venue = data.eventData.location.split(",");
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -290,7 +293,7 @@ class _ticketScreenState extends State<ticketScreen> {
                                 SizedBox(height: 10,),
                                 Text("Venue",style: TextStyle(color: Colors.black.withOpacity(0.5),fontSize: 12),),
                                 SizedBox(height: 2,),
-                                Text(data.eventData.date.day.toString(),style: TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.bold),),
+                                Text(venue[0].toString(),style: TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.bold),),
                               ],
                             ),
                             SizedBox(width: width * 0.15,),

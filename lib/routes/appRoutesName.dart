@@ -33,5 +33,7 @@ class appRoutesName{
   static const String helpAndFaqsScreen= '/helpAndFaqsPage';
   static const String contactusScreen= '/contactusPage';
   static const String aboutScreen= '/aboutPage';
+  static const String welcomeCoinScreen= '/welcomeCoinPage';
+  static const String coinHistoryScreen= '/coinHistoryPage';
 
 }

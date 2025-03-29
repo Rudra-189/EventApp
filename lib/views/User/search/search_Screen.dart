@@ -45,15 +45,15 @@ class _searchScreenState extends State<searchScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20,),
+            SizedBox(height: height * 0.02,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    height: 50,
-                    width: 300,
+                    height: height * 0.065,
+                    width: width * 0.75,
                     child: TextFormField(
                       controller: searchController,
                       cursorColor: Colors.white,
@@ -87,8 +87,8 @@ class _searchScreenState extends State<searchScreen> {
                       showFilterSheet(context);
                     },
                     child: Container(
-                      height: 50,
-                      width: 50,
+                      height: height * 0.065,
+                      width: height * 0.065,
                       decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.09),
                           borderRadius: BorderRadius.circular(11)
@@ -99,7 +99,7 @@ class _searchScreenState extends State<searchScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: height * 0.02,),
             Obx((){
               if(controler.isLoading.value){
                 return Center(child: CircularProgressIndicator(color: Colors.green.shade600,));
@@ -125,7 +125,6 @@ class _searchScreenState extends State<searchScreen> {
                         );
                       },
                       child: Container(
-                        height: 100,
                         margin: EdgeInsets.only(left: 10,right: 10,top: 10),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -136,7 +135,7 @@ class _searchScreenState extends State<searchScreen> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.network(data.img,height: 75,width: 75,fit: BoxFit.cover,),
+                              child: Image.network(data.img,height: height * 0.085,width: height * 0.085,fit: BoxFit.cover,),
                             ),
                             SizedBox(width: 10,),
                             Expanded(
